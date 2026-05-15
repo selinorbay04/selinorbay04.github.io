@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selin Orbay — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ══════════════════════════════════════
+       TOKENS
+    ══════════════════════════════════════ */
+    :root {
+      --cream:        #FFF3DF;
+      --brown:        #5a1200;
+      --orange:       #F97316;
+      --orange-burnt: #8B3800;
+      --black:        #0f0f0f;
+      --name-color:   #FFF3DF;   /* SELIN ORBAY matches background tone */
+      --nav-h:        72px;
+
+      --font-display: 'Bebas Neue', sans-serif;  /* titles, headings, big text */
+      --font-body:    'Inter', sans-serif;        /* nav, labels, small text   */
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 48px;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    nav.scrolled {
+      background: var(--cream);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    }
+
+    /* "SO" logo — display font */
+    .logo {
+      font-family: var(--font-display);
+      font-size: 30px;
+      letter-spacing: 2px;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s ease;
+    }
+    nav.scrolled .logo { color: var(--black); }
+
+    /* nav links — body font */
+    .nav-links { display: flex; gap: 36px; }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s ease, opacity 0.2s ease;
+    }
+    nav.scrolled .nav-links a { color: var(--black); }
+    .nav-links a:hover { opacity: 0.55; }
+
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      height: 100vh;
+      background: var(--brown);
+      overflow: hidden;
+    }
+
+    /* Replace src with your photo: assets/images/hero.jpg */
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      opacity: 0.55;
+      mix-blend-mode: luminosity;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(65, 12, 0, 0.5);
+    }
+
+    /* "SELIN ORBAY" — display font */
+    .hero-name {
+      position: absolute;
+      bottom: 80px;
+      left: 48px;
+      z-index: 1;
+      line-height: 0.88;
+    }
+    .hero-name span {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(64px, 10vw, 128px);
+      color: var(--name-color);
+      letter-spacing: 6px;
+    }
+
+    /* "Scroll to explore" — body font */
+    .scroll-hint {
+      position: absolute;
+      bottom: 44px;
+      right: 48px;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.65);
+      text-transform: uppercase;
+    }
+    .scroll-hint::before {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 1px;
+      background: rgba(255,255,255,0.5);
+    }
+
+
+    /* ══════════════════════════════════════
+       COMBINED STICKY SECTION
+       — Phrases animate in the upper zone
+       — "Check out my... WORK" stays fixed
+         at the bottom of the same viewport
+       500vh total: each of 4 phrases gets
+       one full viewport height of scroll
+    ══════════════════════════════════════ */
+    .tagline-section {
+      height: 500vh;
+      position: relative;
+      background: var(--cream);
+    }
+
+    .tagline-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      /* No left/right padding here — phrase-zone handles it,
+         so the WORK row can bleed edge-to-edge */
+      padding-top: calc(var(--nav-h) + 20px);
+      padding-bottom: 0;
+      overflow: hidden;
+    }
+
+    /* ── Upper zone: animated phrases ── */
+    .phrase-zone {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 clamp(28px, 5vw, 60px);
+      /* Extra bottom margin = breathing room above WORK */
+      margin-bottom: clamp(28px, 5vh, 56px);
+    }
+
+    .tagline {
+      position: absolute;
+      /* left is 0 relative to phrase-zone which already has padding */
+      left: clamp(28px, 5vw, 60px);
+      font-family: var(--font-display);
+      font-size: clamp(52px, 9.5vw, 116px);
+      line-height: 1.0;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(40px);
+      transition:
+        opacity   0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+
+    .tagline.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .tagline.exit {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+
+    .tagline .hl      { color: var(--orange); }
+    .tagline .hl-dark { color: var(--orange-burnt); }
+
+    /* blinking cursor after "engineer" */
+    .cursor-bar {
+      display: inline-block;
+      width: 4px;
+      height: 0.72em;
+      background: var(--orange-burnt);
+      border-radius: 2px;
+      margin-left: 8px;
+      vertical-align: middle;
+      animation: blink 1.1s step-end infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* ── Lower zone: "Check out my... WORK" ── */
+    .cta-zone {
+      width: 100%;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* "Check out my..." — body font, small */
+    .check-out {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+
+    /* W [folder] RK — full page width */
+    .work-display {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      line-height: 0.82;
+    }
+
+    /* Ghost letters — Bebas Neue, sized so WORK spans 100vw.
+       W ≈ 0.65em wide, O ≈ 0.60em, R ≈ 0.55em, K ≈ 0.55em → total ~2.35em
+       font-size = 100vw / 2.35 ≈ 42.5vw                                  */
+    .work-ghost {
+      font-family: var(--font-display);
+      font-size: 42.5vw;
+      letter-spacing: 0;
+      /* Very subtle ghost: same hue as bg, slightly darker */
+      color: rgba(180, 130, 70, 0.16);
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    /* ── Folder icon — replaces the "O" ── */
+    .folder-wrapper {
+      /* O character at 42.5vw ≈ 0.60 × 42.5vw = 25.5vw */
+      flex: 1;          /* fills the gap between W and RK exactly */
+      min-width: 0;
+      cursor: pointer;
+      align-self: flex-end;
+      padding-bottom: 1vw;  /* nudge up to align with cap-height baseline */
+      z-index: 2;
+    }
+
+    .folder-wrapper svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Lid opens on hover */
+    .folder-lid {
+      transform-box: fill-box;
+      transform-origin: 0% 100%;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .folder-wrapper:hover .folder-lid {
+      transform: rotate(-20deg);
+    }
+
+  </style>
+</head>
+<body>
+
+
+<!-- ════════════════════════
+     NAVIGATION
+     Links go to separate pages.
+════════════════════════ -->
+<nav id="nav">
+  <a class="logo" href="index.html">SO</a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════
+     HERO
+════════════════════════ -->
+<section class="hero">
+  <!--
+    Export your photo from Figma → save as assets/images/hero.jpg
+    Then replace the src below.
+  -->
+  <img class="hero-photo" src="assets/images/hero.jpg" alt="Selin Orbay">
+  <div class="hero-overlay"></div>
+
+  <div class="hero-name">
+    <span>SELIN</span>
+    <span>ORBAY</span>
+  </div>
+
+  <div class="scroll-hint">Scroll to explore</div>
+</section>
+
+
+<!-- ════════════════════════
+     STICKY SECTION
+     Upper: cycling phrases
+     Lower: Check out my… WORK
+     (both visible at all times,
+      only the phrase changes)
+════════════════════════ -->
+<section class="tagline-section" id="tagline-section">
+  <div class="tagline-sticky">
+
+    <!-- Phrase zone (top) -->
+    <div class="phrase-zone">
+
+      <div class="tagline active" data-index="0">
+        I am an <span class="hl-dark">engineer</span><span class="cursor-bar"></span>
+      </div>
+
+      <div class="tagline" data-index="1">
+        <span class="hl">Curious</span> at heart
+      </div>
+
+      <div class="tagline" data-index="2">
+        <span class="hl">Creative</span> by nature
+      </div>
+
+      <div class="tagline" data-index="3">
+        <span class="hl">Precise</span> by practice
+      </div>
+
+    </div>
+
+    <!-- CTA zone (bottom) — always visible -->
+    <div class="cta-zone">
+      <p class="check-out">Check out my...</p>
+
+      <div class="work-display">
+        <span class="work-ghost">W</span>
+
+        <!--
+          SVG FOLDER — replaces the "O" in WORK
+          Hover: lid opens. Click: goes to projects page.
+        -->
+        <div
+          class="folder-wrapper"
+          role="button"
+          aria-label="Go to Projects"
+          onclick="window.location.href='projects.html'"
+        >
+          <svg viewBox="0 0 200 158" xmlns="http://www.w3.org/2000/svg">
+            <!-- Back body -->
+            <rect x="2" y="44" width="196" height="112" rx="13" fill="#344e1a"/>
+            <!-- Tab -->
+            <path d="M2,44 L2,26 Q2,16 12,16 L66,16 Q76,16 81,26 L81,44 Z" fill="#3d5c1f"/>
+            <!-- Lid (rotates on hover) -->
+            <g class="folder-lid">
+              <rect x="2" y="34" width="196" height="22" rx="5" fill="#4a6e25"/>
+              <rect x="2" y="48" width="196" height="8"  rx="0" fill="#4a6e25"/>
+            </g>
+            <!-- Front body -->
+            <rect x="2" y="56" width="196" height="100" rx="13" fill="#4a6e25"/>
+            <rect x="2" y="56" width="196" height="12"  rx="0"  fill="#4a6e25"/>
+            <!-- Paper lines -->
+            <rect x="28" y="84"  width="88" height="9" rx="4.5" fill="rgba(255,255,255,0.25)"/>
+            <rect x="28" y="103" width="60" height="9" rx="4.5" fill="rgba(255,255,255,0.16)"/>
+            <rect x="28" y="122" width="74" height="9" rx="4.5" fill="rgba(255,255,255,0.10)"/>
+          </svg>
+        </div>
+
+        <span class="work-ghost">RK</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════
+     FOOTER
+════════════════════════ -->
+<footer style="border-top:1px solid rgba(26,26,26,0.12);padding:24px clamp(24px,6vw,80px);background:#FFF3DF;">
+  <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:300;color:rgba(26,26,26,0.4);letter-spacing:0.5px;">Selin Orbay</span>
+</footer>
+
+
+<!-- ════════════════════════
+     JAVASCRIPT
+════════════════════════ -->
+<script>
+  /* ── 1. Nav colour transition ── */
+  const nav  = document.getElementById('nav');
+  const hero = document.querySelector('.hero');
+
+  function updateNav() {
+    nav.classList.toggle('scrolled', window.scrollY > hero.offsetHeight - 80);
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+
+
+  /* ── 2. Sticky phrase scroll animation ── */
+  const section  = document.getElementById('tagline-section');
+  const taglines = document.querySelectorAll('.tagline');
+  let   current  = 0;
+
+  function showPhrase(index) {
+    index = Math.max(0, Math.min(taglines.length - 1, index));
+    if (index === current) return;
+
+    // Exit current phrase upward
+    taglines[current].classList.remove('active');
+    taglines[current].classList.add('exit');
+    const leaving = taglines[current];
+    setTimeout(() => leaving.classList.remove('exit'), 500);
+
+    // Enter new phrase from below
+    current = index;
+    taglines[current].classList.add('active');
+  }
+
+  function onScroll() {
+    const scrolled = window.scrollY - section.offsetTop;
+    const index    = Math.floor(scrolled / window.innerHeight);
+    showPhrase(index);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+
+</body>
+</html>

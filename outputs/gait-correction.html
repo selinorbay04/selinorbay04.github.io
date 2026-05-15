@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gait Correction with Q-Learning — Selin Orbay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:      #F5E3C8;
+      --text:    #1A1A1A;
+      --line:    rgba(26,26,26,0.12);
+      --green:   #344524;
+      --cream:   #F5E3C8;
+      --nav-h:   68px;
+      --pad-x:   clamp(24px, 6vw, 80px);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--pad-x);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    nav.scrolled {
+      background: var(--bg);
+      box-shadow: 0 1px 0 var(--line);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 2px;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s ease;
+    }
+    nav.scrolled .logo { color: var(--text); }
+
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s ease, opacity 0.2s ease;
+    }
+    nav.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { opacity: 0.55; }
+
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      height: 60vh;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: calc(var(--nav-h) + 24px) var(--pad-x) 40px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      opacity: 0.6;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.65) 100%);
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-kicker {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(245,227,200,0.6);
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 9vw, 110px);
+      letter-spacing: 3px;
+      line-height: 0.92;
+      color: #F5E3C8;
+    }
+
+
+    /* ══════════════════════════════════════
+       CONTENT WRAPPER
+    ══════════════════════════════════════ */
+    .content {
+      padding: 0 var(--pad-x);
+    }
+
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 0;
+    }
+
+
+    /* ══════════════════════════════════════
+       QUOTE
+    ══════════════════════════════════════ */
+    .quote-section {
+      padding: clamp(48px, 7vh, 72px) 0;
+      max-width: 760px;
+    }
+
+    .quote-section blockquote {
+      font-family: var(--font-body);
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--text);
+    }
+
+
+    /* ══════════════════════════════════════
+       META STRIP
+    ══════════════════════════════════════ */
+    .meta-section {
+      padding: clamp(40px, 6vh, 64px) 0;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .meta-left {
+      padding-right: clamp(24px, 4vw, 56px);
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .meta-right {
+      padding-left: clamp(24px, 4vw, 56px);
+    }
+
+    .meta-item {}
+
+    .meta-label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.45);
+      margin-bottom: 6px;
+    }
+
+    .meta-value {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.3vw, 15px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .meta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .meta-tag {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text);
+      border: 1px solid var(--line);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+    }
+    .video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+
+    /* ══════════════════════════════════════
+       SECTION HEADING
+    ══════════════════════════════════════ */
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 60px);
+      letter-spacing: 2px;
+      color: var(--text);
+      padding: clamp(40px, 6vh, 64px) 0 20px;
+    }
+
+
+    /* ══════════════════════════════════════
+       BODY PARAGRAPHS
+    ══════════════════════════════════════ */
+    .body-text {
+      font-family: var(--font-body);
+      font-size: clamp(14px, 1.4vw, 16px);
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text);
+      max-width: 700px;
+      padding-bottom: clamp(32px, 5vh, 52px);
+    }
+
+
+    /* ══════════════════════════════════════
+       SPEC TABLE
+    ══════════════════════════════════════ */
+    .spec-table {
+      width: 100%;
+      border-top: 1px solid var(--line);
+      margin-bottom: clamp(40px, 6vh, 64px);
+    }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .spec-label {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.45);
+      padding: 18px 20px 18px 0;
+      border-right: 1px solid var(--line);
+      align-self: start;
+    }
+
+    .spec-value {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.3vw, 15px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.7;
+      padding: 18px 0 18px 20px;
+    }
+
+
+    /* ══════════════════════════════════════
+       RESULTS SECTION
+    ══════════════════════════════════════ */
+    .results-section {
+      padding-bottom: clamp(56px, 8vh, 88px);
+    }
+
+    .results-intro {
+      font-family: var(--font-body);
+      font-size: clamp(14px, 1.4vw, 16px);
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text);
+      max-width: 700px;
+      margin-bottom: clamp(28px, 4vh, 44px);
+    }
+
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--line);
+    }
+
+    .stat-card {
+      background: var(--green);
+      padding: clamp(24px, 3.5vw, 40px) clamp(20px, 2.5vw, 32px);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 5.5vw, 68px);
+      letter-spacing: 1px;
+      color: var(--cream);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: var(--font-body);
+      font-size: clamp(11px, 1vw, 13px);
+      font-weight: 300;
+      color: rgba(245,227,200,0.65);
+      line-height: 1.5;
+    }
+
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 24px var(--pad-x);
+      background: var(--bg);
+    }
+
+    footer span {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(26,26,26,0.4);
+      letter-spacing: 0.5px;
+    }
+
+  </style>
+</head>
+<body>
+
+
+<!-- ════════════════════════
+     NAV
+════════════════════════ -->
+<nav id="nav">
+  <a class="logo" href="index.html">SO</a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════
+     HERO
+     assets/images/hexabot/gait-hero.jpg
+════════════════════════ -->
+<section class="hero">
+  <img class="hero-photo" src="assets/images/hexabot/gait-hero.jpg" alt="SpiderPi Hexabot Gait Correction">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-kicker">Robotics · CS/ME 301 · Northwestern</p>
+    <h1 class="hero-title">GAIT CORRECTION<br>WITH Q-LEARNING</h1>
+  </div>
+</section>
+
+
+<div class="content">
+
+  <!-- ════════════════════════
+       QUOTE
+  ════════════════════════ -->
+  <div class="quote-section">
+    <blockquote>
+      "Our robot drifted left – every time. Manual fixes failed. So we let it learn."
+    </blockquote>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ════════════════════════
+       META STRIP
+  ════════════════════════ -->
+  <div class="meta-section">
+    <div class="meta-grid">
+
+      <div class="meta-left">
+
+        <div class="meta-item">
+          <p class="meta-label">Year</p>
+          <p class="meta-value">Feb 2026 – Mar 2026</p>
+        </div>
+
+        <div class="meta-item">
+          <p class="meta-label">Role</p>
+          <p class="meta-value">Programmer</p>
+        </div>
+
+        <div class="meta-item">
+          <p class="meta-label">Tags</p>
+          <div class="meta-tags">
+            <span class="meta-tag">Q-Learning</span>
+            <span class="meta-tag">Gait Correction</span>
+            <span class="meta-tag">Python</span>
+            <span class="meta-tag">Reinforcement Learning</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: project photo -->
+      <div class="meta-right">
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/9GArfARKhAU?si=xx9mFDZDIwRlYnyn&rel=0" title="Gait correction demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ════════════════════════
+       THE APPROACH
+  ════════════════════════ -->
+  <h2 class="section-title">THE APPROACH</h2>
+
+  <p class="body-text">
+    The SpiderPi hexapod robot has six legs and a built-in tripod gait, but ours consistently
+    veered left due to small mechanical asymmetries — stiffness differences, micro-offsets in
+    servo calibration. Rather than attempting to measure and compensate each discrepancy by hand,
+    we framed the problem as a reinforcement learning task. A Q-learning agent observes the robot's
+    yaw drift and selects corrective adjustments to the stride timing. Over training episodes the
+    agent learns which adjustments produce the straightest paths.
+  </p>
+
+  <div class="spec-table">
+
+    <div class="spec-row">
+      <div class="spec-label">State Space</div>
+      <div class="spec-value">
+        Discretized yaw error bins (left heavy, centered, right heavy) derived from IMU readings
+        sampled after each stride cycle.
+      </div>
+    </div>
+
+    <div class="spec-row">
+      <div class="spec-label">Action Space</div>
+      <div class="spec-value">
+        Three servo timing adjustments: increase left-side dwell, increase right-side dwell, or
+        maintain current timing. Applied per stride cycle.
+      </div>
+    </div>
+
+    <div class="spec-row">
+      <div class="spec-label">Reward</div>
+      <div class="spec-value">
+        +1 for a stride that reduces yaw error, −1 for one that increases it, 0 for no significant
+        change. Sparse signal kept the agent from overfitting to noise.
+      </div>
+    </div>
+
+    <div class="spec-row">
+      <div class="spec-label">Training</div>
+      <div class="spec-value">
+        Run on the physical robot across multiple 2-meter corridor trials. Q-table updated in real
+        time after each stride; ε-greedy exploration annealed from 0.9 → 0.05 over 200 episodes.
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- ════════════════════════
+       RESULTS
+  ════════════════════════ -->
+  <h2 class="section-title">RESULTS</h2>
+
+  <div class="results-section">
+    <p class="results-intro">
+      After training, the robot's lateral drift dropped dramatically. The corrected gait held
+      a straight heading across repeated 2-meter runs with no manual tuning between trials —
+      a result that purely hand-tuned compensation had never achieved.
+    </p>
+
+    <div class="stat-cards">
+
+      <div class="stat-card">
+        <span class="stat-number">×3</span>
+        <span class="stat-label">reduction in lateral drift vs. uncorrected baseline</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-number">63%</span>
+        <span class="stat-label">of runs finished within 5 cm of centerline over 2 m</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-number">32 CM</span>
+        <span class="stat-label">max drift in baseline vs. ~10 cm after training</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-number">87</span>
+        <span class="stat-label">training episodes to convergence</span>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /.content -->
+
+
+<!-- ════════════════════════
+     FOOTER
+════════════════════════ -->
+<footer>
+  <span>Selin Orbay</span>
+</footer>
+
+
+<!-- ════════════════════════
+     JAVASCRIPT
+════════════════════════ -->
+<script>
+  const nav  = document.getElementById('nav');
+  const hero = document.querySelector('.hero');
+  function updateNav() {
+    nav.classList.toggle('scrolled', window.scrollY > hero.offsetHeight - 80);
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+</script>
+
+</body>
+</html>

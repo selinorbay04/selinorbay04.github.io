@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapping an Unknown Maze — Selin Orbay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:      #F5E3C8;
+      --text:    #1A1A1A;
+      --line:    rgba(26,26,26,0.12);
+      --green:   #344524;
+      --cream:   #F5E3C8;
+      --nav-h:   68px;
+      --pad-x:   clamp(24px, 6vw, 80px);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--pad-x);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    nav.scrolled {
+      background: var(--bg);
+      box-shadow: 0 1px 0 var(--line);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 2px;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s ease;
+    }
+    nav.scrolled .logo { color: var(--text); }
+
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s ease, opacity 0.2s ease;
+    }
+    nav.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { opacity: 0.55; }
+
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      height: 60vh;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: calc(var(--nav-h) + 24px) var(--pad-x) 40px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      opacity: 0.6;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.65) 100%);
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-kicker {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(245,227,200,0.6);
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 9vw, 110px);
+      letter-spacing: 3px;
+      line-height: 0.92;
+      color: #F5E3C8;
+    }
+
+
+    /* ══════════════════════════════════════
+       CONTENT WRAPPER
+    ══════════════════════════════════════ */
+    .content {
+      padding: 0 var(--pad-x);
+    }
+
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 0;
+    }
+
+
+    /* ══════════════════════════════════════
+       QUOTE
+    ══════════════════════════════════════ */
+    .quote-section {
+      padding: clamp(48px, 7vh, 72px) 0;
+      max-width: 800px;
+    }
+
+    .quote-section blockquote {
+      font-family: var(--font-body);
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--text);
+    }
+
+
+    /* ══════════════════════════════════════
+       META STRIP
+    ══════════════════════════════════════ */
+    .meta-section {
+      padding: clamp(40px, 6vh, 64px) 0;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .meta-left {
+      padding-right: clamp(24px, 4vw, 56px);
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .meta-right {
+      padding-left: clamp(24px, 4vw, 56px);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .meta-item {}
+
+    .meta-label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.45);
+      margin-bottom: 6px;
+    }
+
+    .meta-value {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.3vw, 15px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .meta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .meta-tag {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text);
+      border: 1px solid var(--line);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    /* Two stacked videos on the right */
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+    }
+    .video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+
+    /* ══════════════════════════════════════
+       SECTION HEADING
+    ══════════════════════════════════════ */
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 60px);
+      letter-spacing: 2px;
+      color: var(--text);
+      padding: clamp(40px, 6vh, 64px) 0 20px;
+    }
+
+
+    /* ══════════════════════════════════════
+       BODY PARAGRAPHS
+    ══════════════════════════════════════ */
+    .body-text {
+      font-family: var(--font-body);
+      font-size: clamp(14px, 1.4vw, 16px);
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text);
+      padding-bottom: clamp(32px, 5vh, 52px);
+    }
+
+    .body-text + .body-text {
+      margin-top: -clamp(16px, 2.5vh, 28px);
+    }
+
+
+    /* ══════════════════════════════════════
+       SPEC TABLE
+    ══════════════════════════════════════ */
+    .spec-table {
+      width: 100%;
+      border-top: 1px solid var(--line);
+      margin-bottom: clamp(40px, 6vh, 64px);
+    }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .spec-label {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.45);
+      padding: 18px 20px 18px 0;
+      border-right: 1px solid var(--line);
+      align-self: start;
+    }
+
+    .spec-value {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.3vw, 15px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.7;
+      padding: 18px 0 18px 20px;
+    }
+
+
+    /* ══════════════════════════════════════
+       WHAT BROKE IT — two paragraphs, no cards
+    ══════════════════════════════════════ */
+    .broke-section {
+      padding-bottom: clamp(56px, 8vh, 88px);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      max-width: 760px;
+    }
+
+    .broke-section p {
+      font-family: var(--font-body);
+      font-size: clamp(14px, 1.4vw, 16px);
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text);
+    }
+
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 24px var(--pad-x);
+      background: var(--bg);
+    }
+
+    footer span {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(26,26,26,0.4);
+      letter-spacing: 0.5px;
+    }
+
+  </style>
+</head>
+<body>
+
+
+<!-- ════════════════════════
+     NAV
+════════════════════════ -->
+<nav id="nav">
+  <a class="logo" href="index.html">SO</a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════
+     HERO
+     assets/images/hexabot/mapping-hero.jpg
+════════════════════════ -->
+<section class="hero">
+  <img class="hero-photo" src="assets/images/hexabot/mapping-hero.jpg" alt="SpiderPi Hexabot Mapping">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-kicker">Robotics · CS/ME 301 · Northwestern</p>
+    <h1 class="hero-title">MAPPING AN<br>UNKNOWN MAZE</h1>
+  </div>
+</section>
+
+
+<div class="content">
+
+  <!-- ════════════════════════
+       QUOTE
+  ════════════════════════ -->
+  <div class="quote-section">
+    <blockquote>
+      "Three questions every navigation system must answer: Where am I? What's around me? How do I get there?"
+    </blockquote>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ════════════════════════
+       META STRIP
+  ════════════════════════ -->
+  <div class="meta-section">
+    <div class="meta-grid">
+
+      <div class="meta-left">
+
+        <div class="meta-item">
+          <p class="meta-label">Year</p>
+          <p class="meta-value">Mar 2026 – Apr 2026</p>
+        </div>
+
+        <div class="meta-item">
+          <p class="meta-label">Role</p>
+          <p class="meta-value">Programmer</p>
+        </div>
+
+        <div class="meta-item">
+          <p class="meta-label">Tags</p>
+          <div class="meta-tags">
+            <span class="meta-tag">Dead-End Sonar</span>
+            <span class="meta-tag">Sonar Sensor</span>
+            <span class="meta-tag">Wandering Algorithm</span>
+            <span class="meta-tag">Mapping Algorithm</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: two stacked videos -->
+      <div class="meta-right">
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/n77c9bGH0yg?si=eCFgO_SAKz3bn-__&rel=0" title="Mapping demo 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/u_Rd4GxzJoA?si=TaJmLGdy_vp9EGWt&rel=0" title="Mapping demo 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ════════════════════════
+       THE SYSTEM
+  ════════════════════════ -->
+  <h2 class="section-title">THE SYSTEM</h2>
+
+  <p class="body-text">
+    Given a hexapod robot and an unknown maze, the task was to have the robot explore, build a map
+    of every corridor it traversed, and navigate back to the start. The system had no prior knowledge
+    of the maze layout. A front-facing sonar sensor provided distance readings that the robot used
+    to detect walls and open passages. Three subsystems ran together: a wandering algorithm for
+    exploration, a dead-reckoning localization scheme to track position, and a real-time mapping
+    layer that recorded the grid as the robot moved through it. Once the robot reached a dead end or
+    had fully explored reachable space, it reversed the recorded path back to the origin.
+  </p>
+
+  <hr class="divider">
+
+  <!-- ════════════════════════
+       HOW IT WORKS
+  ════════════════════════ -->
+  <h2 class="section-title">HOW IT WORKS</h2>
+
+  <div class="spec-table">
+
+    <div class="spec-row">
+      <div class="spec-label">Localization</div>
+      <div class="spec-value">
+        Dead reckoning using stride count and heading. Each stride advances the robot one grid unit
+        in the current direction; turns are 90° increments tracked in software. Drift accumulates
+        over long runs but stays bounded within the maze's scale.
+      </div>
+    </div>
+
+    <div class="spec-row">
+      <div class="spec-label">Path Planning</div>
+      <div class="spec-value">
+        The robot keeps a stack of visited positions. On reaching a dead end, it pops back through
+        the stack — retracing its exact route — until it finds an unexplored branch. This gives a
+        depth-first traversal of the maze without any global map being required upfront.
+      </div>
+    </div>
+
+    <div class="spec-row">
+      <div class="spec-label">Mapping</div>
+      <div class="spec-value">
+        Each grid cell visited is logged to a 2D array with the robot's known heading at entry.
+        Wall presence is inferred from sonar readings at each cell: if distance &lt; threshold in
+        a given direction, a wall is recorded on that side. The final map is printed to the
+        terminal at the end of the run.
+      </div>
+    </div>
+
+    <div class="spec-row">
+      <div class="spec-label">Wandering</div>
+      <div class="spec-value">
+        At each junction the robot checks for open passages (right, forward, left) in priority
+        order. It prefers unexplored directions. If all adjacent cells are visited, it triggers
+        backtracking. The wandering loop runs at each stride, re-evaluating sonar before each move.
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- ════════════════════════
+       WHAT BROKE IT
+  ════════════════════════ -->
+  <h2 class="section-title">WHAT BROKE IT</h2>
+
+  <div class="broke-section">
+    <p>
+      The sonar sensor was reliable in straight corridors but noisy near corners. At 90° turns,
+      the beam would partially clip the adjacent wall and return a false short reading — making
+      the robot think a passage was blocked when it wasn't. We added a median filter over three
+      consecutive readings before any wall-detection decision, which eliminated most false positives
+      without adding meaningful latency.
+    </p>
+    <p>
+      Drift was the harder problem. Over four or five corridor segments the dead-reckoning position
+      could slip by one full grid unit, causing the backtrack path to terminate one cell off from
+      the true start. We worked around this by defining "start" as a bounded region rather than
+      a single cell, and having the robot search for its origin landmark (a sonar-detectable wall
+      pattern unique to the entry corridor) within that region before declaring success.
+    </p>
+  </div>
+
+</div><!-- /.content -->
+
+
+<!-- ════════════════════════
+     FOOTER
+════════════════════════ -->
+<footer>
+  <span>Selin Orbay</span>
+</footer>
+
+
+<!-- ════════════════════════
+     JAVASCRIPT
+════════════════════════ -->
+<script>
+  const nav  = document.getElementById('nav');
+  const hero = document.querySelector('.hero');
+  function updateNav() {
+    nav.classList.toggle('scrolled', window.scrollY > hero.offsetHeight - 80);
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+</script>
+
+</body>
+</html>

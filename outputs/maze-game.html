@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semi-Autonomous Maze Game — Selin Orbay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:      #F5E3C8;
+      --green:   #344524;
+      --text:    #1A1A1A;
+      --cream:   #F5E3C8;
+      --line:    rgba(26,26,26,0.12);
+      --muted:   rgba(26,26,26,0.45);
+      --nav-h:   68px;
+      --pad-x:   clamp(24px, 6vw, 80px);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 0;
+    }
+
+
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--pad-x);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    nav.scrolled {
+      background: var(--bg);
+      box-shadow: 0 1px 0 var(--line);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 2px;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s ease;
+    }
+    nav.scrolled .logo { color: var(--text); }
+
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s ease, opacity 0.2s ease;
+    }
+    nav.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { opacity: 0.55; }
+
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 54vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: calc(var(--nav-h) + 24px) var(--pad-x) 36px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      opacity: 0.5;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.72) 100%);
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-kicker {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(245,227,200,0.6);
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(56px, 10vw, 130px);
+      letter-spacing: 3px;
+      line-height: 0.92;
+      color: #F5E3C8;
+    }
+
+
+    /* ══════════════════════════════════════
+       META STRIP
+       Subtitle spans full width above the two-col split
+    ══════════════════════════════════════ */
+    .meta-subtitle {
+      padding: clamp(28px, 4vh, 48px) var(--pad-x) 0;
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.5vw, 16px);
+      font-weight: 500;
+      color: var(--text);
+      text-align: right;
+    }
+
+    .meta-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+
+    .meta-left {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      padding: clamp(28px, 4vh, 44px) var(--pad-x);
+      border-right: 1px solid var(--line);
+    }
+
+    .meta-item label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .meta-item span {
+      font-family: var(--font-body);
+      font-size: clamp(12px, 1.3vw, 14px);
+      font-weight: 300;
+      color: var(--text);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.6px;
+      color: var(--text);
+      border: 1px solid rgba(26,26,26,0.35);
+      border-radius: 3px;
+      padding: 4px 10px;
+    }
+
+    .meta-photo {
+      width: 100%;
+      height: 100%;
+      min-height: 260px;
+      object-fit: cover;
+      display: block;
+    }
+
+
+    /* ══════════════════════════════════════
+       SHARED SECTION STYLES
+    ══════════════════════════════════════ */
+    .section {
+      padding: clamp(40px, 6vh, 72px) var(--pad-x);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 7vw, 88px);
+      letter-spacing: 2px;
+      line-height: 1;
+      color: var(--text);
+      margin-bottom: clamp(20px, 3vh, 36px);
+    }
+
+    .body-text {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.35vw, 15px);
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .body-text + .body-text { margin-top: 16px; }
+
+    .body-text strong {
+      font-weight: 500;
+    }
+
+    /* Two-column layout (text + photo) */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 5vw, 72px);
+      align-items: start;
+    }
+
+    .two-col-text {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .side-photo {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+    }
+
+
+    /* ══════════════════════════════════════
+       ENGINEERING — spec table
+       Horizontal + vertical lines
+    ══════════════════════════════════════ */
+    .spec-table { margin-top: clamp(24px, 3vh, 40px); }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      align-items: start;
+      border-top: 1px solid var(--line);
+    }
+    .spec-row:last-child { border-bottom: 1px solid var(--line); }
+
+    .spec-label {
+      font-family: var(--font-body);
+      font-size: clamp(11px, 1.1vw, 13px);
+      font-weight: 500;
+      color: var(--muted);
+      padding: 16px clamp(16px, 2vw, 28px) 16px 0;
+      border-right: 1px solid var(--line);
+    }
+
+    .spec-value {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.35vw, 15px);
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text);
+      padding: 16px 0 16px clamp(16px, 2vw, 28px);
+    }
+
+
+    /* ══════════════════════════════════════
+       FINAL DEMO — github card + photo
+    ══════════════════════════════════════ */
+    .demo-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: clamp(20px, 3vw, 40px);
+      align-items: start;
+      margin-top: clamp(24px, 3vh, 36px);
+    }
+
+    .github-card {
+      width: 90px;
+      background: var(--green);
+      border-radius: 6px;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+      flex-shrink: 0;
+    }
+    .github-card:hover { opacity: 0.8; }
+
+    .github-card svg {
+      width: 36px;
+      height: 36px;
+      fill: var(--cream);
+    }
+
+    .github-card span {
+      font-family: var(--font-body);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      color: var(--cream);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .demo-photo {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+    }
+    .video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+  </style>
+</head>
+<body>
+
+
+<!-- ════════════════════════
+     NAV
+════════════════════════ -->
+<nav id="nav">
+  <a class="logo" href="index.html">SO</a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════
+     HERO
+     assets/images/maze-game/hero.jpg
+════════════════════════ -->
+<section class="hero">
+  <img class="hero-photo" src="assets/images/maze-game/hero.jpg" alt="Maze game setup">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-kicker">Computer Engineering · CE 346 · Northwestern</p>
+    <h1 class="hero-title">SEMI-AUTONOMOUS<br>MAZE GAME</h1>
+  </div>
+</section>
+
+
+<!-- ════════════════════════
+     META STRIP
+     Full-width subtitle, then left meta / right photo
+════════════════════════ -->
+<p class="meta-subtitle">Line-following Robot with Human-in-the-loop</p>
+
+<section class="meta-strip">
+  <div class="meta-left">
+
+    <div class="meta-item">
+      <label>Year</label>
+      <span>Feb 2024 – Mar 2024</span>
+    </div>
+
+    <div class="meta-item">
+      <label>Role</label>
+      <span>Programmer + Hardware Assembly</span>
+    </div>
+
+    <div class="meta-item">
+      <label>Tags</label>
+      <div class="tags">
+        <span class="tag">Embedded C</span>
+        <span class="tag">RF Communication</span>
+        <span class="tag">Backtracking</span>
+        <span class="tag">MicroBit</span>
+        <span class="tag">State Machine</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- assets/images/maze-game/robot.jpg -->
+  <img class="meta-photo" src="assets/images/maze-game/robot.jpg" alt="Line-following robot">
+</section>
+
+<hr class="divider">
+
+
+<!-- ════════════════════════
+     THE SYSTEM
+════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">THE SYSTEM</h2>
+
+  <div class="two-col">
+    <p class="body-text">
+      A line-following robot that navigates a maze autonomously but pauses at junctions
+      to ask for direction. The user steers via a handheld micro:bit controller; the
+      robot handles the rest: line tracking, obstacle detection, backtracking, and
+      autonomously retracing the correct path to start once the finish is reached.
+    </p>
+    <!-- assets/images/maze-game/system.jpg -->
+    <img class="side-photo" src="assets/images/maze-game/system.jpg" alt="System overview">
+  </div>
+</section>
+
+<hr class="divider">
+
+
+<!-- ════════════════════════
+     ENGINEERING THE BUILD
+     Horizontal + vertical lines in spec table
+════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">ENGINEERING THE BUILD</h2>
+
+  <div class="spec-table">
+
+    <div class="spec-row">
+      <span class="spec-label">Architecture</span>
+      <span class="spec-value">Two micro:bit v2s communicating over RF. Robot micro:bit handles all driving logic; controller micro:bit handles wireless input and feedback.</span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-label">Software</span>
+      <span class="spec-value">Written entirely in C, structured with device-specific include files and separate directories per subsystem.</span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-label">RF Protocol</span>
+      <span class="spec-value">Custom RF packet protocol for reliable state transfer between controllers. LEDs flag junctions, obstacles, and maze completion.</span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-label">Backtracking</span>
+      <span class="spec-value">State machine tracks the decision stack at each junction and auto-pops wrong turns on dead ends.</span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-label">Hardware</span>
+      <span class="spec-value">Datasheet-driven integration: register config for line sensor array, sonar distance sensor, and RF radio.</span>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+
+<!-- ════════════════════════
+     THE UNEXPECTED FIX
+════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">THE UNEXPECTED FIX</h2>
+
+  <div class="two-col">
+    <div class="two-col-text">
+      <p class="body-text">
+        Our backtracking passed every bench test – then misbehaved on the real maze.
+        The robot chassis was casting a shadow on the bottom-mounted line sensors,
+        making them read white surface as black lines at junctions.
+      </p>
+      <p class="body-text">Wrong reads → wrong user prompts.</p>
+      <p class="body-text">
+        We diagnosed it and mounted white LEDs on the chassis underside as fill
+        lighting. It improved detection – not perfectly, but enough to validate the
+        root cause.
+      </p>
+      <p class="body-text">
+        <strong>The real lesson: sensor placement is part of the design, not an afterthought.</strong>
+      </p>
+    </div>
+    <!-- assets/images/maze-game/fix.jpg -->
+    <img class="side-photo" src="assets/images/maze-game/fix.jpg" alt="Maze debugging">
+  </div>
+</section>
+
+<hr class="divider">
+
+
+<!-- ════════════════════════
+     FINAL DEMO
+     GitHub card (left) + demo photo (right)
+════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">FINAL DEMO</h2>
+
+  <div class="demo-grid">
+
+    <a class="github-card" href="https://github.com/selinorbay04/semi_autonomous_maze_game" target="_blank" rel="noopener">
+      <!-- GitHub mark SVG -->
+      <svg viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/>
+      </svg>
+      <span>Click to see the code</span>
+    </a>
+
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/znPWcgOGVZM?si=Op31-GsybVzJW-rX&rel=0" title="Maze game final demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════
+     FOOTER
+════════════════════════ -->
+<footer style="border-top:1px solid rgba(26,26,26,0.12);padding:24px clamp(24px,6vw,80px);background:#F5E3C8;">
+  <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:300;color:rgba(26,26,26,0.4);letter-spacing:0.5px;">Selin Orbay</span>
+</footer>
+
+
+<!-- ════════════════════════
+     JAVASCRIPT
+════════════════════════ -->
+<script>
+  const nav  = document.getElementById('nav');
+  const hero = document.querySelector('.hero');
+  function updateNav() {
+    nav.classList.toggle('scrolled', window.scrollY > hero.offsetHeight - 80);
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Selin Orbay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ══════════════════════════════════════
+       TOKENS  (same palette as index.html)
+    ══════════════════════════════════════ */
+    :root {
+      --cream:        #FFF3DF;
+      --brown:        #3d1000;      /* dark section background */
+      --orange:       #F97316;
+      --orange-burnt: #8B3800;
+      --black:        #0f0f0f;
+      --nav-h:        72px;
+
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+
+    /* ══════════════════════════════════════
+       NAV  (identical to landing page)
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 48px;
+      /* starts transparent over hero photo */
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    nav.scrolled {
+      background: var(--cream);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 30px;
+      letter-spacing: 2px;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s ease;
+    }
+    nav.scrolled .logo { color: var(--black); }
+
+    .nav-links { display: flex; gap: 36px; align-items: center; }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s ease, opacity 0.2s ease;
+    }
+    nav.scrolled .nav-links a { color: var(--black); }
+    .nav-links a:hover { opacity: 0.55; }
+
+    /* active page indicator */
+    .nav-links a.active {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      height: 72vh;
+      min-height: 420px;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+
+    /* Export your Times Square photo from Figma →
+       save as  assets/images/about-hero.jpg         */
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+    }
+
+    /* subtle dark gradient at the bottom so title is legible */
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.15) 0%,
+        rgba(0,0,0,0.55) 100%
+      );
+    }
+
+    .hero-title {
+      position: absolute;
+      bottom: 36px;
+      left: 48px;
+      z-index: 1;
+      font-family: var(--font-display);
+      font-size: clamp(52px, 9vw, 110px);
+      color: #fff;
+      letter-spacing: 3px;
+      line-height: 1;
+    }
+
+
+    /* ══════════════════════════════════════
+       INTRO PARAGRAPH
+    ══════════════════════════════════════ */
+    .intro-section {
+      background: var(--cream);
+      padding: clamp(48px, 8vh, 80px) clamp(28px, 8vw, 120px);
+      max-width: 900px;
+    }
+
+    .intro-section p {
+      font-size: clamp(15px, 1.6vw, 18px);
+      line-height: 1.75;
+      color: var(--black);
+    }
+
+    .hl          { color: var(--orange-burnt); font-weight: 700; }
+    .hl-orange   { color: var(--orange);       font-weight: 700; }
+
+
+    /* ══════════════════════════════════════
+       TWO-COLUMN SECTION
+       Left: portrait photo
+       Right: body paragraphs (pushed right)
+    ══════════════════════════════════════ */
+    .bio-section {
+      background: var(--cream);
+      /* Full width — no max-width so text reaches the right edge */
+      padding: clamp(40px, 6vh, 72px) 0;
+      display: grid;
+      /* Photo gets a fixed left-padded column; text runs to the right edge */
+      grid-template-columns: clamp(28px, 6vw, 80px) minmax(0, 340px) clamp(32px, 4vw, 60px) 1fr clamp(28px, 6vw, 80px);
+      align-items: start;
+    }
+
+    /* Photo sits in column 2 */
+    .bio-photo {
+      grid-column: 2;
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* Text sits in column 4 — pushed toward the right edge */
+    .bio-text {
+      grid-column: 4;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .bio-text p {
+      font-size: clamp(14px, 1.45vw, 16px);
+      line-height: 1.85;
+      color: var(--black);
+      font-weight: 300;         /* thinner than default 400 */
+      text-align: justify;      /* flush both left and right */
+      hyphens: auto;            /* avoids ugly gaps on narrow lines */
+    }
+
+
+    /* ══════════════════════════════════════
+       SKILLS SECTION
+       Dark brown background, 3 light boxes
+    ══════════════════════════════════════ */
+    .skills-section {
+      background: var(--brown);
+      padding: clamp(48px, 7vh, 80px) clamp(28px, 6vw, 80px);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(16px, 2.5vw, 32px);
+    }
+
+    /* Each column lives inside a lighter box */
+    .skill-col {
+      background: rgba(255, 243, 223, 0.10);  /* translucent cream lift */
+      border: 1px solid rgba(255, 243, 223, 0.14);
+      border-radius: 6px;
+      padding: clamp(24px, 3vw, 36px) clamp(20px, 2.5vw, 32px);
+    }
+
+    .skill-col h3 {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,243,223,0.55);
+      margin-bottom: 20px;
+    }
+
+    .skill-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .skill-col ul li {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.3vw, 15px);
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1.4;
+    }
+
+
+    /* ══════════════════════════════════════
+       FOOTER  (minimal dark bar)
+    ══════════════════════════════════════ */
+    footer {
+      background: var(--brown);
+      border-top: 1px solid rgba(255,243,223,0.1);
+      padding: 24px clamp(28px, 6vw, 80px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer span {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,243,223,0.4);
+      letter-spacing: 0.5px;
+    }
+
+  </style>
+</head>
+<body>
+
+
+<!-- ════════════════════════
+     NAVIGATION
+════════════════════════ -->
+<nav id="nav">
+  <a class="logo" href="index.html">SO</a>
+  <div class="nav-links">
+    <a href="about.html" class="active">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════
+     HERO
+     Replace src with your Times Square photo:
+     assets/images/about-hero.jpg
+════════════════════════ -->
+<section class="hero">
+  <img class="hero-photo" src="assets/images/about-hero.jpg" alt="Selin in New York City">
+  <div class="hero-gradient"></div>
+  <h1 class="hero-title">ABOUT ME</h1>
+</section>
+
+
+<!-- ════════════════════════
+     INTRO PARAGRAPH
+════════════════════════ -->
+<section class="intro-section">
+  <p>
+    <span class="hl">Hi, I'm Selin Orbay.</span>
+    I'm a junior at Northwestern University studying Computer Science with a concentration
+    in Robotics and pursuing the Segal Design Certificate, which is a long way of saying
+    <span class="hl">I care equally about how things work and how they're made.</span>
+  </p>
+</section>
+
+
+<!-- ════════════════════════
+     BIO — photo + paragraphs
+     Replace src with your portrait:
+     assets/images/about-portrait.jpg
+════════════════════════ -->
+<section class="bio-section">
+
+  <img
+    class="bio-photo"
+    src="assets/images/about-portrait.jpg"
+    alt="Selin Orbay"
+  >
+
+  <div class="bio-text">
+    <p>
+      I'm drawn to the space where engineering gets physical: control systems,
+      automation, hands-on builds.
+    </p>
+
+    <p>
+      My approach to any problem starts by getting everything out of my head and onto
+      a surface — diagrams, scenarios, failure modes — until I can see the shape of it
+      clearly enough to start connecting the dots.
+      <span class="hl">I like problems that don't have obvious answers, and I like
+      building things that have to actually work in the real world.</span>
+    </p>
+
+    <p>
+      Outside of engineering, I sketch constantly, pen and paper for thinking, CAD for
+      making. I've modeled vases, aquarium structures, things that sit somewhere between
+      functional objects and design exercise. I came up through VEX Robotics, starting
+      as a team programmer and eventually captaining an 80-person team, which is
+      probably where <span class="hl">I learned that the technical problems are rarely
+      the hardest ones to solve.</span>
+    </p>
+
+    <p>
+      I value creativity, originality, and being someone people can count on.
+      I take it seriously.
+    </p>
+  </div>
+
+</section>
+
+
+<!-- ════════════════════════
+     SKILLS
+════════════════════════ -->
+<section class="skills-section">
+  <div class="skills-grid">
+
+    <div class="skill-col">
+      <h3>Software</h3>
+      <ul>
+        <li>C / C++</li>
+        <li>Python</li>
+        <li>React / Node.js</li>
+        <li>AWS (Lambda, S3, RDS)</li>
+        <li>PID Control</li>
+        <li>Machine Learning</li>
+      </ul>
+    </div>
+
+    <div class="skill-col">
+      <h3>Engineering</h3>
+      <ul>
+        <li>Engineering Design Steps</li>
+        <li>Embedded Systems</li>
+        <li>Robotics &amp; Automation</li>
+        <li>FMEA</li>
+        <li>Fabrication &amp; Prototyping</li>
+      </ul>
+    </div>
+
+    <div class="skill-col">
+      <h3>Design &amp; Tools</h3>
+      <ul>
+        <li>CAD — Solidworks</li>
+        <li>Figma</li>
+        <li>Segal Design Certificate</li>
+        <li>Ideation &amp; Sketching</li>
+        <li>Rapid Prototyping</li>
+        <li>Industrial Design Methods</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════
+     FOOTER
+════════════════════════ -->
+<footer style="border-top:1px solid rgba(26,26,26,0.12);padding:24px clamp(24px,6vw,80px);background:#F5E3C8;">
+  <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:300;color:rgba(26,26,26,0.4);letter-spacing:0.5px;">Selin Orbay</span>
+</footer>
+
+
+<!-- ════════════════════════
+     JAVASCRIPT
+════════════════════════ -->
+<script>
+  /* Nav turns opaque after scrolling past hero */
+  const nav  = document.getElementById('nav');
+  const hero = document.querySelector('.hero');
+
+  function updateNav() {
+    nav.classList.toggle('scrolled', window.scrollY > hero.offsetHeight - 80);
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+</script>
+
+</body>
+</html>

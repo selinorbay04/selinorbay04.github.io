@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Selin Orbay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:           #344524;
+      --bg-dark:      #263318;   /* slightly darker for nav scrolled state */
+      --cream:        #F5E3C8;
+      --orange-burnt: #8B3800;
+      --nav-h:        68px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+      transition: background 0.4s ease;
+    }
+
+    nav.scrolled {
+      background: var(--bg);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.25);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 2px;
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      color: var(--cream);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+    .nav-links a:hover { opacity: 0.55; }
+    .nav-links a.active {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+
+    /* ══════════════════════════════════════
+       PAGE HEADER
+    ══════════════════════════════════════ */
+    .page-header {
+      padding: calc(var(--nav-h) + 32px) 40px 28px;
+    }
+
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(64px, 11vw, 130px);
+      color: var(--cream);
+      letter-spacing: 3px;
+      line-height: 1;
+    }
+
+
+    /* ══════════════════════════════════════
+       PROJECT CARDS GRID
+       2 columns, minimal gap, flush to edges
+    ══════════════════════════════════════ */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;           /* as close as possible */
+      padding: 0 3px 3px; /* same gap on outer edges */
+    }
+
+    .project-card {
+      position: relative;
+      aspect-ratio: 16 / 11;
+      overflow: hidden;
+      display: block;
+      text-decoration: none;
+      background: #2a3a1a;  /* fallback while image loads */
+      cursor: pointer;
+    }
+
+    /* Project photo — replace each src in the HTML */
+    .project-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.5s ease;
+    }
+
+    .project-card:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Dark gradient at bottom for label legibility */
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 40%,
+        rgba(0,0,0,0.72) 100%
+      );
+    }
+
+    /* Project label */
+    .card-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 1;
+      padding: 12px 14px;
+    }
+
+    .card-label span {
+      font-family: var(--font-body);
+      font-size: clamp(10px, 1.1vw, 13px);
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: 0.2px;
+      line-height: 1.4;
+      display: block;
+    }
+
+    /* Empty slot styling (ReadAssist — no image yet) */
+    .project-card.empty {
+      background: rgba(255,255,255,0.04);
+      border: 1px dashed rgba(255,255,255,0.1);
+    }
+
+
+    /* ══════════════════════════════════════
+       PLAYGROUND SECTION
+    ══════════════════════════════════════ */
+    .playground-section {
+      padding: clamp(56px, 9vh, 100px) 40px clamp(64px, 10vh, 120px);
+    }
+
+    .discover-text {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 96px);
+      color: var(--cream);
+      letter-spacing: 2px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    /* Two rows of letters — PLAY / GROUND */
+    .letter-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .letter-row {
+      display: flex;
+      gap: 0;
+    }
+
+    /* Each letter is a full link */
+    .pg-letter {
+      font-family: var(--font-display);
+      font-size: clamp(80px, 16vw, 200px);
+      line-height: 0.88;
+      letter-spacing: 0;
+      color: #5C7040;             /* default: dark green (blends into bg) */
+      text-decoration: none;
+      transition: color 0.22s ease;
+      /* Spread letters evenly across the available width */
+      flex: 1;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Hover: dark green → cream (lights up) */
+    .pg-letter:hover {
+      color: #F5E3C8;
+    }
+
+  </style>
+</head>
+<body>
+
+
+<!-- ════════════════════════
+     NAVIGATION
+════════════════════════ -->
+<nav id="nav">
+  <a class="logo" href="index.html">SO</a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="projects.html" class="active">Projects</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════
+     PAGE HEADER
+════════════════════════ -->
+<header class="page-header">
+  <h1>PROJECTS</h1>
+</header>
+
+
+<!-- ════════════════════════
+     PROJECT CARDS
+     Export each project photo from Figma and
+     save to assets/images/projects/
+════════════════════════ -->
+<section class="projects-grid">
+
+  <!-- 1 — Hexabot / Gait / Mapping -->
+  <a class="project-card" href="hexabot.html">
+    <img src="assets/images/projects/hexabot.jpg" alt="SpiderPi Hexabot">
+    <div class="card-label">
+      <span>SpiderPi Hexabot | Q-Learning Gait Correction + Maze Mapping &amp; Navigation</span>
+    </div>
+  </a>
+
+  <!-- 2 — Maze Game -->
+  <a class="project-card" href="maze-game.html">
+    <img src="assets/images/projects/maze-game.jpg" alt="Semi-Autonomous Maze Game">
+    <div class="card-label">
+      <span>Semi-Autonomous Maze Game</span>
+    </div>
+  </a>
+
+  <!-- 3 — WaterGuard -->
+  <a class="project-card" href="waterguard.html">
+    <img src="assets/images/projects/waterguard.jpg" alt="WaterGuard">
+    <div class="card-label">
+      <span>WaterGuard</span>
+    </div>
+  </a>
+
+  <!-- 4 — VEX Robotics -->
+  <a class="project-card" href="vex.html">
+    <img src="assets/images/projects/vex.jpg" alt="VEX Robotics">
+    <div class="card-label">
+      <span>VEX Robotics — Team Captain &amp; Programmer</span>
+    </div>
+  </a>
+
+  <!-- 5 — ReadAssist -->
+  <a class="project-card" href="readassist.html">
+    <img src="assets/images/projects/readassist.jpg" alt="ReadAssist">
+    <div class="card-label">
+      <span>ReadAssist</span>
+    </div>
+  </a>
+
+</section>
+
+
+<!-- ════════════════════════
+     DISCOVER MY PLAYGROUND
+     Each letter links to playground.html.
+     Hover: cream → #5C7040 (fades into bg).
+════════════════════════ -->
+<section class="playground-section">
+
+  <p class="discover-text">Discover my</p>
+
+  <div class="letter-rows">
+
+    <!-- Row 1: P L A Y -->
+    <div class="letter-row">
+      <a class="pg-letter" href="playground.html">P</a>
+      <a class="pg-letter" href="playground.html">L</a>
+      <a class="pg-letter" href="playground.html">A</a>
+      <a class="pg-letter" href="playground.html">Y</a>
+    </div>
+
+    <!-- Row 2: G R O U N D -->
+    <div class="letter-row">
+      <a class="pg-letter" href="playground.html">G</a>
+      <a class="pg-letter" href="playground.html">R</a>
+      <a class="pg-letter" href="playground.html">O</a>
+      <a class="pg-letter" href="playground.html">U</a>
+      <a class="pg-letter" href="playground.html">N</a>
+      <a class="pg-letter" href="playground.html">D</a>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ════════════════════════
+     FOOTER
+════════════════════════ -->
+<footer style="border-top:1px solid rgba(245,227,200,0.12);padding:24px clamp(24px,6vw,80px);background:#344524;">
+  <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:300;color:rgba(245,227,200,0.35);letter-spacing:0.5px;">Selin Orbay</span>
+</footer>
+
+
+<!-- ════════════════════════
+     JAVASCRIPT
+════════════════════════ -->
+<script>
+  const nav = document.getElementById('nav');
+  function updateNav() {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+</script>
+
+</body>
+</html>

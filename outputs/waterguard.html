@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WaterGuard — Selin Orbay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:       #F5E3C8;           /* page background */
+      --green:    #344524;           /* results cards only */
+      --text:     #1A1A1A;           /* all body text */
+      --cream:    #F5E3C8;           /* text on dark surfaces */
+      --line:     rgba(26,26,26,0.12);   /* faint lines on light bg */
+      --muted:    rgba(26,26,26,0.45);   /* labels / secondary text */
+      --nav-h:    68px;
+      --pad-x:    clamp(24px, 6vw, 80px);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── Horizontal divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 0;
+    }
+
+
+    /* ══════════════════════════════════════
+       NAV — white text over hero, dark once scrolled
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--pad-x);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    nav.scrolled {
+      background: var(--bg);
+      box-shadow: 0 1px 0 var(--line);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 2px;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s ease;
+    }
+    nav.scrolled .logo { color: var(--text); }
+
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s ease, opacity 0.2s ease;
+    }
+    nav.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { opacity: 0.55; }
+
+
+    /* ══════════════════════════════════════
+       HERO  (stays dark — photo overlay)
+    ══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 52vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: calc(var(--nav-h) + 24px) var(--pad-x) 36px;
+      overflow: hidden;
+      background: #1a2510;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      opacity: 0.45;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(20,32,10,0.35) 0%, rgba(20,32,10,0.78) 100%);
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-kicker {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(245,227,200,0.6);
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(64px, 12vw, 148px);
+      letter-spacing: 3px;
+      line-height: 0.9;
+      color: #F5E3C8;
+      margin-bottom: 20px;
+    }
+
+    .hero-quote {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.5vw, 16px);
+      font-style: italic;
+      font-weight: 300;
+      color: #F5E3C8;
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+
+    /* ══════════════════════════════════════
+       META STRIP  — Year / Role / Tags + photo
+       Vertical line separates meta from photo
+    ══════════════════════════════════════ */
+    .meta-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+
+    .meta-left {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      padding: clamp(36px, 5vh, 60px) var(--pad-x);
+      /* vertical line on the right edge */
+      border-right: 1px solid var(--line);
+    }
+
+    .meta-item label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .meta-item span {
+      font-family: var(--font-body);
+      font-size: clamp(12px, 1.3vw, 14px);
+      font-weight: 300;
+      color: var(--text);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      color: var(--text);
+      border: 1px solid rgba(26,26,26,0.35);
+      border-radius: 3px;
+      padding: 4px 10px;
+    }
+
+    /* Photo fills right cell, no extra padding so it's flush */
+    .meta-photo {
+      width: 100%;
+      height: 100%;
+      min-height: 260px;
+      object-fit: cover;
+      display: block;
+    }
+
+
+    /* ══════════════════════════════════════
+       SHARED SECTION STYLES
+    ══════════════════════════════════════ */
+    .section {
+      padding: clamp(40px, 6vh, 72px) var(--pad-x);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 7vw, 88px);
+      letter-spacing: 2px;
+      line-height: 1;
+      color: var(--text);
+      margin-bottom: clamp(20px, 3vh, 36px);
+    }
+
+    .body-text {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.35vw, 15px);
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+
+    /* ══════════════════════════════════════
+       THE PROBLEM  (text left, photo right)
+    ══════════════════════════════════════ */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 5vw, 72px);
+      align-items: start;
+    }
+
+    .two-col-text {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .side-photo {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+    }
+
+    .side-photo-tall {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+    }
+
+
+    /* ══════════════════════════════════════
+       ENGINEERING — spec table
+       Both horizontal AND vertical faint lines
+    ══════════════════════════════════════ */
+    .spec-table {
+      margin-top: clamp(24px, 3vh, 40px);
+    }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      align-items: start;
+      border-top: 1px solid var(--line);
+    }
+
+    .spec-row:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .spec-label {
+      font-family: var(--font-body);
+      font-size: clamp(11px, 1.1vw, 13px);
+      font-weight: 500;
+      color: var(--muted);
+      padding: 16px clamp(16px, 2vw, 28px) 16px 0;
+      /* vertical line between label and value */
+      border-right: 1px solid var(--line);
+    }
+
+    .spec-value {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.35vw, 15px);
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text);
+      padding: 16px 0 16px clamp(16px, 2vw, 28px);
+    }
+
+
+    /* ══════════════════════════════════════
+       RESULTS — dark green cards
+    ══════════════════════════════════════ */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: clamp(24px, 3vh, 40px);
+      /* 1px gaps show as thin lines between cards */
+      gap: 1px;
+      background: rgba(26,26,26,0.15);
+      border: 1px solid rgba(26,26,26,0.15);
+    }
+
+    .result-card {
+      background: var(--green);     /* dark green */
+      padding: clamp(20px, 3vw, 36px) clamp(16px, 2.5vw, 28px);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .result-stat {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 60px);
+      letter-spacing: 1px;
+      line-height: 1;
+      color: var(--cream);
+    }
+
+    .result-icon {
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1;
+      color: var(--cream);
+    }
+
+    .result-desc {
+      font-family: var(--font-body);
+      font-size: clamp(10px, 1vw, 12px);
+      font-weight: 300;
+      line-height: 1.65;
+      color: rgba(245,227,200,0.65);
+    }
+
+  </style>
+</head>
+<body>
+
+
+<!-- ════════════════════════
+     NAV
+════════════════════════ -->
+<nav id="nav">
+  <a class="logo" href="index.html">SO</a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════
+     HERO
+     assets/images/waterguard/hero.jpg
+════════════════════════ -->
+<section class="hero">
+  <img class="hero-photo" src="assets/images/waterguard/hero.jpg" alt="WaterGuard team">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-kicker">Product Design · DSGN 384 · Northwestern</p>
+    <h1 class="hero-title">WATERGUARD</h1>
+    <p class="hero-quote">"What would you do if your client said they want to scan a 2,000 lb whale in a CT scanner?"</p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════
+     META STRIP
+     Vertical line between left meta column and right photo
+════════════════════════ -->
+<section class="meta-strip">
+
+  <div class="meta-left">
+    <div class="meta-item">
+      <label>Year</label>
+      <span>Sept 2024 – Mar 2025</span>
+    </div>
+    <div class="meta-item">
+      <label>Role</label>
+      <span>Designer + Fabricator</span>
+    </div>
+    <div class="meta-item">
+      <label>Tags</label>
+      <div class="tags">
+        <span class="tag">Product Design</span>
+        <span class="tag">Fabrication</span>
+        <span class="tag">DFR</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- assets/images/waterguard/device.jpg -->
+  <img class="meta-photo" src="assets/images/waterguard/device.jpg" alt="WaterGuard device">
+
+</section>
+
+<hr class="divider">
+
+
+<!-- ════════════════════════
+     THE PROBLEM
+════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">THE PROBLEM</h2>
+
+  <div class="two-col">
+    <div class="two-col-text">
+      <p class="body-text">
+        CT scanners are built for dry operating rooms, not aquariums. When our client
+        needed to scan live aquatic animals, their team spent 45+ minutes improvising a
+        plastic-and-tape barrier before every procedure – fragile, unrepeatable.
+      </p>
+      <p class="body-text">
+        My team was tasked with designing a clinician-ready replacement.
+      </p>
+    </div>
+    <!-- assets/images/waterguard/problem.jpg -->
+    <img class="side-photo" src="assets/images/waterguard/problem.jpg" alt="CT scanner setup">
+  </div>
+</section>
+
+<hr class="divider">
+
+
+<!-- ════════════════════════
+     ENGINEERING THE SOLUTION
+     Horizontal + vertical lines in spec table
+════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">ENGINEERING THE SOLUTION</h2>
+
+  <p class="body-text">
+    Two subsystems: gantry waterproofing and runoff collection. The harder problem was the
+    gantry — sealed without interfering with the imaging laser, without permanent
+    modifications, fast enough to not stress the animal.
+  </p>
+
+  <div class="spec-table">
+
+    <div class="spec-row">
+      <span class="spec-label">Material</span>
+      <span class="spec-value">10 mil LDPE – saltwater-resistant, heat-weldable, no radiographic artifacts</span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-label">Laser Window</span>
+      <span class="spec-value">0.02" PETG, validated against a control – no measurable beam deflection</span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-label">Geometry</span>
+      <span class="spec-value">12.5° incline routes water passively rearward; shingled face overlaps reduce seam ingress</span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-label">Seam Placement</span>
+      <span class="spec-value">Positioned at the gantry's top (lowest water-contact risk) – driven by FMEA flagging weld separation as highest-likelihood failure mode</span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-label">Attachment</span>
+      <span class="spec-value">3M Dual Lock fasteners – no tools, no permanent modifications, fully repeatable</span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-label">Runoff</span>
+      <span class="spec-value">PVC-framed 7-gallon collection bin mounts on the scanner's rear pillars and travels with it</span>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+
+<!-- ════════════════════════
+     MY ROLE
+════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">MY ROLE</h2>
+
+  <div class="two-col">
+    <div class="two-col-text">
+      <p class="body-text">
+        Built a dimensionally accurate 3D model of the NeuroLogica BodyTom from
+        manufacturer specs. Modeled early design directions and assemblies to evaluate
+        geometry before committing materials.
+      </p>
+      <p class="body-text">
+        Led the physical prototype build. Heat-welded the majority of the final liner,
+        including critical seam sections. Contributed the shingled overlap geometry central
+        to the liner's water-shedding behavior.
+      </p>
+      <p class="body-text">
+        Ran most ideation sessions. Mediated team conflicts. Maintained a DFR focus
+        throughout: every decision traceable to a failure mode, not just a prototype that
+        happened to work.
+      </p>
+    </div>
+    <!-- assets/images/waterguard/role.jpg -->
+    <img class="side-photo-tall" src="assets/images/waterguard/role.jpg" alt="Prototype build">
+  </div>
+</section>
+
+<hr class="divider">
+
+
+<!-- ════════════════════════
+     RESULTS
+     Cards use dark green (#344524) background
+════════════════════════ -->
+<section class="section">
+  <h2 class="section-title">RESULTS</h2>
+
+  <div class="results-grid">
+
+    <div class="result-card">
+      <span class="result-stat">&gt;%90</span>
+      <p class="result-desc">Reduction in setup time<br>45 min → under 3 min</p>
+    </div>
+
+    <div class="result-card">
+      <span class="result-stat">0</span>
+      <p class="result-desc">Water contact with protected components</p>
+    </div>
+
+    <div class="result-card">
+      <span class="result-stat">0</span>
+      <p class="result-desc">Radiographic artifacts — laser integrity maintained</p>
+    </div>
+
+    <div class="result-card">
+      <span class="result-icon">✓</span>
+      <p class="result-desc">Full-scale prototype installed on-site at the aquarium</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════
+     FOOTER
+════════════════════════ -->
+<footer style="border-top:1px solid rgba(26,26,26,0.12);padding:24px clamp(24px,6vw,80px);background:#F5E3C8;">
+  <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:300;color:rgba(26,26,26,0.4);letter-spacing:0.5px;">Selin Orbay</span>
+</footer>
+
+
+<!-- ════════════════════════
+     JAVASCRIPT
+════════════════════════ -->
+<script>
+  const nav  = document.getElementById('nav');
+  const hero = document.querySelector('.hero');
+  function updateNav() {
+    nav.classList.toggle('scrolled', window.scrollY > hero.offsetHeight - 80);
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+</script>
+
+</body>
+</html>
