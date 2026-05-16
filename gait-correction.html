@@ -169,6 +169,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0;
+      align-items: center;
     }
 
     .meta-left {
@@ -213,10 +214,11 @@
       font-family: var(--font-body);
       font-size: 11px;
       font-weight: 400;
-      color: var(--text);
-      border: 1px solid var(--line);
+      color: var(--cream);
+      background: var(--green);
+      border: none;
       padding: 4px 10px;
-      border-radius: 20px;
+      border-radius: 3px;
     }
 
     .video-wrap {
@@ -362,6 +364,49 @@
       letter-spacing: 0.5px;
     }
 
+    /* ── Project nav footer ── */
+    .project-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: clamp(24px,4vh,40px) var(--pad-x);
+      border-top: 1px solid var(--line);
+    }
+    .project-nav a {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .project-nav a:hover { opacity: 0.55; }
+
+    /* ── Back to top ── */
+    .back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 44px;
+      height: 44px;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s, transform 0.25s;
+      z-index: 100;
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .back-to-top:hover { transform: translateY(-3px); }
+
   </style>
 </head>
 <body>
@@ -375,6 +420,7 @@
   <div class="nav-links">
     <a href="about.html">About</a>
     <a href="projects.html">Projects</a>
+    <a href="playground.html">Playground</a>
     <a href="contact.html">Contact</a>
   </div>
 </nav>
@@ -542,11 +588,25 @@
 
 
 <!-- ════════════════════════
+     PROJECT NAV
+════════════════════════ -->
+<nav class="project-nav">
+  <a href="projects.html">← Back to Projects</a>
+  <a href="mapping.html">Next: Mapping an Unknown Maze →</a>
+</nav>
+
+<!-- ════════════════════════
      FOOTER
 ════════════════════════ -->
 <footer>
   <span>Selin Orbay</span>
 </footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 13V5M9 5L4.5 9.5M9 5L13.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
 
 
 <!-- ════════════════════════
@@ -560,6 +620,12 @@
   }
   window.addEventListener('scroll', updateNav, { passive: true });
   updateNav();
+
+  const btt = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+  btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 </script>
 
 </body>

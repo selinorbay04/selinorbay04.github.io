@@ -95,7 +95,7 @@
       inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center 35%;
+      object-position: center center;
       opacity: 0.6;
     }
 
@@ -169,6 +169,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0;
+      align-items: center;
     }
 
     .meta-left {
@@ -216,10 +217,11 @@
       font-family: var(--font-body);
       font-size: 11px;
       font-weight: 400;
-      color: var(--text);
-      border: 1px solid var(--line);
+      color: var(--cream);
+      background: var(--green);
+      border: none;
       padding: 4px 10px;
-      border-radius: 20px;
+      border-radius: 3px;
     }
 
     /* Two stacked videos on the right */
@@ -340,6 +342,57 @@
       letter-spacing: 0.5px;
     }
 
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 5vw, 72px);
+      align-items: start;
+      margin-bottom: clamp(32px, 5vh, 52px);
+    }
+
+    /* ── Project nav footer ── */
+    .project-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: clamp(24px,4vh,40px) var(--pad-x);
+      border-top: 1px solid var(--line);
+    }
+    .project-nav a {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .project-nav a:hover { opacity: 0.55; }
+
+    /* ── Back to top ── */
+    .back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 44px;
+      height: 44px;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s, transform 0.25s;
+      z-index: 100;
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .back-to-top:hover { transform: translateY(-3px); }
+
   </style>
 </head>
 <body>
@@ -353,6 +406,7 @@
   <div class="nav-links">
     <a href="about.html">About</a>
     <a href="projects.html">Projects</a>
+    <a href="playground.html">Playground</a>
     <a href="contact.html">Contact</a>
   </div>
 </nav>
@@ -415,13 +469,10 @@
 
       </div>
 
-      <!-- Right: two stacked videos -->
+      <!-- Right: first video only -->
       <div class="meta-right">
         <div class="video-wrap">
           <iframe src="https://www.youtube.com/embed/n77c9bGH0yg?si=eCFgO_SAKz3bn-__&rel=0" title="Mapping demo 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <div class="video-wrap">
-          <iframe src="https://www.youtube.com/embed/u_Rd4GxzJoA?si=TaJmLGdy_vp9EGWt&rel=0" title="Mapping demo 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
       </div>
 
@@ -435,15 +486,20 @@
   ════════════════════════ -->
   <h2 class="section-title">THE SYSTEM</h2>
 
-  <p class="body-text">
-    Given a hexapod robot and an unknown maze, the task was to have the robot explore, build a map
-    of every corridor it traversed, and navigate back to the start. The system had no prior knowledge
-    of the maze layout. A front-facing sonar sensor provided distance readings that the robot used
-    to detect walls and open passages. Three subsystems ran together: a wandering algorithm for
-    exploration, a dead-reckoning localization scheme to track position, and a real-time mapping
-    layer that recorded the grid as the robot moved through it. Once the robot reached a dead end or
-    had fully explored reachable space, it reversed the recorded path back to the origin.
-  </p>
+  <div class="two-col">
+    <p class="body-text" style="padding-bottom:0;">
+      Given a hexapod robot and an unknown maze, the task was to have the robot explore, build a map
+      of every corridor it traversed, and navigate back to the start. The system had no prior knowledge
+      of the maze layout. A front-facing sonar sensor provided distance readings that the robot used
+      to detect walls and open passages. Three subsystems ran together: a wandering algorithm for
+      exploration, a dead-reckoning localization scheme to track position, and a real-time mapping
+      layer that recorded the grid as the robot moved through it. Once the robot reached a dead end or
+      had fully explored reachable space, it reversed the recorded path back to the origin.
+    </p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/u_Rd4GxzJoA?si=TaJmLGdy_vp9EGWt&rel=0" title="Mapping demo 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </div>
 
   <hr class="divider">
 
@@ -521,11 +577,25 @@
 
 
 <!-- ════════════════════════
+     PROJECT NAV
+════════════════════════ -->
+<nav class="project-nav">
+  <a href="projects.html">← Back to Projects</a>
+  <a href="maze-game.html">Next: Semi-Autonomous Maze Game →</a>
+</nav>
+
+<!-- ════════════════════════
      FOOTER
 ════════════════════════ -->
 <footer>
   <span>Selin Orbay</span>
 </footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 13V5M9 5L4.5 9.5M9 5L13.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
 
 
 <!-- ════════════════════════
@@ -539,6 +609,12 @@
   }
   window.addEventListener('scroll', updateNav, { passive: true });
   updateNav();
+
+  const btt = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+  btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 </script>
 
 </body>

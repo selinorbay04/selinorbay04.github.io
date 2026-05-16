@@ -134,8 +134,8 @@
       inset: 0;
       background: linear-gradient(
         to bottom,
-        transparent 40%,
-        rgba(0,0,0,0.72) 100%
+        transparent 25%,
+        rgba(0,0,0,0.82) 100%
       );
     }
 
@@ -144,16 +144,36 @@
       position: absolute;
       bottom: 0; left: 0; right: 0;
       z-index: 1;
-      padding: 12px 14px;
+      padding: clamp(14px, 2vw, 24px) clamp(14px, 2vw, 24px);
     }
 
-    .card-label span {
+    .card-num {
       font-family: var(--font-body);
-      font-size: clamp(10px, 1.1vw, 13px);
+      font-size: 10px;
       font-weight: 500;
+      letter-spacing: 0.5px;
+      color: rgba(255,255,255,0.55);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .card-name {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.3vw, 16px);
+      font-weight: 700;
       color: #fff;
-      letter-spacing: 0.2px;
-      line-height: 1.4;
+      line-height: 1.25;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .card-meta {
+      font-family: var(--font-body);
+      font-size: clamp(9px, 0.85vw, 11px);
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
       display: block;
     }
 
@@ -214,6 +234,25 @@
       color: #F5E3C8;
     }
 
+    /* Each letter floats independently */
+    @keyframes float-a { 0%,100%{transform:translate(0,0)} 30%{transform:translate(3px,-5px)} 70%{transform:translate(-2px,3px)} }
+    @keyframes float-b { 0%,100%{transform:translate(0,0)} 25%{transform:translate(-4px,-3px)} 65%{transform:translate(3px,4px)} }
+    @keyframes float-c { 0%,100%{transform:translate(0,0)} 40%{transform:translate(2px,-6px)} 80%{transform:translate(-3px,2px)} }
+    @keyframes float-d { 0%,100%{transform:translate(0,0)} 20%{transform:translate(-3px,4px)} 60%{transform:translate(4px,-3px)} }
+    @keyframes float-e { 0%,100%{transform:translate(0,0)} 35%{transform:translate(4px,3px)} 75%{transform:translate(-2px,-5px)} }
+    @keyframes float-f { 0%,100%{transform:translate(0,0)} 45%{transform:translate(-4px,-4px)} 85%{transform:translate(2px,5px)} }
+
+    .pg-letter:nth-child(1) { animation: float-a 3.1s ease-in-out infinite; }
+    .pg-letter:nth-child(2) { animation: float-b 3.6s ease-in-out infinite; }
+    .pg-letter:nth-child(3) { animation: float-c 2.9s ease-in-out infinite; }
+    .pg-letter:nth-child(4) { animation: float-d 3.4s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(1) { animation: float-e 3.2s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(2) { animation: float-f 2.8s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(3) { animation: float-a 3.5s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(4) { animation: float-b 3.0s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(5) { animation: float-c 3.7s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(6) { animation: float-d 3.3s ease-in-out infinite; }
+
   </style>
 </head>
 <body>
@@ -227,6 +266,7 @@
   <div class="nav-links">
     <a href="about.html">About</a>
     <a href="projects.html" class="active">Projects</a>
+    <a href="playground.html">Playground</a>
     <a href="contact.html">Contact</a>
   </div>
 </nav>
@@ -251,7 +291,9 @@
   <a class="project-card" href="hexabot.html">
     <img src="assests/images/projects/hexabot.png" alt="SpiderPi Hexabot">
     <div class="card-label">
-      <span>SpiderPi Hexabot | Q-Learning Gait Correction + Maze Mapping &amp; Navigation</span>
+      <span class="card-num">01</span>
+      <span class="card-name">SpiderPi Hexabot — Gait Correction &amp; Maze Mapping</span>
+      <span class="card-meta">Robotics · Python · Q-Learning · 2025–2026</span>
     </div>
   </a>
 
@@ -259,7 +301,9 @@
   <a class="project-card" href="maze-game.html">
     <img src="assests/images/projects/maze-game.png" alt="Semi-Autonomous Maze Game">
     <div class="card-label">
-      <span>Semi-Autonomous Maze Game</span>
+      <span class="card-num">02</span>
+      <span class="card-name">Semi-Autonomous Maze Game</span>
+      <span class="card-meta">Computer Engineering · Embedded C · 2024</span>
     </div>
   </a>
 
@@ -267,7 +311,9 @@
   <a class="project-card" href="waterguard.html">
     <img src="assests/images/projects/waterguard.png" alt="WaterGuard">
     <div class="card-label">
-      <span>WaterGuard</span>
+      <span class="card-num">03</span>
+      <span class="card-name">WaterGuard — Aquatic CT Scanner Protection</span>
+      <span class="card-meta">Product Design · Fabrication · 2025–2026</span>
     </div>
   </a>
 
@@ -275,7 +321,9 @@
   <a class="project-card" href="vex.html">
     <img src="assests/images/projects/vex.png" alt="VEX Robotics">
     <div class="card-label">
-      <span>VEX Robotics — Team Captain &amp; Programmer</span>
+      <span class="card-num">04</span>
+      <span class="card-name">VEX Robotics — Team Captain &amp; Programmer</span>
+      <span class="card-meta">Robotics · Leadership · 2019–2023</span>
     </div>
   </a>
 
@@ -283,7 +331,9 @@
   <a class="project-card" href="readassist.html">
     <img src="assests/images/projects/readassist.png" alt="ReadAssist">
     <div class="card-label">
-      <span>ReadAssist</span>
+      <span class="card-num">05</span>
+      <span class="card-name">ReadAssist</span>
+      <span class="card-meta">Coming Soon</span>
     </div>
   </a>
 
