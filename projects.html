@@ -127,11 +127,27 @@
       transform: scale(1.05);
     }
 
+    /* Hover darkening overlay */
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.38);
+      opacity: 0;
+      z-index: 1;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
     /* Dark gradient at bottom for label legibility */
     .project-card::after {
       content: '';
       position: absolute;
       inset: 0;
+      z-index: 2;
       background: linear-gradient(
         to bottom,
         transparent 25%,
@@ -143,7 +159,7 @@
     .card-label {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      z-index: 1;
+      z-index: 3;
       padding: clamp(14px, 2vw, 24px) clamp(14px, 2vw, 24px);
     }
 
