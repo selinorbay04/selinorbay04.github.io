@@ -182,10 +182,12 @@
     .phrase-zone {
       position: relative;
       flex: 1;
+      /* Guarantee enough room so the phrase never overlaps the WORK section */
+      min-height: clamp(200px, 38vh, 380px);
       display: flex;
       align-items: flex-start;
       padding: 0 clamp(28px, 5vw, 60px);
-      margin-bottom: clamp(48px, 10vh, 100px);
+      margin-bottom: clamp(32px, 5vh, 60px);
     }
 
     .tagline {
@@ -292,23 +294,50 @@
       display: block;
     }
 
-    /* Lid swings open from bottom edge on hover */
-    .folder-lid {
-      transform-box: fill-box;
-      transform-origin: 50% 100%;
-      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* ── Mac-style folder: front panel tilts toward viewer ── */
+
+    /* Documents peek up from behind */
+    .folder-docs {
+      transition: transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .folder-wrapper:hover .folder-lid {
-      transform: rotate(-52deg);
+    .folder-wrapper:hover .folder-docs {
+      transform: translateY(-14px);
     }
 
-    /* Papers slide up to peek out when folder opens */
-    .folder-papers {
+    /* Front lid tilts forward (toward viewer) using perspective */
+    .folder-front {
       transform-box: fill-box;
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: 50% 100%;
+      transform: perspective(600px) rotateX(0deg);
+      transition: transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .folder-wrapper:hover .folder-papers {
-      transform: translateY(-10px);
+    .folder-wrapper:hover .folder-front {
+      transform: perspective(600px) rotateX(-38deg);
+    }
+
+    /* Orange arrow circle — fades in on hover */
+    .folder-arrow {
+      transform-box: fill-box;
+      transform-origin: 50% 50%;
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    .folder-wrapper:hover .folder-arrow {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* "Or keep scrolling" caption below WORK */
+    .keep-scrolling {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      color: rgba(15,15,15,0.38);
+      text-transform: uppercase;
+      text-align: center;
+      padding: 10px 0 28px;
     }
 
   </style>
@@ -384,14 +413,15 @@
 
     <!-- CTA zone (bottom) — always visible -->
     <div class="cta-zone">
-      <p class="check-out">Check out my...</p>
+      <p class="check-out">Curious?... Check out my</p>
 
       <div class="work-display">
         <span class="work-ghost">W</span>
 
         <!--
           SVG FOLDER — replaces the "O" in WORK
-          Hover: lid opens. Click: goes to projects page.
+          Mac-style: front panel tilts toward viewer on hover.
+          Click: goes to projects page.
         -->
         <div
           class="folder-wrapper"
@@ -399,28 +429,54 @@
           aria-label="Go to Projects"
           onclick="window.location.href='projects.html'"
         >
-          <svg viewBox="0 0 200 158" xmlns="http://www.w3.org/2000/svg">
-            <!-- Back panel (always visible) -->
-            <rect x="2" y="44" width="196" height="112" rx="12" fill="#263a14"/>
-            <!-- Folder tab -->
-            <path d="M2,44 L2,26 Q2,16 12,16 L68,16 Q78,16 82,27 L86,44 Z" fill="#263a14"/>
-            <!-- Papers inside (peek out when lid opens) -->
-            <g class="folder-papers">
-              <rect x="16" y="60" width="168" height="90" rx="5" fill="#344e1a"/>
-              <rect x="30" y="84"  width="90" height="8" rx="4" fill="rgba(245,227,200,0.45)"/>
-              <rect x="30" y="102" width="62" height="8" rx="4" fill="rgba(245,227,200,0.28)"/>
-              <rect x="30" y="120" width="76" height="8" rx="4" fill="rgba(245,227,200,0.15)"/>
+          <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+
+            <!-- ① Back panel of folder (always visible) -->
+            <rect x="4" y="46" width="192" height="110" rx="10" fill="#5a7a30"/>
+
+            <!-- ② Folder tab (top-left bump) -->
+            <path d="M4,46 L4,28 Q4,18 14,18 L70,18 Q80,18 84,29 L88,46 Z" fill="#5a7a30"/>
+
+            <!-- ③ Documents layer — slides up on hover -->
+            <g class="folder-docs">
+              <!-- White paper 1 (back) -->
+              <rect x="28" y="52" width="144" height="100" rx="5" fill="#e8dcc8" opacity="0.85"/>
+              <!-- White paper 2 (front) -->
+              <rect x="20" y="58" width="144" height="100" rx="5" fill="#f0e8d8" opacity="0.95"/>
+              <!-- Lines on front paper -->
+              <rect x="34" y="78"  width="80" height="6" rx="3" fill="rgba(90,90,70,0.30)"/>
+              <rect x="34" y="92"  width="56" height="6" rx="3" fill="rgba(90,90,70,0.20)"/>
+              <rect x="34" y="106" width="68" height="6" rx="3" fill="rgba(90,90,70,0.14)"/>
             </g>
-            <!-- Front lid (full panel — pivots open from bottom) -->
-            <g class="folder-lid">
-              <rect x="2" y="44" width="196" height="112" rx="12" fill="#4a6e25"/>
-              <rect x="2" y="44" width="196" height="16" rx="7 7 0 0" fill="#5a8a2e"/>
+
+            <!-- ④ Front lid of folder — tilts toward viewer on hover -->
+            <g class="folder-front">
+              <rect x="4" y="46" width="192" height="110" rx="10" fill="#7aaa3c"/>
+              <!-- Subtle highlight strip at top of lid -->
+              <rect x="4" y="46" width="192" height="18" rx="10" fill="#8cc040" opacity="0.7"/>
             </g>
+
+            <!-- ⑤ Orange arrow circle — appears on hover -->
+            <!-- Outer g holds the position; inner g holds the CSS scale animation -->
+            <g transform="translate(100, 101)">
+              <g class="folder-arrow">
+                <circle cx="0" cy="0" r="22" fill="#F97316"/>
+                <!-- Arrow pointing right -->
+                <polyline points="-7,-5 2,0 -7,5"
+                  fill="none" stroke="#fff" stroke-width="2.8"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="-10" y1="0" x2="2" y2="0"
+                  stroke="#fff" stroke-width="2.8" stroke-linecap="round"/>
+              </g>
+            </g>
+
           </svg>
         </div>
 
         <span class="work-ghost">RK</span>
       </div>
+
+      <p class="keep-scrolling">Or keep scrolling</p>
     </div>
 
   </div>
