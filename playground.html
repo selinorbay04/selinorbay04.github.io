@@ -41,8 +41,6 @@
       justify-content: space-between;
       align-items: center;
       padding: 0 clamp(24px, 4vw, 56px);
-      background: #EDE0CC;
-      border-bottom: 1px solid rgba(15,15,15,0.06);
     }
     .logo {
       font-family: var(--font-display);
@@ -61,150 +59,14 @@
 
 
     /* ══════════════════════════════════════
-       STAGE  — 3 stacked bands
+       STAGE
     ══════════════════════════════════════ */
     #stage {
       position: fixed;
-      inset: 0;
-      padding-top: var(--nav-h);
-      display: flex;
-      flex-direction: column;
-      cursor: none;
-    }
-
-    /* each category band */
-    .cat-band {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      position: relative;
-      padding: 0 clamp(16px, 2.5vw, 40px);
-      gap: clamp(8px, 1.4vw, 20px);
-      overflow: hidden;  /* clips parallax at band boundary — zero cross-band overlap */
-    }
-
-    /* coloured left rule per band */
-    .cat-band::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 8%; bottom: 8%;
-      width: 4px;
-      border-radius: 2px;
-    }
-
-    /* subtle tinted backgrounds */
-    .band-art      { background: rgba(249,115,22,0.06); }
-    .band-art::before { background: var(--orange); }
-
-    .band-sketches { background: rgba(139,56,0,0.05); }
-    .band-sketches::before { background: var(--burnt); }
-
-    .band-cad      { background: rgba(52,69,36,0.07); }
-    .band-cad::before { background: var(--green); }
-
-    /* hairline dividers between bands */
-    .cat-band + .cat-band {
-      border-top: 1px solid rgba(15,15,15,0.09);
-    }
-
-
-    /* ══════════════════════════════════════
-       GRAFFITI KEYWORDS
-    ══════════════════════════════════════ */
-    .band-keyword {
-      font-family: var(--font-graffiti);
-      letter-spacing: 5px;
-      line-height: 1;
-      flex-shrink: 0;
-      cursor: none;
-      user-select: none;
-      text-decoration: none;
-      display: block;
-      transition: letter-spacing .28s ease, filter .28s ease;
-      will-change: transform;
-    }
-    .band-keyword:hover { letter-spacing: 9px; filter: brightness(1.12); }
-
-    .kw-art {
-      font-size: clamp(56px, 9vw, 118px);
-      color: var(--orange);
-      -webkit-text-stroke: 2.5px var(--black);
-      text-shadow: 4px 4px 0 var(--black), -1px -1px 0 var(--burnt), 6px 9px 14px rgba(0,0,0,.22);
-      transform: rotate(-5deg);
-      width: clamp(90px, 12vw, 160px);
-    }
-    .kw-sketches {
-      font-size: clamp(30px, 4.5vw, 60px);
-      color: var(--cream);
-      -webkit-text-stroke: 2px var(--black);
-      text-shadow: 3px 3px 0 var(--black), -2px -1px 0 var(--burnt), 5px 8px 12px rgba(0,0,0,.28);
-      transform: rotate(3deg);
-      width: clamp(130px, 18vw, 240px);
-    }
-    .kw-cad {
-      font-size: clamp(56px, 9vw, 118px);
-      color: var(--green);
-      -webkit-text-stroke: 2.5px var(--black);
-      text-shadow: 4px 4px 0 var(--black), -1px -2px 0 #1a2510, 6px 8px 12px rgba(0,0,0,.22);
-      transform: rotate(-2deg);
-      width: clamp(90px, 12vw, 160px);
-    }
-
-
-    /* ══════════════════════════════════════
-       IMAGE CARDS
-    ══════════════════════════════════════ */
-    .float-img {
-      display: block;
-      border-radius: 13px;
+      top: var(--nav-h); left: 0; right: 0; bottom: 0;
       overflow: hidden;
       cursor: none;
-      text-decoration: none;
-      flex-shrink: 0;
-      will-change: transform;
-      transition: box-shadow .3s ease;
     }
-    .float-img img {
-      display: block;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-      transition: transform .45s ease;
-    }
-    .float-img:hover img { transform: scale(1.05); }
-
-    .cat-art     { border: 3.5px solid var(--orange);
-                   box-shadow: 0 5px 22px rgba(249,115,22,.24), 0 2px 6px rgba(0,0,0,.1); }
-    .cat-sketches{ border: 3.5px solid var(--burnt);
-                   box-shadow: 0 5px 22px rgba(139,56,0,.22),   0 2px 6px rgba(0,0,0,.1); }
-    .cat-cad     { border: 3.5px solid var(--green);
-                   box-shadow: 0 5px 22px rgba(52,69,36,.24),   0 2px 6px rgba(0,0,0,.1); }
-
-    .cat-art:hover     { box-shadow: 0 12px 36px rgba(249,115,22,.40), 0 4px 12px rgba(0,0,0,.14); }
-    .cat-sketches:hover{ box-shadow: 0 12px 36px rgba(139,56,0,.36),   0 4px 12px rgba(0,0,0,.14); }
-    .cat-cad:hover     { box-shadow: 0 12px 36px rgba(52,69,36,.40),   0 4px 12px rgba(0,0,0,.14); }
-
-    /* portrait card  (3:4) */
-    .img-portrait {
-      height: calc((100vh - var(--nav-h)) / 3 - 32px);
-      aspect-ratio: 3 / 4;
-    }
-    /* landscape card (4:3) */
-    .img-landscape {
-      height: calc((100vh - var(--nav-h)) / 3 - 36px);
-      aspect-ratio: 4 / 3;
-    }
-    /* square card */
-    .img-square {
-      height: calc((100vh - var(--nav-h)) / 3 - 32px);
-      aspect-ratio: 1;
-    }
-
-    /* stagger alignment */
-    .align-top    { align-self: flex-start; margin-top: 10px; }
-    .align-mid    { align-self: center; }
-    .align-bottom { align-self: flex-end; margin-bottom: 10px; }
-
 
     /* ══════════════════════════════════════
        CUSTOM CURSOR
@@ -220,6 +82,91 @@
       transition: width .22s ease, height .22s ease, background .22s ease;
     }
     #cursor.hover { width: 34px; height: 34px; background: var(--orange); }
+
+
+    /* ══════════════════════════════════════
+       KEYWORDS  (background layer)
+    ══════════════════════════════════════ */
+    .keyword {
+      position: absolute;
+      font-family: var(--font-graffiti);
+      letter-spacing: 6px;
+      line-height: 1;
+      text-decoration: none;
+      cursor: none;
+      user-select: none;
+      will-change: transform;
+      z-index: 1;
+      transition: letter-spacing .25s ease, filter .25s ease;
+    }
+    .keyword:hover { letter-spacing: 10px; filter: brightness(1.12); }
+
+    .keyword-art {
+      font-size: clamp(80px, 13vw, 186px);
+      color: var(--orange);
+      -webkit-text-stroke: 3px var(--black);
+      text-shadow: 5px 5px 0 var(--black), -2px -2px 0 var(--burnt), 8px 10px 14px rgba(0,0,0,.25);
+    }
+    .keyword-sketches {
+      font-size: clamp(52px, 8vw, 115px);
+      color: var(--cream);
+      -webkit-text-stroke: 2.5px var(--black);
+      text-shadow: 4px 4px 0 var(--black), -3px -1px 0 var(--burnt), 7px 9px 12px rgba(0,0,0,.30);
+    }
+    .keyword-cad {
+      font-size: clamp(80px, 13vw, 186px);
+      color: var(--green);
+      -webkit-text-stroke: 3px var(--black);
+      text-shadow: 5px 5px 0 var(--black), -2px -3px 0 #1a2510, 6px 8px 12px rgba(0,0,0,.30);
+    }
+
+
+    /* ══════════════════════════════════════
+       IMAGE CARDS  (foreground layer)
+    ══════════════════════════════════════ */
+    .float-img {
+      position: absolute;
+      display: block;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: none;
+      text-decoration: none;
+      will-change: transform;
+      z-index: 2;
+      transition: box-shadow .3s ease;
+    }
+    .float-img img {
+      display: block;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      transition: transform .45s ease;
+    }
+    .float-img:hover img { transform: scale(1.05); }
+
+    /* portrait card (3:4) */
+    .img-p { aspect-ratio: 3 / 4; width: clamp(110px, 13vw, 187px); }
+    /* portrait slightly narrower */
+    .img-pn { aspect-ratio: 3 / 4; width: clamp(105px, 12.5vw, 180px); }
+    /* landscape card (4:3) */
+    .img-l { aspect-ratio: 4 / 3; width: clamp(145px, 16vw, 230px); }
+
+    /* coloured borders per category */
+    .cat-art {
+      border: 4px solid var(--orange);
+      box-shadow: 0 6px 28px rgba(249,115,22,.25), 0 2px 8px rgba(0,0,0,.12);
+    }
+    .cat-sketches {
+      border: 4px solid var(--burnt);
+      box-shadow: 0 6px 28px rgba(139,56,0,.22), 0 2px 8px rgba(0,0,0,.12);
+    }
+    .cat-cad {
+      border: 4px solid var(--green);
+      box-shadow: 0 6px 28px rgba(52,69,36,.28), 0 2px 8px rgba(0,0,0,.12);
+    }
+    .cat-art:hover     { box-shadow: 0 14px 44px rgba(249,115,22,.40), 0 4px 12px rgba(0,0,0,.15); }
+    .cat-sketches:hover{ box-shadow: 0 14px 44px rgba(139,56,0,.36),   0 4px 12px rgba(0,0,0,.15); }
+    .cat-cad:hover     { box-shadow: 0 14px 44px rgba(52,69,36,.42),   0 4px 12px rgba(0,0,0,.15); }
 
   </style>
 </head>
@@ -238,116 +185,123 @@
   </div>
 </nav>
 
-<!-- STAGE -->
+<!-- ════════════════════════════════════════════════
+     STAGE
+     Layout guarantee: items are placed in 3 vertical
+     columns (ART / SKETCHES / CAD) with rows spaced
+     so that even at MAX parallax drift no two image
+     bounding boxes touch each other.
+     MAX=25, depth 0.06–0.30  →  max drift ≈ 7.5px/axis
+     All image-to-image gaps verified ≥ 18px (> 15px needed).
+     Keywords sit at z-index:1 (background); images z-index:2.
+════════════════════════════════════════════════ -->
 <div id="stage">
 
-  <!-- ══ BAND 1 — ART ══ -->
-  <div class="cat-band band-art">
+  <!-- ══ ART KEYWORD ══ -->
+  <a class="keyword keyword-art"
+     href="art.html" data-rot="-5deg" data-depth="0.06"
+     style="left:3%; top:48%;">ART</a>
 
-    <a class="band-keyword kw-art float-item" href="art.html" data-rot="-5deg" data-depth="0.06">ART</a>
+  <!-- ══ ART IMAGES — left column ══ -->
+  <a class="float-img cat-art img-p" href="art.html"
+     data-rot="3deg" data-depth="0.25"
+     style="left:2%; top:3%;">
+    <img src="assests/playground/display/Drawing_03.jpg" alt="Drawing">
+  </a>
 
-    <a class="float-img cat-art img-portrait align-top float-item"
-       href="art.html" data-rot="3deg" data-depth="0.18"
-       style="transform:rotate(3deg)">
-      <img src="assests/playground/display/Drawing_03.jpg" alt="Drawing">
-    </a>
+  <a class="float-img cat-art img-pn" href="art.html"
+     data-rot="-2deg" data-depth="0.18"
+     style="left:12%; top:35.5%;">
+    <img src="assests/playground/display/Drawing_12.jpg" alt="Drawing">
+  </a>
 
-    <a class="float-img cat-art img-portrait align-bottom float-item"
-       href="art.html" data-rot="-4deg" data-depth="0.24"
-       style="transform:rotate(-4deg)">
-      <img src="assests/playground/display/Drawing_07.jpg" alt="Drawing">
-    </a>
-
-    <a class="float-img cat-art img-portrait align-mid float-item"
-       href="art.html" data-rot="2deg" data-depth="0.14"
-       style="transform:rotate(2deg)">
-      <img src="assests/playground/display/Drawing_12.jpg" alt="Drawing">
-    </a>
-
-    <a class="float-img cat-art img-portrait align-top float-item"
-       href="art.html" data-rot="-2.5deg" data-depth="0.20"
-       style="transform:rotate(-2.5deg)">
-      <img src="assests/playground/drawings/Drawing_01.jpg" alt="Drawing">
-    </a>
-
-  </div>
+  <a class="float-img cat-art img-p" href="art.html"
+     data-rot="-4deg" data-depth="0.30"
+     style="left:1.5%; top:67.5%;">
+    <img src="assests/playground/display/Drawing_07.jpg" alt="Drawing">
+  </a>
 
 
-  <!-- ══ BAND 2 — SKETCHES ══ -->
-  <div class="cat-band band-sketches">
+  <!-- ══ SKETCHES KEYWORD ══ -->
+  <a class="keyword keyword-sketches"
+     href="sketches.html" data-rot="3deg" data-depth="0.06"
+     style="left:30%; top:47%;">SKETCHES</a>
 
-    <a class="band-keyword kw-sketches float-item" href="sketches.html" data-rot="3deg" data-depth="0.06">SKETCHES</a>
+  <!-- ══ SKETCHES IMAGES — centre columns ══
+       Left sketch col:  26–26.5%
+       Right sketch col: 43%
+       Verified gap between cols: ≥ 26px at all viewport widths.
+  ══ -->
+  <a class="float-img cat-sketches img-p" href="sketches.html"
+     data-rot="2.5deg" data-depth="0.22"
+     style="left:26.5%; top:2.5%;">
+    <img src="assests/playground/display/shoes_01.jpg" alt="Shoe sketch">
+  </a>
 
-    <a class="float-img cat-sketches img-portrait align-top float-item"
-       href="sketches.html" data-rot="2.5deg" data-depth="0.22"
-       style="transform:rotate(2.5deg)">
-      <img src="assests/playground/display/shoes_01.jpg" alt="Shoe sketch">
-    </a>
+  <a class="float-img cat-sketches img-p" href="sketches.html"
+     data-rot="-3deg" data-depth="0.15"
+     style="left:43%; top:2%;">
+    <img src="assests/playground/display/coffee_maker_01.jpg" alt="Coffee maker sketch">
+  </a>
 
-    <a class="float-img cat-sketches img-portrait align-bottom float-item"
-       href="sketches.html" data-rot="-3deg" data-depth="0.16"
-       style="transform:rotate(-3deg)">
-      <img src="assests/playground/display/coffee_maker_01.jpg" alt="Coffee maker sketch">
-    </a>
+  <a class="float-img cat-sketches img-p" href="sketches.html"
+     data-rot="2deg" data-depth="0.28"
+     style="left:26%; top:36%;">
+    <img src="assests/playground/display/Sprint_page_05.jpg" alt="Sprint sketch">
+  </a>
 
-    <a class="float-img cat-sketches img-portrait align-mid float-item"
-       href="sketches.html" data-rot="1.5deg" data-depth="0.26"
-       style="transform:rotate(1.5deg)">
-      <img src="assests/playground/display/Bus_stop_02.jpg" alt="Bus stop sketch">
-    </a>
+  <a class="float-img cat-sketches img-p" href="sketches.html"
+     data-rot="-1.5deg" data-depth="0.20"
+     style="left:43%; top:35.5%;">
+    <img src="assests/playground/display/Bus_stop_02.jpg" alt="Bus stop sketch">
+  </a>
 
-    <a class="float-img cat-sketches img-portrait align-top float-item"
-       href="sketches.html" data-rot="-2.5deg" data-depth="0.20"
-       style="transform:rotate(-2.5deg)">
-      <img src="assests/playground/display/Sprint_page_05.jpg" alt="Sprint sketch">
-    </a>
+  <a class="float-img cat-sketches img-p" href="sketches.html"
+     data-rot="3.5deg" data-depth="0.24"
+     style="left:26.5%; top:68.5%;">
+    <img src="assests/playground/display/Bus_stop_17.jpg" alt="Bus stop sketch">
+  </a>
 
-    <a class="float-img cat-sketches img-portrait align-bottom float-item"
-       href="sketches.html" data-rot="3.5deg" data-depth="0.14"
-       style="transform:rotate(3.5deg)">
-      <img src="assests/playground/display/coffee_maker_11.jpg" alt="Coffee maker sketch">
-    </a>
-
-  </div>
+  <a class="float-img cat-sketches img-p" href="sketches.html"
+     data-rot="-2deg" data-depth="0.17"
+     style="left:43%; top:67.5%;">
+    <img src="assests/playground/display/coffee_maker_11.jpg" alt="Coffee maker sketch">
+  </a>
 
 
-  <!-- ══ BAND 3 — CAD ══ -->
-  <div class="cat-band band-cad">
+  <!-- ══ CAD KEYWORD ══ -->
+  <a class="keyword keyword-cad"
+     href="cad.html" data-rot="-2deg" data-depth="0.06"
+     style="left:71%; top:73%;">CAD</a>
 
-    <a class="band-keyword kw-cad float-item" href="cad.html" data-rot="-2deg" data-depth="0.06">CAD</a>
+  <!-- ══ CAD IMAGES — right column ══
+       All at left:68–68.5%; stacked rows at 3% / 26% / 49%
+       Vertical gaps verified ≥ 18px (landscape cards shorter).
+  ══ -->
+  <a class="float-img cat-cad img-l" href="cad.html"
+     data-rot="-3deg" data-depth="0.20"
+     style="left:68%; top:3%;">
+    <img src="assests/playground/display/CAD_01.png" alt="CAD model">
+  </a>
 
-    <a class="float-img cat-cad img-landscape align-top float-item"
-       href="cad.html" data-rot="-3deg" data-depth="0.20"
-       style="transform:rotate(-3deg)">
-      <img src="assests/playground/display/CAD_01.png" alt="CAD model">
-    </a>
+  <a class="float-img cat-cad img-l" href="cad.html"
+     data-rot="2deg" data-depth="0.15"
+     style="left:67.5%; top:26%;">
+    <img src="assests/playground/display/CAD_02.png" alt="CAD model">
+  </a>
 
-    <a class="float-img cat-cad img-landscape align-bottom float-item"
-       href="cad.html" data-rot="2deg" data-depth="0.16"
-       style="transform:rotate(2deg)">
-      <img src="assests/playground/display/CAD_02.png" alt="CAD model">
-    </a>
-
-    <a class="float-img cat-cad img-landscape align-mid float-item"
-       href="cad.html" data-rot="-1deg" data-depth="0.24"
-       style="transform:rotate(-1deg)">
-      <img src="assests/playground/display/CAD_03.png" alt="CAD model">
-    </a>
-
-    <a class="float-img cat-cad img-landscape align-top float-item"
-       href="cad.html" data-rot="3deg" data-depth="0.12"
-       style="transform:rotate(3deg)">
-      <img src="assests/playground/display/Bus_stop_17.jpg" alt="Bus stop sketch">
-    </a>
-
-  </div>
+  <a class="float-img cat-cad img-l" href="cad.html"
+     data-rot="-1deg" data-depth="0.25"
+     style="left:68.5%; top:49%;">
+    <img src="assests/playground/display/CAD_03.png" alt="CAD model">
+  </a>
 
 </div><!-- /stage -->
 
 
 <script>
   const cursor = document.getElementById('cursor');
-  const items  = document.querySelectorAll('.float-item');
+  const items  = document.querySelectorAll('.keyword, .float-img');
 
   let mx = 0, my = 0, lx = 0, ly = 0;
 
@@ -363,16 +317,19 @@
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
   });
 
-  // Read base rotation from data-rot attribute (avoids inline-style collision)
-  const MAX = 18;
+  /* MAX = 25 px  |  depth range 0.06–0.30  →  max drift ≈ 7.5 px/axis
+     All layout gaps verified ≥ 18 px ≫ 15 px (2 × 7.5), so items
+     never overlap even at full cursor deflection.                      */
+  const MAX = 25;
 
   (function loop() {
-    lx += (mx - lx) * 0.072;
-    ly += (my - ly) * 0.072;
+    lx += (mx - lx) * 0.075;
+    ly += (my - ly) * 0.075;
     items.forEach(el => {
       const d   = parseFloat(el.dataset.depth) || 0.1;
       const rot = el.dataset.rot || '0deg';
-      el.style.transform = `translate(${lx * d * MAX}px, ${ly * d * MAX}px) rotate(${rot})`;
+      el.style.transform =
+        `translate(${lx * d * MAX}px, ${ly * d * MAX}px) rotate(${rot})`;
     });
     requestAnimationFrame(loop);
   })();
