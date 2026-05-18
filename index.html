@@ -182,12 +182,13 @@
     .phrase-zone {
       position: relative;
       flex: 1;
-      /* Guarantee enough room so the phrase never overlaps the WORK section */
-      min-height: clamp(200px, 38vh, 380px);
+      /* Taglines are position:absolute so they don't need much layout height —
+         just enough so they don't visually bleed into the WORK section */
+      min-height: clamp(180px, 22vh, 260px);
       display: flex;
       align-items: flex-start;
       padding: 0 clamp(28px, 5vw, 60px);
-      margin-bottom: clamp(32px, 5vh, 60px);
+      margin-bottom: clamp(16px, 2vh, 32px);
     }
 
     .tagline {
@@ -337,7 +338,7 @@
       color: rgba(15,15,15,0.38);
       text-transform: uppercase;
       text-align: center;
-      padding: 10px 0 28px;
+      padding: 6px 0 12px;
     }
 
   </style>
