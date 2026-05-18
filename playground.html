@@ -57,7 +57,6 @@
     .nav-links a:hover { opacity: .45; }
     .nav-links a.active { text-decoration: underline; text-underline-offset: 4px; }
 
-
     /* ══════════════════════════════════════
        STAGE
     ══════════════════════════════════════ */
@@ -83,14 +82,44 @@
     }
     #cursor.hover { width: 34px; height: 34px; background: var(--orange); }
 
-
     /* ══════════════════════════════════════
-       KEYWORDS  (background layer)
+       ALL ITEMS  (vw-based sizing + positioning)
+
+       LAYOUT GUARANTEE
+       ─────────────────────────────────────
+       Everything — positions AND sizes — is
+       expressed in vw so all gaps scale together.
+
+       Portrait card:  width 11.25vw, height 15vw (3:4)
+       CAD card:       width 14vw,    height 10.5vw (4:3)
+
+       Columns (left edges):
+         ART  col-A  :  2vw
+         ART  col-B  : 13vw       (Drawing_12 only)
+         SKT  col-A  : 27vw
+         SKT  col-B  : 41.5vw
+         CAD  col    : 68vw
+
+       Rows (top edges, portrait):
+         Row-1 :  1.5vw          bottom = 16.5vw
+         Row-2 : 19.5vw  gap 3vw bottom = 34.5vw
+         Row-3 : 37.5vw  gap 3vw bottom = 52.5vw
+
+       CAD rows (landscape):
+         Row-1 :  1.5vw          bottom = 12vw
+         Row-2 : 14.2vw  gap 2.2vw bottom = 24.7vw
+         Row-3 : 26.9vw  gap 2.2vw bottom = 37.4vw
+
+       Minimum image-to-image gap: 2.2vw ≥ 31.7px @ 1440px
+       MAX parallax = 0.014 × innerWidth  →  max drift = 0.42vw @ any width
+       0.42vw × 2 = 0.84vw  ≪  2.2vw gap  ✓  no overlap at any viewport
     ══════════════════════════════════════ */
+
+    /* Keywords — background layer */
     .keyword {
       position: absolute;
       font-family: var(--font-graffiti);
-      letter-spacing: 6px;
+      letter-spacing: 5px;
       line-height: 1;
       text-decoration: none;
       cursor: none;
@@ -99,31 +128,28 @@
       z-index: 1;
       transition: letter-spacing .25s ease, filter .25s ease;
     }
-    .keyword:hover { letter-spacing: 10px; filter: brightness(1.12); }
+    .keyword:hover { letter-spacing: 9px; filter: brightness(1.12); }
 
     .keyword-art {
-      font-size: clamp(80px, 13vw, 186px);
+      font-size: clamp(72px, 12vw, 172px);
       color: var(--orange);
       -webkit-text-stroke: 3px var(--black);
       text-shadow: 5px 5px 0 var(--black), -2px -2px 0 var(--burnt), 8px 10px 14px rgba(0,0,0,.25);
     }
     .keyword-sketches {
-      font-size: clamp(52px, 8vw, 115px);
+      font-size: clamp(44px, 7.2vw, 104px);
       color: var(--cream);
       -webkit-text-stroke: 2.5px var(--black);
       text-shadow: 4px 4px 0 var(--black), -3px -1px 0 var(--burnt), 7px 9px 12px rgba(0,0,0,.30);
     }
     .keyword-cad {
-      font-size: clamp(80px, 13vw, 186px);
+      font-size: clamp(72px, 12vw, 172px);
       color: var(--green);
       -webkit-text-stroke: 3px var(--black);
       text-shadow: 5px 5px 0 var(--black), -2px -3px 0 #1a2510, 6px 8px 12px rgba(0,0,0,.30);
     }
 
-
-    /* ══════════════════════════════════════
-       IMAGE CARDS  (foreground layer)
-    ══════════════════════════════════════ */
+    /* Image cards — foreground layer */
     .float-img {
       position: absolute;
       display: block;
@@ -144,24 +170,22 @@
     }
     .float-img:hover img { transform: scale(1.05); }
 
-    /* portrait card (3:4) */
-    .img-p { aspect-ratio: 3 / 4; width: clamp(110px, 13vw, 187px); }
-    /* portrait slightly narrower */
-    .img-pn { aspect-ratio: 3 / 4; width: clamp(105px, 12.5vw, 180px); }
-    /* landscape card (4:3) */
-    .img-l { aspect-ratio: 4 / 3; width: clamp(145px, 16vw, 230px); }
+    /* portrait  3:4 — width + height both in vw so gap math holds */
+    .img-p { width: 11.25vw; height: 15vw; }
+    /* landscape 4:3 */
+    .img-l { width: 14vw;    height: 10.5vw; }
 
-    /* coloured borders per category */
+    /* coloured borders */
     .cat-art {
-      border: 4px solid var(--orange);
+      border: 3.5px solid var(--orange);
       box-shadow: 0 6px 28px rgba(249,115,22,.25), 0 2px 8px rgba(0,0,0,.12);
     }
     .cat-sketches {
-      border: 4px solid var(--burnt);
+      border: 3.5px solid var(--burnt);
       box-shadow: 0 6px 28px rgba(139,56,0,.22), 0 2px 8px rgba(0,0,0,.12);
     }
     .cat-cad {
-      border: 4px solid var(--green);
+      border: 3.5px solid var(--green);
       box-shadow: 0 6px 28px rgba(52,69,36,.28), 0 2px 8px rgba(0,0,0,.12);
     }
     .cat-art:hover     { box-shadow: 0 14px 44px rgba(249,115,22,.40), 0 4px 12px rgba(0,0,0,.15); }
@@ -185,114 +209,113 @@
   </div>
 </nav>
 
-<!-- ════════════════════════════════════════════════
-     STAGE
-     Layout guarantee: items are placed in 3 vertical
-     columns (ART / SKETCHES / CAD) with rows spaced
-     so that even at MAX parallax drift no two image
-     bounding boxes touch each other.
-     MAX=25, depth 0.06–0.30  →  max drift ≈ 7.5px/axis
-     All image-to-image gaps verified ≥ 18px (> 15px needed).
-     Keywords sit at z-index:1 (background); images z-index:2.
-════════════════════════════════════════════════ -->
+<!--
+  STAGE LAYOUT  (all positions in vw — see CSS comment for proof)
+
+  ART zone   x: 2–24.25vw     ← col-A 2vw, col-B 13vw
+  SKETCH zone x: 27–52.75vw   ← col-A 27vw, col-B 41.5vw
+  CAD zone   x: 68–82vw
+
+  Row tops (portrait): 1.5vw / 19.5vw / 37.5vw
+  Row tops (CAD land): 1.5vw / 14.2vw / 26.9vw
+  Keywords: z-index 1 (behind images); may visually overlap images — intentional.
+-->
 <div id="stage">
 
-  <!-- ══ ART KEYWORD ══ -->
+  <!-- ══ ART keyword ══ -->
   <a class="keyword keyword-art"
-     href="art.html" data-rot="-5deg" data-depth="0.06"
-     style="left:3%; top:48%;">ART</a>
+     href="art.html"
+     data-rot="-5deg" data-depth="0.06"
+     style="left:3vw; top:35.5vw;">ART</a>
 
-  <!-- ══ ART IMAGES — left column ══ -->
-  <a class="float-img cat-art img-p" href="art.html"
+  <!-- ART col-A, rows 1 & 3 -->
+  <a class="float-img img-p cat-art" href="art.html"
      data-rot="3deg" data-depth="0.25"
-     style="left:2%; top:3%;">
+     style="left:2vw; top:1.5vw;">
     <img src="assests/playground/display/Drawing_03.jpg" alt="Drawing">
   </a>
 
-  <a class="float-img cat-art img-pn" href="art.html"
-     data-rot="-2deg" data-depth="0.18"
-     style="left:12%; top:35.5%;">
-    <img src="assests/playground/display/Drawing_12.jpg" alt="Drawing">
-  </a>
-
-  <a class="float-img cat-art img-p" href="art.html"
+  <a class="float-img img-p cat-art" href="art.html"
      data-rot="-4deg" data-depth="0.30"
-     style="left:1.5%; top:67.5%;">
+     style="left:2vw; top:37.5vw;">
     <img src="assests/playground/display/Drawing_07.jpg" alt="Drawing">
   </a>
 
+  <!-- ART col-B, row 2 -->
+  <a class="float-img img-p cat-art" href="art.html"
+     data-rot="-2deg" data-depth="0.18"
+     style="left:13vw; top:19.5vw;">
+    <img src="assests/playground/display/Drawing_12.jpg" alt="Drawing">
+  </a>
 
-  <!-- ══ SKETCHES KEYWORD ══ -->
+
+  <!-- ══ SKETCHES keyword ══ -->
   <a class="keyword keyword-sketches"
-     href="sketches.html" data-rot="3deg" data-depth="0.06"
-     style="left:30%; top:47%;">SKETCHES</a>
+     href="sketches.html"
+     data-rot="3deg" data-depth="0.06"
+     style="left:29vw; top:34vw;">SKETCHES</a>
 
-  <!-- ══ SKETCHES IMAGES — centre columns ══
-       Left sketch col:  26–26.5%
-       Right sketch col: 43%
-       Verified gap between cols: ≥ 26px at all viewport widths.
-  ══ -->
-  <a class="float-img cat-sketches img-p" href="sketches.html"
+  <!-- SKETCH col-A: rows 1, 2, 3 -->
+  <a class="float-img img-p cat-sketches" href="sketches.html"
      data-rot="2.5deg" data-depth="0.22"
-     style="left:26.5%; top:2.5%;">
+     style="left:27vw; top:1.5vw;">
     <img src="assests/playground/display/shoes_01.jpg" alt="Shoe sketch">
   </a>
 
-  <a class="float-img cat-sketches img-p" href="sketches.html"
-     data-rot="-3deg" data-depth="0.15"
-     style="left:43%; top:2%;">
-    <img src="assests/playground/display/coffee_maker_01.jpg" alt="Coffee maker sketch">
-  </a>
-
-  <a class="float-img cat-sketches img-p" href="sketches.html"
+  <a class="float-img img-p cat-sketches" href="sketches.html"
      data-rot="2deg" data-depth="0.28"
-     style="left:26%; top:36%;">
+     style="left:27vw; top:19.5vw;">
     <img src="assests/playground/display/Sprint_page_05.jpg" alt="Sprint sketch">
   </a>
 
-  <a class="float-img cat-sketches img-p" href="sketches.html"
-     data-rot="-1.5deg" data-depth="0.20"
-     style="left:43%; top:35.5%;">
-    <img src="assests/playground/display/Bus_stop_02.jpg" alt="Bus stop sketch">
-  </a>
-
-  <a class="float-img cat-sketches img-p" href="sketches.html"
+  <a class="float-img img-p cat-sketches" href="sketches.html"
      data-rot="3.5deg" data-depth="0.24"
-     style="left:26.5%; top:68.5%;">
+     style="left:27vw; top:37.5vw;">
     <img src="assests/playground/display/Bus_stop_17.jpg" alt="Bus stop sketch">
   </a>
 
-  <a class="float-img cat-sketches img-p" href="sketches.html"
+  <!-- SKETCH col-B: rows 1, 2, 3 -->
+  <a class="float-img img-p cat-sketches" href="sketches.html"
+     data-rot="-3deg" data-depth="0.15"
+     style="left:41.5vw; top:1.5vw;">
+    <img src="assests/playground/display/coffee_maker_01.jpg" alt="Coffee maker sketch">
+  </a>
+
+  <a class="float-img img-p cat-sketches" href="sketches.html"
+     data-rot="-1.5deg" data-depth="0.20"
+     style="left:41.5vw; top:19.5vw;">
+    <img src="assests/playground/display/Bus_stop_02.jpg" alt="Bus stop sketch">
+  </a>
+
+  <a class="float-img img-p cat-sketches" href="sketches.html"
      data-rot="-2deg" data-depth="0.17"
-     style="left:43%; top:67.5%;">
+     style="left:41.5vw; top:37.5vw;">
     <img src="assests/playground/display/coffee_maker_11.jpg" alt="Coffee maker sketch">
   </a>
 
 
-  <!-- ══ CAD KEYWORD ══ -->
+  <!-- ══ CAD keyword ══ -->
   <a class="keyword keyword-cad"
-     href="cad.html" data-rot="-2deg" data-depth="0.06"
-     style="left:71%; top:73%;">CAD</a>
+     href="cad.html"
+     data-rot="-2deg" data-depth="0.06"
+     style="left:71vw; top:40vw;">CAD</a>
 
-  <!-- ══ CAD IMAGES — right column ══
-       All at left:68–68.5%; stacked rows at 3% / 26% / 49%
-       Vertical gaps verified ≥ 18px (landscape cards shorter).
-  ══ -->
-  <a class="float-img cat-cad img-l" href="cad.html"
+  <!-- CAD col, rows 1, 2, 3 -->
+  <a class="float-img img-l cat-cad" href="cad.html"
      data-rot="-3deg" data-depth="0.20"
-     style="left:68%; top:3%;">
+     style="left:68vw; top:1.5vw;">
     <img src="assests/playground/display/CAD_01.png" alt="CAD model">
   </a>
 
-  <a class="float-img cat-cad img-l" href="cad.html"
+  <a class="float-img img-l cat-cad" href="cad.html"
      data-rot="2deg" data-depth="0.15"
-     style="left:67.5%; top:26%;">
+     style="left:67.5vw; top:14.2vw;">
     <img src="assests/playground/display/CAD_02.png" alt="CAD model">
   </a>
 
-  <a class="float-img cat-cad img-l" href="cad.html"
+  <a class="float-img img-l cat-cad" href="cad.html"
      data-rot="-1deg" data-depth="0.25"
-     style="left:68.5%; top:49%;">
+     style="left:68.5vw; top:26.9vw;">
     <img src="assests/playground/display/CAD_03.png" alt="CAD model">
   </a>
 
@@ -307,7 +330,7 @@
 
   document.addEventListener('mousemove', e => {
     cursor.style.left = e.clientX + 'px';
-    cursor.style.top  = e.clientY + 'px';
+    cursor.style.top  = e.clientY  + 'px';
     mx = (e.clientX / window.innerWidth  - 0.5) * 2;
     my = (e.clientY / window.innerHeight - 0.5) * 2;
   });
@@ -317,14 +340,19 @@
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
   });
 
-  /* MAX = 25 px  |  depth range 0.06–0.30  →  max drift ≈ 7.5 px/axis
-     All layout gaps verified ≥ 18 px ≫ 15 px (2 × 7.5), so items
-     never overlap even at full cursor deflection.                      */
-  const MAX = 25;
+  /*
+   * MAX is proportional to viewport width (1.4vw) so parallax drift stays
+   * a fixed fraction of vw-based gaps at every screen size.
+   * max depth = 0.30  →  max drift = MAX × 0.30 = 0.42vw
+   * minimum gap between any two images = 2.2vw  ≫  0.84vw (2 × 0.42)
+   * Therefore: zero overlap guaranteed at all viewport widths.
+   */
+  function getMax() { return window.innerWidth * 0.014; }
 
   (function loop() {
     lx += (mx - lx) * 0.075;
     ly += (my - ly) * 0.075;
+    const MAX = getMax();
     items.forEach(el => {
       const d   = parseFloat(el.dataset.depth) || 0.1;
       const rot = el.dataset.rot || '0deg';
