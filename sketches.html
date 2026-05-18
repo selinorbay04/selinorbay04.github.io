@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sketches — Selin Orbay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bangers&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream:   #FFF3DF;
+      --orange:  #F97316;
+      --burnt:   #8B3800;
+      --black:   #0f0f0f;
+      --bg:      #1A0E05;
+      --nav-h:   68px;
+      --font-display:  'Bebas Neue', sans-serif;
+      --font-graffiti: 'Bangers', cursive;
+      --font-body:     'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 clamp(24px, 4vw, 56px);
+      transition: background 0.4s ease;
+    }
+    nav.scrolled {
+      background: var(--bg);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.4);
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 28px; letter-spacing: 2px;
+      color: var(--cream); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      font-size: 14px; font-weight: 600; letter-spacing: 0.6px;
+      color: var(--cream); text-decoration: none;
+      transition: opacity .2s;
+    }
+    .nav-links a:hover { opacity: .5; }
+    .nav-links a.active { text-decoration: underline; text-underline-offset: 4px; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,243,223,0.5);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--burnt); }
+    .back-link svg { width: 14px; height: 14px; }
+
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    .hero {
+      padding: calc(var(--nav-h) + 40px) clamp(24px, 6vw, 80px) 0;
+      display: flex;
+      align-items: flex-end;
+      gap: clamp(16px, 3vw, 40px);
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .hero-title {
+      font-family: var(--font-graffiti);
+      font-size: clamp(64px, 12vw, 160px);
+      letter-spacing: 7px;
+      line-height: 0.88;
+      color: var(--cream);
+      -webkit-text-stroke: 3px var(--black);
+      text-shadow:
+        4px 4px 0 var(--black),
+        -2px -1px 0 var(--burnt),
+        0 0 50px rgba(139,56,0,.4);
+    }
+
+    .hero-meta {
+      padding-bottom: clamp(10px, 1.5vw, 18px);
+    }
+    .hero-meta p {
+      font-size: clamp(13px, 1.2vw, 15px);
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(255,243,223,0.5);
+      max-width: 300px;
+    }
+    .hero-count {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 64px);
+      color: var(--burnt);
+      letter-spacing: 2px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .hero-rule {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--burnt) 0%, rgba(139,56,0,.1) 60%, transparent 100%);
+      margin: clamp(20px, 3vh, 36px) 0 0;
+    }
+
+
+    /* ══════════════════════════════════════
+       CATEGORY GRID
+    ══════════════════════════════════════ */
+    .cat-intro {
+      padding: clamp(32px, 5vh, 56px) clamp(24px, 6vw, 80px) clamp(16px, 2vh, 24px);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,243,223,0.35);
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3px;
+      padding: 0 3px 3px;
+    }
+
+    /* 5th card spans full width */
+    .cat-card:nth-child(5) {
+      grid-column: 1 / -1;
+    }
+
+    .cat-card {
+      position: relative;
+      display: block;
+      text-decoration: none;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      cursor: pointer;
+    }
+
+    .cat-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform .6s ease;
+      filter: brightness(0.82);
+    }
+    .cat-card:hover img {
+      transform: scale(1.06);
+      filter: brightness(0.72);
+    }
+
+    /* tinted overlay per category */
+    .cat-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      transition: opacity .4s ease;
+    }
+    .cat-busstop::before   { background: linear-gradient(135deg, rgba(139,56,0,.45), rgba(0,0,0,.1)); }
+    .cat-coffee::before    { background: linear-gradient(135deg, rgba(52,69,36,.5),  rgba(0,0,0,.1)); }
+    .cat-sprint::before    { background: linear-gradient(135deg, rgba(249,115,22,.4), rgba(0,0,0,.1)); }
+    .cat-shoes::before     { background: linear-gradient(135deg, rgba(61,16,0,.55),  rgba(0,0,0,.1)); }
+    .cat-furniture::before { background: linear-gradient(135deg, rgba(139,56,0,.4),  rgba(249,115,22,.15)); }
+
+    .cat-card:hover::before { opacity: 0.7; }
+
+    /* bottom gradient for label */
+    .cat-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(to bottom, transparent 20%, rgba(0,0,0,.88) 100%);
+    }
+
+    .cat-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 3;
+      padding: clamp(16px, 2.5vw, 28px);
+    }
+
+    .cat-num {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.45);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .cat-name {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4.5vw, 56px);
+      letter-spacing: 2px;
+      color: #fff;
+      display: block;
+      line-height: 1;
+      margin-bottom: 6px;
+      transition: letter-spacing .25s ease;
+    }
+    .cat-card:hover .cat-name { letter-spacing: 4px; }
+
+    .cat-count-tag {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+      display: block;
+    }
+
+    /* accent stripe on left */
+    .cat-card .accent-bar {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 5px;
+      z-index: 4;
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform .4s cubic-bezier(.16,1,.3,1);
+    }
+    .cat-card:hover .accent-bar { transform: scaleY(1); }
+
+    .cat-busstop   .accent-bar { background: var(--burnt); }
+    .cat-coffee    .accent-bar { background: #344524; }
+    .cat-sprint    .accent-bar { background: var(--orange); }
+    .cat-shoes     .accent-bar { background: #3d1000; }
+    .cat-furniture .accent-bar { background: var(--burnt); }
+
+    /* ── 5th card is wider — make it landscape feel ── */
+    .cat-card:nth-child(5) {
+      aspect-ratio: 16 / 5;
+    }
+
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    footer {
+      border-top: 1px solid rgba(255,243,223,0.07);
+      padding: 24px clamp(24px, 6vw, 80px);
+      background: var(--bg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer span {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,243,223,.3);
+      letter-spacing: .5px;
+    }
+
+  </style>
+</head>
+<body>
+
+
+<!-- ════════════════════════
+     NAV
+════════════════════════ -->
+<nav id="nav">
+  <a class="logo" href="index.html">SO</a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="playground.html" class="active">Playground</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════
+     HERO
+════════════════════════ -->
+<header class="hero">
+
+  <a class="back-link" href="playground.html"
+     style="position:absolute;top:calc(var(--nav-h)+14px);left:clamp(24px,6vw,80px);">
+    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 4l-5 4 5 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Playground
+  </a>
+
+  <h1 class="hero-title">SKETCHES</h1>
+
+  <div class="hero-meta">
+    <span class="hero-count">5</span>
+    <p>Pen studies across five categories — from furniture to urban spaces.</p>
+  </div>
+
+  <div class="hero-rule"></div>
+</header>
+
+
+<!-- ════════════════════════
+     CATEGORY GRID
+════════════════════════ -->
+<p class="cat-intro">Choose a category</p>
+
+<section class="categories">
+
+  <!-- 1 — Bus Stop -->
+  <a class="cat-card cat-busstop" href="busstop.html">
+    <div class="accent-bar"></div>
+    <img src="assests/playground/sketches/busstop/Bus_stop_01.jpg" alt="Bus Stop sketches" loading="lazy">
+    <div class="cat-label">
+      <span class="cat-num">01</span>
+      <span class="cat-name">BUS STOP</span>
+      <span class="cat-count-tag">21 sketches</span>
+    </div>
+  </a>
+
+  <!-- 2 — Coffee Maker -->
+  <a class="cat-card cat-coffee" href="coffeemaker.html">
+    <div class="accent-bar"></div>
+    <img src="assests/playground/sketches/coffeemaker/coffee_maker_01.jpg" alt="Coffee Maker sketches" loading="lazy">
+    <div class="cat-label">
+      <span class="cat-num">02</span>
+      <span class="cat-name">COFFEE MAKER</span>
+      <span class="cat-count-tag">12 sketches</span>
+    </div>
+  </a>
+
+  <!-- 3 — Sprint -->
+  <a class="cat-card cat-sprint" href="sprint.html">
+    <div class="accent-bar"></div>
+    <img src="assests/playground/sketches/sprint/Sprint_page_01.jpg" alt="Sprint sketches" loading="lazy">
+    <div class="cat-label">
+      <span class="cat-num">03</span>
+      <span class="cat-name">SPRINT</span>
+      <span class="cat-count-tag">6 sketches</span>
+    </div>
+  </a>
+
+  <!-- 4 — Shoes -->
+  <a class="cat-card cat-shoes" href="shoes.html">
+    <div class="accent-bar"></div>
+    <img src="assests/playground/sketches/shoes/shoes_01.jpg" alt="Shoe sketches" loading="lazy">
+    <div class="cat-label">
+      <span class="cat-num">04</span>
+      <span class="cat-name">SHOES</span>
+      <span class="cat-count-tag">24 sketches</span>
+    </div>
+  </a>
+
+  <!-- 5 — Furniture (full-width) -->
+  <a class="cat-card cat-furniture" href="furniture.html">
+    <div class="accent-bar"></div>
+    <img src="assests/playground/sketches/furniture/furniture_01.jpg" alt="Furniture sketches" loading="lazy">
+    <div class="cat-label">
+      <span class="cat-num">05</span>
+      <span class="cat-name">FURNITURE</span>
+      <span class="cat-count-tag">24 sketches</span>
+    </div>
+  </a>
+
+</section>
+
+
+<!-- ════════════════════════
+     FOOTER
+════════════════════════ -->
+<footer>
+  <span>Selin Orbay</span>
+  <span>
+    <a href="playground.html" style="color:rgba(255,243,223,.3);text-decoration:none;font-size:12px;font-weight:300;">← Back to Playground</a>
+  </span>
+</footer>
+
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+</script>
+
+</body>
+</html>

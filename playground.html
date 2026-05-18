@@ -19,19 +19,14 @@
       --font-display:  'Bebas Neue', sans-serif;
       --font-body:     'Inter', sans-serif;
       --font-graffiti: 'Bangers', cursive;
-
-      /* per-category accent colours */
-      --art-color:      #F97316;   /* orange */
-      --sketch-color:   #8B3800;   /* burnt */
-      --cad-color:      #344524;   /* dark green */
     }
 
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
-      width:100%; height:100%;
-      overflow:hidden;
-      background:#EDE0CC;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: #EDE0CC;
       font-family: var(--font-body);
     }
 
@@ -39,122 +34,192 @@
        NAV
     ══════════════════════════════════════ */
     nav {
-      position:fixed; top:0; left:0; right:0;
-      z-index:300;
-      height:var(--nav-h);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:0 clamp(24px,4vw,56px);
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 300;
+      height: var(--nav-h);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 clamp(24px, 4vw, 56px);
+      background: #EDE0CC;
+      border-bottom: 1px solid rgba(15,15,15,0.06);
     }
     .logo {
-      font-family:var(--font-display);
-      font-size:28px; letter-spacing:2px;
-      color:var(--black); text-decoration:none;
+      font-family: var(--font-display);
+      font-size: 28px; letter-spacing: 2px;
+      color: var(--black); text-decoration: none;
     }
-    .nav-links { display:flex; gap:32px; align-items:center; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
     .nav-links a {
-      font-family:var(--font-body);
-      font-size:14px; font-weight:600; letter-spacing:0.6px;
-      color:var(--black); text-decoration:none;
-      transition:opacity .2s;
+      font-family: var(--font-body);
+      font-size: 14px; font-weight: 600; letter-spacing: 0.6px;
+      color: var(--black); text-decoration: none;
+      transition: opacity .2s;
     }
-    .nav-links a:hover { opacity:.45; }
-    .nav-links a.active { text-decoration:underline; text-underline-offset:4px; }
+    .nav-links a:hover { opacity: .45; }
+    .nav-links a.active { text-decoration: underline; text-underline-offset: 4px; }
 
 
     /* ══════════════════════════════════════
-       STAGE
+       STAGE  — 3 stacked bands
     ══════════════════════════════════════ */
     #stage {
-      position:fixed; inset:0;
-      width:100vw; height:100vh;
-      overflow:hidden;
-      cursor:none;
+      position: fixed;
+      inset: 0;
+      padding-top: var(--nav-h);
+      display: flex;
+      flex-direction: column;
+      cursor: none;
     }
 
-    /* custom cursor */
-    #cursor {
-      position:fixed;
-      width:14px; height:14px;
-      border-radius:50%;
-      background:var(--black);
-      pointer-events:none;
-      z-index:9999;
-      transform:translate(-50%,-50%);
-      transition:width .22s ease, height .22s ease, background .22s ease;
+    /* each category band */
+    .cat-band {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 0 clamp(16px, 2.5vw, 40px);
+      gap: clamp(8px, 1.4vw, 20px);
+      overflow: hidden;  /* clips parallax at band boundary — zero cross-band overlap */
     }
-    #cursor.hover { width:34px; height:34px; background:var(--orange); }
+
+    /* coloured left rule per band */
+    .cat-band::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8%; bottom: 8%;
+      width: 4px;
+      border-radius: 2px;
+    }
+
+    /* subtle tinted backgrounds */
+    .band-art      { background: rgba(249,115,22,0.06); }
+    .band-art::before { background: var(--orange); }
+
+    .band-sketches { background: rgba(139,56,0,0.05); }
+    .band-sketches::before { background: var(--burnt); }
+
+    .band-cad      { background: rgba(52,69,36,0.07); }
+    .band-cad::before { background: var(--green); }
+
+    /* hairline dividers between bands */
+    .cat-band + .cat-band {
+      border-top: 1px solid rgba(15,15,15,0.09);
+    }
 
 
     /* ══════════════════════════════════════
-       FLOATING ITEMS
+       GRAFFITI KEYWORDS
     ══════════════════════════════════════ */
-    .float-item {
-      position:absolute;
-      will-change:transform;
+    .band-keyword {
+      font-family: var(--font-graffiti);
+      letter-spacing: 5px;
+      line-height: 1;
+      flex-shrink: 0;
+      cursor: none;
+      user-select: none;
+      text-decoration: none;
+      display: block;
+      transition: letter-spacing .28s ease, filter .28s ease;
+      will-change: transform;
+    }
+    .band-keyword:hover { letter-spacing: 9px; filter: brightness(1.12); }
+
+    .kw-art {
+      font-size: clamp(56px, 9vw, 118px);
+      color: var(--orange);
+      -webkit-text-stroke: 2.5px var(--black);
+      text-shadow: 4px 4px 0 var(--black), -1px -1px 0 var(--burnt), 6px 9px 14px rgba(0,0,0,.22);
+      transform: rotate(-5deg);
+      width: clamp(90px, 12vw, 160px);
+    }
+    .kw-sketches {
+      font-size: clamp(30px, 4.5vw, 60px);
+      color: var(--cream);
+      -webkit-text-stroke: 2px var(--black);
+      text-shadow: 3px 3px 0 var(--black), -2px -1px 0 var(--burnt), 5px 8px 12px rgba(0,0,0,.28);
+      transform: rotate(3deg);
+      width: clamp(130px, 18vw, 240px);
+    }
+    .kw-cad {
+      font-size: clamp(56px, 9vw, 118px);
+      color: var(--green);
+      -webkit-text-stroke: 2.5px var(--black);
+      text-shadow: 4px 4px 0 var(--black), -1px -2px 0 #1a2510, 6px 8px 12px rgba(0,0,0,.22);
+      transform: rotate(-2deg);
+      width: clamp(90px, 12vw, 160px);
     }
 
-    /* ── Keywords ── */
-    .keyword {
-      font-family:var(--font-graffiti);
-      letter-spacing:6px;
-      line-height:1;
-      text-decoration:none;
-      display:block;
-      cursor:none;
-      user-select:none;
-      transition:letter-spacing .25s ease, filter .25s ease;
-    }
-    .keyword:hover { letter-spacing:10px; filter:brightness(1.12); }
 
-    .keyword-art {
-      font-size:clamp(88px,15vw,200px);
-      color:var(--art-color);
-      -webkit-text-stroke:3px var(--black);
-      text-shadow: 5px 5px 0 var(--black), -2px -2px 0 var(--burnt), 8px 10px 14px rgba(0,0,0,.25);
-      transform:rotate(-5deg);
-    }
-    .keyword-sketches {
-      font-size:clamp(60px,9.5vw,128px);
-      color:var(--cream);
-      -webkit-text-stroke:3px var(--black);
-      text-shadow: 4px 4px 0 var(--black), -3px -1px 0 var(--burnt), 7px 9px 12px rgba(0,0,0,.30);
-      transform:rotate(3deg);
-    }
-    .keyword-cad {
-      font-size:clamp(88px,14vw,190px);
-      color:var(--green);
-      -webkit-text-stroke:3px var(--black);
-      text-shadow: 5px 5px 0 var(--black), -2px -3px 0 #1a2510, 6px 8px 12px rgba(0,0,0,.30);
-      transform:rotate(-2deg);
-    }
-
-    /* ── Image cards ── */
+    /* ══════════════════════════════════════
+       IMAGE CARDS
+    ══════════════════════════════════════ */
     .float-img {
-      position:absolute;
-      display:block;
-      border-radius:16px;
-      overflow:hidden;
-      cursor:none;
-      text-decoration:none;
-      transition:box-shadow .3s ease;
+      display: block;
+      border-radius: 13px;
+      overflow: hidden;
+      cursor: none;
+      text-decoration: none;
+      flex-shrink: 0;
+      will-change: transform;
+      transition: box-shadow .3s ease;
     }
     .float-img img {
-      display:block;
-      width:100%; height:100%;
-      object-fit:cover;
-      pointer-events:none;
+      display: block;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      transition: transform .45s ease;
+    }
+    .float-img:hover img { transform: scale(1.05); }
+
+    .cat-art     { border: 3.5px solid var(--orange);
+                   box-shadow: 0 5px 22px rgba(249,115,22,.24), 0 2px 6px rgba(0,0,0,.1); }
+    .cat-sketches{ border: 3.5px solid var(--burnt);
+                   box-shadow: 0 5px 22px rgba(139,56,0,.22),   0 2px 6px rgba(0,0,0,.1); }
+    .cat-cad     { border: 3.5px solid var(--green);
+                   box-shadow: 0 5px 22px rgba(52,69,36,.24),   0 2px 6px rgba(0,0,0,.1); }
+
+    .cat-art:hover     { box-shadow: 0 12px 36px rgba(249,115,22,.40), 0 4px 12px rgba(0,0,0,.14); }
+    .cat-sketches:hover{ box-shadow: 0 12px 36px rgba(139,56,0,.36),   0 4px 12px rgba(0,0,0,.14); }
+    .cat-cad:hover     { box-shadow: 0 12px 36px rgba(52,69,36,.40),   0 4px 12px rgba(0,0,0,.14); }
+
+    /* portrait card  (3:4) */
+    .img-portrait {
+      height: calc((100vh - var(--nav-h)) / 3 - 32px);
+      aspect-ratio: 3 / 4;
+    }
+    /* landscape card (4:3) */
+    .img-landscape {
+      height: calc((100vh - var(--nav-h)) / 3 - 36px);
+      aspect-ratio: 4 / 3;
+    }
+    /* square card */
+    .img-square {
+      height: calc((100vh - var(--nav-h)) / 3 - 32px);
+      aspect-ratio: 1;
     }
 
-    /* coloured border per category */
-    .cat-art     { border: 4px solid var(--art-color);    box-shadow:0 6px 28px rgba(249,115,22,.25), 0 2px 8px rgba(0,0,0,.12); }
-    .cat-sketches{ border: 4px solid var(--sketch-color); box-shadow:0 6px 28px rgba(139,56,0,.22),   0 2px 8px rgba(0,0,0,.12); }
-    .cat-cad     { border: 4px solid var(--cad-color);    box-shadow:0 6px 28px rgba(52,69,36,.28),   0 2px 8px rgba(0,0,0,.12); }
+    /* stagger alignment */
+    .align-top    { align-self: flex-start; margin-top: 10px; }
+    .align-mid    { align-self: center; }
+    .align-bottom { align-self: flex-end; margin-bottom: 10px; }
 
-    .cat-art:hover     { box-shadow:0 14px 44px rgba(249,115,22,.40), 0 4px 12px rgba(0,0,0,.15); }
-    .cat-sketches:hover{ box-shadow:0 14px 44px rgba(139,56,0,.36),   0 4px 12px rgba(0,0,0,.15); }
-    .cat-cad:hover     { box-shadow:0 14px 44px rgba(52,69,36,.42),   0 4px 12px rgba(0,0,0,.15); }
+
+    /* ══════════════════════════════════════
+       CUSTOM CURSOR
+    ══════════════════════════════════════ */
+    #cursor {
+      position: fixed;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--black);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: width .22s ease, height .22s ease, background .22s ease;
+    }
+    #cursor.hover { width: 34px; height: 34px; background: var(--orange); }
 
   </style>
 </head>
@@ -176,96 +241,106 @@
 <!-- STAGE -->
 <div id="stage">
 
-  <!-- ══ KEYWORDS ══ -->
-  <a class="float-item keyword keyword-art"
-     href="art.html" data-depth="0.16"
-     style="top:38%; left:4%;">ART</a>
+  <!-- ══ BAND 1 — ART ══ -->
+  <div class="cat-band band-art">
 
-  <a class="float-item keyword keyword-sketches"
-     href="sketches.html" data-depth="0.12"
-     style="top:6%; left:42%;">SKETCHES</a>
+    <a class="band-keyword kw-art float-item" href="art.html" data-rot="-5deg" data-depth="0.06">ART</a>
 
-  <a class="float-item keyword keyword-cad"
-     href="cad.html" data-depth="0.20"
-     style="top:62%; left:70%;">CAD</a>
+    <a class="float-img cat-art img-portrait align-top float-item"
+       href="art.html" data-rot="3deg" data-depth="0.18"
+       style="transform:rotate(3deg)">
+      <img src="assests/playground/display/Drawing_03.jpg" alt="Drawing">
+    </a>
 
+    <a class="float-img cat-art img-portrait align-bottom float-item"
+       href="art.html" data-rot="-4deg" data-depth="0.24"
+       style="transform:rotate(-4deg)">
+      <img src="assests/playground/display/Drawing_07.jpg" alt="Drawing">
+    </a>
 
-  <!-- ══ ART IMAGES — left zone ══ -->
-  <!-- Drawing_03: upper left -->
-  <a class="float-item float-img cat-art" href="art.html" data-depth="0.50"
-     style="width:240px; height:270px; top:8%; left:3%; transform:rotate(3deg);">
-    <img src="assests/playground/display/Drawing_03.jpg" alt="Drawing">
-  </a>
+    <a class="float-img cat-art img-portrait align-mid float-item"
+       href="art.html" data-rot="2deg" data-depth="0.14"
+       style="transform:rotate(2deg)">
+      <img src="assests/playground/display/Drawing_12.jpg" alt="Drawing">
+    </a>
 
-  <!-- Drawing_07: lower left -->
-  <a class="float-item float-img cat-art" href="art.html" data-depth="0.62"
-     style="width:225px; height:260px; top:60%; left:1%; transform:rotate(-4deg);">
-    <img src="assests/playground/display/Drawing_07.jpg" alt="Drawing">
-  </a>
+    <a class="float-img cat-art img-portrait align-top float-item"
+       href="art.html" data-rot="-2.5deg" data-depth="0.20"
+       style="transform:rotate(-2.5deg)">
+      <img src="assests/playground/drawings/Drawing_01.jpg" alt="Drawing">
+    </a>
 
-  <!-- Drawing_12: center-left, below ART keyword -->
-  <a class="float-item float-img cat-art" href="art.html" data-depth="0.36"
-     style="width:235px; height:235px; top:22%; left:20%; transform:rotate(-2deg);">
-    <img src="assests/playground/display/Drawing_12.jpg" alt="Drawing">
-  </a>
+  </div>
 
 
-  <!-- ══ SKETCHES IMAGES — center + upper right ══ -->
-  <!-- shoes_01: upper right -->
-  <a class="float-item float-img cat-sketches" href="sketches.html" data-depth="0.54"
-     style="width:245px; height:220px; top:3%; left:72%; transform:rotate(2.5deg);">
-    <img src="assests/playground/display/shoes_01.jpg" alt="Shoe sketch">
-  </a>
+  <!-- ══ BAND 2 — SKETCHES ══ -->
+  <div class="cat-band band-sketches">
 
-  <!-- coffee_maker_01: center -->
-  <a class="float-item float-img cat-sketches" href="sketches.html" data-depth="0.42"
-     style="width:235px; height:255px; top:36%; left:37%; transform:rotate(-3deg);">
-    <img src="assests/playground/display/coffee_maker_01.jpg" alt="Coffee maker sketch">
-  </a>
+    <a class="band-keyword kw-sketches float-item" href="sketches.html" data-rot="3deg" data-depth="0.06">SKETCHES</a>
 
-  <!-- coffee_maker_11: lower center-left -->
-  <a class="float-item float-img cat-sketches" href="sketches.html" data-depth="0.66"
-     style="width:230px; height:240px; top:70%; left:26%; transform:rotate(3.5deg);">
-    <img src="assests/playground/display/coffee_maker_11.jpg" alt="Coffee maker sketch">
-  </a>
+    <a class="float-img cat-sketches img-portrait align-top float-item"
+       href="sketches.html" data-rot="2.5deg" data-depth="0.22"
+       style="transform:rotate(2.5deg)">
+      <img src="assests/playground/display/shoes_01.jpg" alt="Shoe sketch">
+    </a>
 
-  <!-- Bus_stop_02: center-right -->
-  <a class="float-item float-img cat-sketches" href="sketches.html" data-depth="0.46"
-     style="width:248px; height:220px; top:50%; left:52%; transform:rotate(-2deg);">
-    <img src="assests/playground/display/Bus_stop_02.jpg" alt="Bus stop sketch">
-  </a>
+    <a class="float-img cat-sketches img-portrait align-bottom float-item"
+       href="sketches.html" data-rot="-3deg" data-depth="0.16"
+       style="transform:rotate(-3deg)">
+      <img src="assests/playground/display/coffee_maker_01.jpg" alt="Coffee maker sketch">
+    </a>
 
-  <!-- Bus_stop_17: lower left-center -->
-  <a class="float-item float-img cat-sketches" href="sketches.html" data-depth="0.58"
-     style="width:235px; height:235px; top:78%; left:12%; transform:rotate(2deg);">
-    <img src="assests/playground/display/Bus_stop_17.jpg" alt="Bus stop sketch">
-  </a>
+    <a class="float-img cat-sketches img-portrait align-mid float-item"
+       href="sketches.html" data-rot="1.5deg" data-depth="0.26"
+       style="transform:rotate(1.5deg)">
+      <img src="assests/playground/display/Bus_stop_02.jpg" alt="Bus stop sketch">
+    </a>
 
-  <!-- Sprint_page_05: center-right upper -->
-  <a class="float-item float-img cat-sketches" href="sketches.html" data-depth="0.34"
-     style="width:245px; height:220px; top:19%; left:59%; transform:rotate(-1.5deg);">
-    <img src="assests/playground/display/Sprint_page_05.jpg" alt="Sprint sketch">
-  </a>
+    <a class="float-img cat-sketches img-portrait align-top float-item"
+       href="sketches.html" data-rot="-2.5deg" data-depth="0.20"
+       style="transform:rotate(-2.5deg)">
+      <img src="assests/playground/display/Sprint_page_05.jpg" alt="Sprint sketch">
+    </a>
+
+    <a class="float-img cat-sketches img-portrait align-bottom float-item"
+       href="sketches.html" data-rot="3.5deg" data-depth="0.14"
+       style="transform:rotate(3.5deg)">
+      <img src="assests/playground/display/coffee_maker_11.jpg" alt="Coffee maker sketch">
+    </a>
+
+  </div>
 
 
-  <!-- ══ CAD IMAGES — right zone ══ -->
-  <!-- CAD_01: right upper -->
-  <a class="float-item float-img cat-cad" href="cad.html" data-depth="0.44"
-     style="width:262px; height:197px; top:22%; left:76%; transform:rotate(-3deg);">
-    <img src="assests/playground/display/CAD_01.png" alt="CAD model">
-  </a>
+  <!-- ══ BAND 3 — CAD ══ -->
+  <div class="cat-band band-cad">
 
-  <!-- CAD_02: right middle -->
-  <a class="float-item float-img cat-cad" href="cad.html" data-depth="0.60"
-     style="width:255px; height:191px; top:50%; left:82%; transform:rotate(2deg);">
-    <img src="assests/playground/display/CAD_02.png" alt="CAD model">
-  </a>
+    <a class="band-keyword kw-cad float-item" href="cad.html" data-rot="-2deg" data-depth="0.06">CAD</a>
 
-  <!-- CAD_03: right lower -->
-  <a class="float-item float-img cat-cad" href="cad.html" data-depth="0.30"
-     style="width:258px; height:194px; top:78%; left:68%; transform:rotate(-1deg);">
-    <img src="assests/playground/display/CAD_03.png" alt="CAD model">
-  </a>
+    <a class="float-img cat-cad img-landscape align-top float-item"
+       href="cad.html" data-rot="-3deg" data-depth="0.20"
+       style="transform:rotate(-3deg)">
+      <img src="assests/playground/display/CAD_01.png" alt="CAD model">
+    </a>
+
+    <a class="float-img cat-cad img-landscape align-bottom float-item"
+       href="cad.html" data-rot="2deg" data-depth="0.16"
+       style="transform:rotate(2deg)">
+      <img src="assests/playground/display/CAD_02.png" alt="CAD model">
+    </a>
+
+    <a class="float-img cat-cad img-landscape align-mid float-item"
+       href="cad.html" data-rot="-1deg" data-depth="0.24"
+       style="transform:rotate(-1deg)">
+      <img src="assests/playground/display/CAD_03.png" alt="CAD model">
+    </a>
+
+    <a class="float-img cat-cad img-landscape align-top float-item"
+       href="cad.html" data-rot="3deg" data-depth="0.12"
+       style="transform:rotate(3deg)">
+      <img src="assests/playground/display/Bus_stop_17.jpg" alt="Bus stop sketch">
+    </a>
+
+  </div>
 
 </div><!-- /stage -->
 
@@ -274,11 +349,11 @@
   const cursor = document.getElementById('cursor');
   const items  = document.querySelectorAll('.float-item');
 
-  let mx=0, my=0, lx=0, ly=0;
+  let mx = 0, my = 0, lx = 0, ly = 0;
 
   document.addEventListener('mousemove', e => {
     cursor.style.left = e.clientX + 'px';
-    cursor.style.top  = e.clientY  + 'px';
+    cursor.style.top  = e.clientY + 'px';
     mx = (e.clientX / window.innerWidth  - 0.5) * 2;
     my = (e.clientY / window.innerHeight - 0.5) * 2;
   });
@@ -288,21 +363,16 @@
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
   });
 
-  // Store base rotation per item
-  const baseRot = {};
-  items.forEach((el, i) => {
-    const m = (el.getAttribute('style')||'').match(/rotate\(([^)]+)\)/);
-    baseRot[i] = m ? m[1] : '0deg';
-  });
-
-  const MAX = 100;
+  // Read base rotation from data-rot attribute (avoids inline-style collision)
+  const MAX = 18;
 
   (function loop() {
-    lx += (mx - lx) * 0.075;
-    ly += (my - ly) * 0.075;
-    items.forEach((el, i) => {
-      const d = parseFloat(el.dataset.depth) || 0.3;
-      el.style.transform = `translate(${lx*d*MAX}px,${ly*d*MAX}px) rotate(${baseRot[i]})`;
+    lx += (mx - lx) * 0.072;
+    ly += (my - ly) * 0.072;
+    items.forEach(el => {
+      const d   = parseFloat(el.dataset.depth) || 0.1;
+      const rot = el.dataset.rot || '0deg';
+      el.style.transform = `translate(${lx * d * MAX}px, ${ly * d * MAX}px) rotate(${rot})`;
     });
     requestAnimationFrame(loop);
   })();

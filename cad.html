@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAD — Selin Orbay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bangers&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream:   #FFF3DF;
+      --orange:  #F97316;
+      --burnt:   #8B3800;
+      --green:   #344524;
+      --green-light: #5C7040;
+      --black:   #0f0f0f;
+      --bg:      #0D1308;
+      --nav-h:   68px;
+      --font-display:  'Bebas Neue', sans-serif;
+      --font-graffiti: 'Bangers', cursive;
+      --font-body:     'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 clamp(24px, 4vw, 56px);
+      transition: background 0.4s ease;
+    }
+    nav.scrolled {
+      background: var(--bg);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.5);
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 28px; letter-spacing: 2px;
+      color: var(--cream); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      font-size: 14px; font-weight: 600; letter-spacing: 0.6px;
+      color: var(--cream); text-decoration: none;
+      transition: opacity .2s;
+    }
+    .nav-links a:hover { opacity: .5; }
+    .nav-links a.active { text-decoration: underline; text-underline-offset: 4px; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,243,223,0.45);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--green-light); }
+    .back-link svg { width: 14px; height: 14px; }
+
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    .hero {
+      padding: calc(var(--nav-h) + 40px) clamp(24px, 6vw, 80px) 0;
+      display: flex;
+      align-items: flex-end;
+      gap: clamp(16px, 3vw, 40px);
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .hero-title {
+      font-family: var(--font-graffiti);
+      font-size: clamp(80px, 16vw, 200px);
+      letter-spacing: 8px;
+      line-height: 0.88;
+      color: var(--green);
+      -webkit-text-stroke: 3px rgba(92,112,64,.6);
+      text-shadow:
+        5px 5px 0 rgba(0,0,0,.5),
+        -2px -2px 0 #1a2510,
+        0 0 70px rgba(92,112,64,.3);
+    }
+
+    .hero-meta {
+      padding-bottom: clamp(10px, 1.5vw, 18px);
+    }
+    .hero-meta p {
+      font-size: clamp(13px, 1.2vw, 15px);
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(255,243,223,0.45);
+      max-width: 300px;
+    }
+    .hero-count {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 64px);
+      color: var(--green-light);
+      letter-spacing: 2px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .hero-rule {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green) 0%, rgba(52,69,36,.1) 60%, transparent 100%);
+      margin: clamp(20px, 3vh, 36px) 0 0;
+    }
+
+
+    /* ══════════════════════════════════════
+       MODELS GRID
+    ══════════════════════════════════════ */
+    .section-label {
+      padding: clamp(32px, 5vh, 56px) clamp(24px, 6vw, 80px) clamp(12px, 1.5vh, 18px);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,243,223,0.3);
+    }
+
+    .models-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3px;
+      padding: 0 3px;
+    }
+
+    /* 3rd card full width */
+    .model-card:nth-child(3) {
+      grid-column: 1 / -1;
+    }
+
+    .model-card {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      text-decoration: none;
+      aspect-ratio: 16 / 9;
+      background: #111;
+    }
+
+    .model-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform .6s ease;
+      filter: brightness(0.88) saturate(0.9);
+    }
+    .model-card:hover img {
+      transform: scale(1.04);
+      filter: brightness(0.78) saturate(1.1);
+    }
+
+    /* dark overlay */
+    .model-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: rgba(0,0,0,.28);
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    .model-card:hover::before { opacity: 1; }
+
+    /* bottom gradient */
+    .model-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,.85) 100%);
+    }
+
+    .model-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 3;
+      padding: clamp(16px, 2.5vw, 28px);
+    }
+
+    .model-num {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,.4);
+      display: block;
+      margin-bottom: 5px;
+    }
+    .model-name {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3.5vw, 48px);
+      letter-spacing: 2px;
+      color: #fff;
+      display: block;
+      margin-bottom: 5px;
+      transition: letter-spacing .25s ease;
+    }
+    .model-card:hover .model-name { letter-spacing: 4px; }
+
+    .model-tool {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--green-light);
+      display: block;
+    }
+
+    /* green accent line on hover */
+    .model-card .accent-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--green);
+      z-index: 4;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .45s cubic-bezier(.16,1,.3,1);
+    }
+    .model-card:hover .accent-bar { transform: scaleX(1); }
+
+
+    /* ══════════════════════════════════════
+       E-DRAWING SECTION (coming soon)
+    ══════════════════════════════════════ */
+    .edrw-section {
+      padding: clamp(48px, 7vh, 80px) clamp(24px, 6vw, 80px) clamp(56px, 9vh, 100px);
+    }
+
+    .edrw-header {
+      display: flex;
+      align-items: flex-end;
+      gap: clamp(12px, 2vw, 24px);
+      margin-bottom: clamp(24px, 3.5vh, 40px);
+      flex-wrap: wrap;
+    }
+
+    .edrw-title {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 6.5vw, 80px);
+      letter-spacing: 3px;
+      color: var(--green-light);
+      line-height: 1;
+    }
+
+    .edrw-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green-light);
+      background: rgba(92,112,64,.15);
+      border: 1px solid rgba(92,112,64,.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+    .edrw-body {
+      font-size: clamp(14px, 1.3vw, 16px);
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(255,243,223,.45);
+      max-width: 560px;
+      margin-bottom: clamp(28px, 4vh, 48px);
+    }
+
+    /* placeholder card */
+    .edrw-placeholder {
+      width: 100%;
+      max-width: 720px;
+      aspect-ratio: 16 / 7;
+      border-radius: 16px;
+      border: 2px dashed rgba(92,112,64,.3);
+      background: rgba(52,69,36,.07);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .edrw-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(52,69,36,.2);
+      border: 2px solid rgba(92,112,64,.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .edrw-icon svg { width: 22px; height: 22px; color: var(--green-light); }
+
+    .edrw-placeholder p {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      color: rgba(255,243,223,.3);
+      text-align: center;
+    }
+
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    footer {
+      border-top: 1px solid rgba(255,243,223,.07);
+      padding: 24px clamp(24px, 6vw, 80px);
+      background: var(--bg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer span {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,243,223,.3);
+      letter-spacing: .5px;
+    }
+
+  </style>
+</head>
+<body>
+
+
+<!-- ════════════════════════
+     NAV
+════════════════════════ -->
+<nav id="nav">
+  <a class="logo" href="index.html">SO</a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="playground.html" class="active">Playground</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════
+     HERO
+════════════════════════ -->
+<header class="hero">
+
+  <a class="back-link" href="playground.html"
+     style="position:absolute;top:calc(var(--nav-h)+14px);left:clamp(24px,6vw,80px);">
+    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 4l-5 4 5 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Playground
+  </a>
+
+  <h1 class="hero-title">CAD</h1>
+
+  <div class="hero-meta">
+    <span class="hero-count">3</span>
+    <p>3D models built in SolidWorks — from functional parts to design exercises.</p>
+  </div>
+
+  <div class="hero-rule"></div>
+</header>
+
+
+<!-- ════════════════════════
+     MODELS
+════════════════════════ -->
+<p class="section-label">Models</p>
+
+<section class="models-grid">
+
+  <!-- Model 01 -->
+  <a class="model-card" href="cad.html">
+    <div class="accent-bar"></div>
+    <img src="assests/playground/CAD/Screenshot 2026-05-18 at 12.15.23 PM.png" alt="CAD Model 01" loading="lazy">
+    <div class="model-label">
+      <span class="model-num">01</span>
+      <span class="model-name">MODEL 01</span>
+      <span class="model-tool">SolidWorks</span>
+    </div>
+  </a>
+
+  <!-- Model 02 -->
+  <a class="model-card" href="cad.html">
+    <div class="accent-bar"></div>
+    <img src="assests/playground/CAD/Screenshot 2026-05-18 at 12.15.44 PM.png" alt="CAD Model 02" loading="lazy">
+    <div class="model-label">
+      <span class="model-num">02</span>
+      <span class="model-name">MODEL 02</span>
+      <span class="model-tool">SolidWorks</span>
+    </div>
+  </a>
+
+  <!-- Model 03 — full width -->
+  <a class="model-card" href="cad.html">
+    <div class="accent-bar"></div>
+    <img src="assests/playground/CAD/Screenshot 2026-05-18 at 12.16.03 PM.png" alt="CAD Model 03" loading="lazy">
+    <div class="model-label">
+      <span class="model-num">03</span>
+      <span class="model-name">MODEL 03</span>
+      <span class="model-tool">SolidWorks</span>
+    </div>
+  </a>
+
+</section>
+
+
+<!-- ════════════════════════
+     E-DRAWINGS
+════════════════════════ -->
+<section class="edrw-section">
+
+  <div class="edrw-header">
+    <h2 class="edrw-title">E-DRAWINGS</h2>
+    <span class="edrw-badge">Coming Soon</span>
+  </div>
+
+  <p class="edrw-body">
+    Interactive 3D e-drawing viewers are coming to this section —
+    you'll be able to rotate, zoom, and explore the models directly in the browser.
+  </p>
+
+  <div class="edrw-placeholder">
+    <div class="edrw-icon">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3L2 8l10 5 10-5-10-5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M2 16l10 5 10-5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <p>Interactive viewer · Loading soon</p>
+  </div>
+
+</section>
+
+
+<!-- ════════════════════════
+     FOOTER
+════════════════════════ -->
+<footer>
+  <span>Selin Orbay</span>
+  <span>
+    <a href="playground.html" style="color:rgba(255,243,223,.3);text-decoration:none;font-size:12px;font-weight:300;">← Back to Playground</a>
+  </span>
+</footer>
+
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+</script>
+
+</body>
+</html>
