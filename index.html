@@ -156,11 +156,11 @@
        — Phrases animate in the upper zone
        — "Check out my... WORK" stays fixed
          at the bottom of the same viewport
-       500vh total: each of 4 phrases gets
-       one full viewport height of scroll
+       300vh total: each of 4 phrases gets
+       ~half a viewport of scroll (faster)
     ══════════════════════════════════════ */
     .tagline-section {
-      height: 500vh;
+      height: 300vh;
       position: relative;
       background: var(--cream);
     }
@@ -203,8 +203,8 @@
       opacity: 0;
       transform: translateY(40px);
       transition:
-        opacity   0.5s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        opacity   0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
       pointer-events: none;
     }
 
@@ -506,34 +506,59 @@
   updateNav();
 
 
-  /* ── 2. Sticky phrase scroll animation ── */
+  /* ── 2. Sticky phrase scroll animation + auto-cycle ── */
   const section  = document.getElementById('tagline-section');
   const taglines = document.querySelectorAll('.tagline');
   let   current  = 0;
+  let   autoTimer = null;
+  let   userScrolling = false;
+  let   scrollPauseTimer = null;
 
   function showPhrase(index) {
-    index = Math.max(0, Math.min(taglines.length - 1, index));
+    // wrap around for auto-cycle; clamp for scroll-driven
+    index = ((index % taglines.length) + taglines.length) % taglines.length;
     if (index === current) return;
 
-    // Exit current phrase upward
     taglines[current].classList.remove('active');
     taglines[current].classList.add('exit');
     const leaving = taglines[current];
-    setTimeout(() => leaving.classList.remove('exit'), 500);
+    setTimeout(() => leaving.classList.remove('exit'), 350);
 
-    // Enter new phrase from below
     current = index;
     taglines[current].classList.add('active');
   }
 
+  // Scroll drives phrase index (each phrase = 0.5 viewport of scroll)
   function onScroll() {
+    // Pause auto-cycle briefly while user is scrolling
+    userScrolling = true;
+    clearTimeout(scrollPauseTimer);
+    scrollPauseTimer = setTimeout(() => { userScrolling = false; }, 1200);
+
     const scrolled = window.scrollY - section.offsetTop;
-    const index    = Math.floor(scrolled / window.innerHeight);
-    showPhrase(index);
+    if (scrolled >= 0) {
+      const index = Math.floor(scrolled / (window.innerHeight * 0.5));
+      showPhrase(index);
+    }
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // Auto-cycle: advance to next phrase every 1.6s when section is visible
+  // and user isn't actively scrolling
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => {
+        if (!userScrolling) showPhrase(current + 1);
+      }, 1600);
+    } else {
+      clearInterval(autoTimer);
+      autoTimer = null;
+    }
+  }, { threshold: 0.2 });
+  observer.observe(section);
 </script>
 
 </body>
