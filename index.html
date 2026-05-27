@@ -156,11 +156,11 @@
        — Phrases animate in the upper zone
        — "Check out my... WORK" stays fixed
          at the bottom of the same viewport
-       500vh total: each of 4 phrases gets
-       one full viewport height of scroll
+       300vh total: each of 4 phrases gets
+       ~half a viewport of scroll (faster)
     ══════════════════════════════════════ */
     .tagline-section {
-      height: 500vh;
+      height: 300vh;
       position: relative;
       background: var(--cream);
     }
@@ -203,8 +203,8 @@
       opacity: 0;
       transform: translateY(40px);
       transition:
-        opacity   0.5s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        opacity   0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
       pointer-events: none;
     }
 
@@ -329,17 +329,133 @@
       transform: scale(1);
     }
 
-    /* "Or keep scrolling" caption below WORK */
-    .keep-scrolling {
+    /* ══════════════════════════════════════
+       SKILLS SECTION  (dark brown, 3 columns)
+    ══════════════════════════════════════ */
+    .skills-section {
+      background: #3d1000;
+      padding: clamp(48px, 7vh, 80px) clamp(28px, 6vw, 80px);
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(16px, 2.5vw, 32px);
+    }
+    .skill-col {
+      background: rgba(255, 243, 223, 0.10);
+      border: 1px solid rgba(255, 243, 223, 0.14);
+      border-radius: 6px;
+      padding: clamp(24px, 3vw, 36px) clamp(20px, 2.5vw, 32px);
+    }
+    .skill-col h3 {
       font-family: var(--font-body);
       font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 2px;
-      color: rgba(15,15,15,0.38);
+      font-weight: 600;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
-      text-align: center;
-      padding: 6px 0 12px;
+      color: rgba(255,243,223,0.55);
+      margin-bottom: 20px;
     }
+    .skill-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .skill-col ul li {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.3vw, 15px);
+      font-weight: 400;
+      color: #FFF3DF;
+      line-height: 1.4;
+    }
+
+    /* ══════════════════════════════════════
+       WORK SECTION  (standalone, cream bg)
+    ══════════════════════════════════════ */
+    .work-section {
+      background: var(--cream);
+      padding: clamp(48px, 7vh, 80px) 0 0;
+      text-align: center;
+    }
+
+    /* ══════════════════════════════════════
+       BRIDGE SENTENCE  (site-green bg)
+    ══════════════════════════════════════ */
+    .bridge-section {
+      background: #344524;
+      padding: clamp(36px, 5vh, 60px) clamp(28px, 6vw, 80px);
+      text-align: center;
+    }
+    .bridge-text {
+      font-family: var(--font-body);
+      font-size: clamp(15px, 1.8vw, 20px);
+      font-style: italic;
+      font-weight: 300;
+      color: #FFF3DF;
+      letter-spacing: 0.3px;
+      line-height: 1.75;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ══════════════════════════════════════
+       PLAYGROUND SECTION  (cream bg)
+    ══════════════════════════════════════ */
+    .playground-section {
+      background: var(--cream);
+      padding: clamp(56px, 9vh, 100px) 40px clamp(64px, 10vh, 120px);
+    }
+    .discover-text {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 96px);
+      color: var(--black);
+      letter-spacing: 2px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .letter-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .letter-row {
+      display: flex;
+      gap: 0;
+    }
+    .pg-letter {
+      font-family: var(--font-display);
+      font-size: clamp(80px, 16vw, 200px);
+      line-height: 0.88;
+      letter-spacing: 0;
+      color: #8aaa5c;           /* light green default */
+      text-decoration: none;
+      transition: color 0.22s ease;
+      flex: 1;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pg-letter:hover { color: #344524; } /* dark green on hover */
+
+    @keyframes float-a { 0%,100%{transform:translate(0,0)} 30%{transform:translate(3px,-5px)} 70%{transform:translate(-2px,3px)} }
+    @keyframes float-b { 0%,100%{transform:translate(0,0)} 25%{transform:translate(-4px,-3px)} 65%{transform:translate(3px,4px)} }
+    @keyframes float-c { 0%,100%{transform:translate(0,0)} 40%{transform:translate(2px,-6px)} 80%{transform:translate(-3px,2px)} }
+    @keyframes float-d { 0%,100%{transform:translate(0,0)} 20%{transform:translate(-3px,4px)} 60%{transform:translate(4px,-3px)} }
+    @keyframes float-e { 0%,100%{transform:translate(0,0)} 35%{transform:translate(4px,3px)} 75%{transform:translate(-2px,-5px)} }
+    @keyframes float-f { 0%,100%{transform:translate(0,0)} 45%{transform:translate(-4px,-4px)} 85%{transform:translate(2px,5px)} }
+
+    .pg-letter:nth-child(1) { animation: float-a 3.1s ease-in-out infinite; }
+    .pg-letter:nth-child(2) { animation: float-b 3.6s ease-in-out infinite; }
+    .pg-letter:nth-child(3) { animation: float-c 2.9s ease-in-out infinite; }
+    .pg-letter:nth-child(4) { animation: float-d 3.4s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(1) { animation: float-e 3.2s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(2) { animation: float-f 2.8s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(3) { animation: float-a 3.5s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(4) { animation: float-b 3.0s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(5) { animation: float-c 3.7s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(6) { animation: float-d 3.3s ease-in-out infinite; }
 
   </style>
 </head>
@@ -412,74 +528,148 @@
 
     </div>
 
-    <!-- CTA zone (bottom) — always visible -->
-    <div class="cta-zone">
-      <p class="check-out">Check out my</p>
+  </div>
+</section>
 
-      <div class="work-display">
-        <span class="work-ghost">W</span>
 
-        <!--
-          SVG FOLDER — replaces the "O" in WORK
-          Mac-style: front panel tilts toward viewer on hover.
-          Click: goes to projects page.
-        -->
-        <div
-          class="folder-wrapper"
-          role="button"
-          aria-label="Go to Projects"
-          onclick="window.location.href='projects.html'"
-        >
-          <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+<!-- ════════════════════════
+     SKILLS
+════════════════════════ -->
+<section class="skills-section">
+  <div class="skills-grid">
 
-            <!-- ① Back panel of folder (always visible) -->
-            <rect x="4" y="46" width="192" height="110" rx="10" fill="#5a7a30"/>
+    <div class="skill-col">
+      <h3>Software</h3>
+      <ul>
+        <li>C / C++</li>
+        <li>Python</li>
+        <li>React / Node.js</li>
+        <li>AWS (Lambda, S3, RDS)</li>
+        <li>PID Control</li>
+        <li>Machine Learning</li>
+      </ul>
+    </div>
 
-            <!-- ② Folder tab (top-left bump) -->
-            <path d="M4,46 L4,28 Q4,18 14,18 L70,18 Q80,18 84,29 L88,46 Z" fill="#5a7a30"/>
+    <div class="skill-col">
+      <h3>Engineering</h3>
+      <ul>
+        <li>Engineering Design Steps</li>
+        <li>Embedded Systems</li>
+        <li>Robotics &amp; Automation</li>
+        <li>FMEA</li>
+        <li>Fabrication &amp; Prototyping</li>
+      </ul>
+    </div>
 
-            <!-- ③ Documents layer — slides up on hover -->
-            <g class="folder-docs">
-              <!-- White paper 1 (back) -->
-              <rect x="28" y="52" width="144" height="100" rx="5" fill="#e8dcc8" opacity="0.85"/>
-              <!-- White paper 2 (front) -->
-              <rect x="20" y="58" width="144" height="100" rx="5" fill="#f0e8d8" opacity="0.95"/>
-              <!-- Lines on front paper -->
-              <rect x="34" y="78"  width="80" height="6" rx="3" fill="rgba(90,90,70,0.30)"/>
-              <rect x="34" y="92"  width="56" height="6" rx="3" fill="rgba(90,90,70,0.20)"/>
-              <rect x="34" y="106" width="68" height="6" rx="3" fill="rgba(90,90,70,0.14)"/>
-            </g>
-
-            <!-- ④ Front lid of folder — tilts toward viewer on hover -->
-            <g class="folder-front">
-              <rect x="4" y="46" width="192" height="110" rx="10" fill="#7aaa3c"/>
-              <!-- Subtle highlight strip at top of lid -->
-              <rect x="4" y="46" width="192" height="18" rx="10" fill="#8cc040" opacity="0.7"/>
-            </g>
-
-            <!-- ⑤ Orange arrow circle — appears on hover -->
-            <!-- Outer g holds the position; inner g holds the CSS scale animation -->
-            <g transform="translate(100, 101)">
-              <g class="folder-arrow">
-                <circle cx="0" cy="0" r="22" fill="#F97316"/>
-                <!-- Arrow pointing right -->
-                <polyline points="-7,-5 2,0 -7,5"
-                  fill="none" stroke="#fff" stroke-width="2.8"
-                  stroke-linecap="round" stroke-linejoin="round"/>
-                <line x1="-10" y1="0" x2="2" y2="0"
-                  stroke="#fff" stroke-width="2.8" stroke-linecap="round"/>
-              </g>
-            </g>
-
-          </svg>
-        </div>
-
-        <span class="work-ghost">RK</span>
-      </div>
-
+    <div class="skill-col">
+      <h3>Design &amp; Tools</h3>
+      <ul>
+        <li>CAD — Solidworks</li>
+        <li>Figma</li>
+        <li>Segal Design Certificate</li>
+        <li>Ideation &amp; Sketching</li>
+        <li>Rapid Prototyping</li>
+        <li>Industrial Design Methods</li>
+      </ul>
     </div>
 
   </div>
+</section>
+
+
+<!-- ════════════════════════
+     CHECK OUT MY WORK
+════════════════════════ -->
+<section class="work-section">
+  <p class="check-out">Check out my</p>
+
+  <div class="work-display">
+    <span class="work-ghost">W</span>
+
+    <div
+      class="folder-wrapper"
+      role="button"
+      aria-label="Go to Projects"
+      onclick="window.location.href='projects.html'"
+    >
+      <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+
+        <!-- ① Back panel -->
+        <rect x="4" y="46" width="192" height="110" rx="10" fill="#344524"/>
+
+        <!-- ② Folder tab -->
+        <path d="M4,46 L4,28 Q4,18 14,18 L70,18 Q80,18 84,29 L88,46 Z" fill="#344524"/>
+
+        <!-- ③ Documents — slides up on hover -->
+        <g class="folder-docs">
+          <rect x="28" y="52" width="144" height="100" rx="5" fill="#e8dcc8" opacity="0.85"/>
+          <rect x="20" y="58" width="144" height="100" rx="5" fill="#f0e8d8" opacity="0.95"/>
+          <rect x="34" y="78"  width="80" height="6" rx="3" fill="rgba(90,90,70,0.30)"/>
+          <rect x="34" y="92"  width="56" height="6" rx="3" fill="rgba(90,90,70,0.20)"/>
+          <rect x="34" y="106" width="68" height="6" rx="3" fill="rgba(90,90,70,0.14)"/>
+        </g>
+
+        <!-- ④ Front lid — tilts on hover -->
+        <g class="folder-front">
+          <rect x="4" y="46" width="192" height="110" rx="10" fill="#5C7040"/>
+          <rect x="4" y="46" width="192" height="18" rx="10" fill="#6d8a50" opacity="0.7"/>
+        </g>
+
+        <!-- ⑤ Orange arrow — appears on hover -->
+        <g transform="translate(100, 101)">
+          <g class="folder-arrow">
+            <circle cx="0" cy="0" r="22" fill="#F97316"/>
+            <polyline points="-7,-5 2,0 -7,5"
+              fill="none" stroke="#fff" stroke-width="2.8"
+              stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="-10" y1="0" x2="2" y2="0"
+              stroke="#fff" stroke-width="2.8" stroke-linecap="round"/>
+          </g>
+        </g>
+
+      </svg>
+    </div>
+
+    <span class="work-ghost">RK</span>
+  </div>
+</section>
+
+
+<!-- ════════════════════════
+     BRIDGE
+════════════════════════ -->
+<section class="bridge-section">
+  <p class="bridge-text">The work tells you what I build. The playground tells you who I am.</p>
+</section>
+
+
+<!-- ════════════════════════
+     DISCOVER MY PLAYGROUND
+════════════════════════ -->
+<section class="playground-section">
+
+  <p class="discover-text">Discover my</p>
+
+  <div class="letter-rows">
+
+    <div class="letter-row">
+      <a class="pg-letter" href="playground.html">P</a>
+      <a class="pg-letter" href="playground.html">L</a>
+      <a class="pg-letter" href="playground.html">A</a>
+      <a class="pg-letter" href="playground.html">Y</a>
+    </div>
+
+    <div class="letter-row">
+      <a class="pg-letter" href="playground.html">G</a>
+      <a class="pg-letter" href="playground.html">R</a>
+      <a class="pg-letter" href="playground.html">O</a>
+      <a class="pg-letter" href="playground.html">U</a>
+      <a class="pg-letter" href="playground.html">N</a>
+      <a class="pg-letter" href="playground.html">D</a>
+    </div>
+
+  </div>
+
 </section>
 
 
@@ -506,34 +696,59 @@
   updateNav();
 
 
-  /* ── 2. Sticky phrase scroll animation ── */
+  /* ── 2. Sticky phrase scroll animation + auto-cycle ── */
   const section  = document.getElementById('tagline-section');
   const taglines = document.querySelectorAll('.tagline');
   let   current  = 0;
+  let   autoTimer = null;
+  let   userScrolling = false;
+  let   scrollPauseTimer = null;
 
   function showPhrase(index) {
-    index = Math.max(0, Math.min(taglines.length - 1, index));
+    // wrap around for auto-cycle; clamp for scroll-driven
+    index = ((index % taglines.length) + taglines.length) % taglines.length;
     if (index === current) return;
 
-    // Exit current phrase upward
     taglines[current].classList.remove('active');
     taglines[current].classList.add('exit');
     const leaving = taglines[current];
-    setTimeout(() => leaving.classList.remove('exit'), 500);
+    setTimeout(() => leaving.classList.remove('exit'), 350);
 
-    // Enter new phrase from below
     current = index;
     taglines[current].classList.add('active');
   }
 
+  // Scroll drives phrase index (each phrase = 0.5 viewport of scroll)
   function onScroll() {
+    // Pause auto-cycle briefly while user is scrolling
+    userScrolling = true;
+    clearTimeout(scrollPauseTimer);
+    scrollPauseTimer = setTimeout(() => { userScrolling = false; }, 1200);
+
     const scrolled = window.scrollY - section.offsetTop;
-    const index    = Math.floor(scrolled / window.innerHeight);
-    showPhrase(index);
+    if (scrolled >= 0) {
+      const index = Math.floor(scrolled / (window.innerHeight * 0.5));
+      showPhrase(index);
+    }
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // Auto-cycle: advance to next phrase every 1.6s when section is visible
+  // and user isn't actively scrolling
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => {
+        if (!userScrolling) showPhrase(current + 1);
+      }, 1600);
+    } else {
+      clearInterval(autoTimer);
+      autoTimer = null;
+    }
+  }, { threshold: 0.2 });
+  observer.observe(section);
 </script>
 
 </body>
