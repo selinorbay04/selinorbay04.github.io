@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VEX Robotics | Selin Orbay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:       #F5E3C8;
+      --text:     #1A1A1A;
+      --line:     rgba(26,26,26,0.12);
+      --muted:    rgba(26,26,26,0.45);
+      --nav-h:    68px;
+      --pad-x:    clamp(24px, 6vw, 80px);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--pad-x);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    nav.scrolled {
+      background: var(--bg);
+      box-shadow: 0 1px 0 var(--line);
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 28px; letter-spacing: 2px;
+      color: #fff; text-decoration: none;
+      transition: color 0.4s ease;
+    }
+    nav.scrolled .logo { color: var(--text); }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-size: 14px; font-weight: 600; letter-spacing: 0.5px;
+      color: #fff; text-decoration: none;
+      transition: color 0.4s ease, opacity 0.2s ease;
+    }
+    nav.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { opacity: 0.55; }
+    .nav-links a.active { text-decoration: underline; text-underline-offset: 4px; }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: calc(var(--nav-h) + 24px) var(--pad-x) 36px;
+      overflow: hidden;
+      background: #1a1a2e;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,30,0.4) 0%, rgba(10,10,30,0.82) 100%);
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-kicker {
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(245,227,200,0.6); margin-bottom: 10px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(64px, 12vw, 148px);
+      letter-spacing: 3px; line-height: 0.9;
+      color: #F5E3C8; margin-bottom: 20px;
+    }
+    .hero-quote {
+      font-size: clamp(13px, 1.5vw, 16px);
+      font-style: italic; font-weight: 300;
+      color: #F5E3C8; max-width: 560px; line-height: 1.6;
+    }
+
+    /* COMING SOON */
+    .coming-soon {
+      padding: clamp(80px, 15vh, 140px) var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      text-align: center;
+    }
+    .coming-soon-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .coming-soon-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 6vw, 72px);
+      letter-spacing: 4px;
+      color: var(--text);
+    }
+    .coming-soon-text {
+      font-size: 15px; font-weight: 300; line-height: 1.7;
+      color: var(--muted); max-width: 440px;
+    }
+
+    /* PROJECT NAV */
+    .project-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px var(--pad-x);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .project-nav a {
+      font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
+      color: var(--text); text-decoration: none;
+      transition: opacity .2s;
+    }
+    .project-nav a:hover { opacity: 0.5; }
+
+    /* BACK TO TOP */
+    .back-to-top {
+      position: fixed; bottom: 28px; right: 28px;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--text); border: none;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; opacity: 0; pointer-events: none;
+      transition: opacity .3s ease;
+      z-index: 100;
+    }
+    .back-to-top.visible { opacity: 1; pointer-events: auto; }
+    .back-to-top svg path { stroke: var(--bg); }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="logo" href="index.html">SO</a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="projects.html" class="active">Projects</a>
+    <a href="playground.html">Playground</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-kicker">Robotics &amp; Competition</p>
+    <h1 class="hero-title">VEX<br>ROBOTICS</h1>
+    <p class="hero-quote">Competitive robotics — design, build, and program under pressure.</p>
+  </div>
+</header>
+
+<section class="coming-soon">
+  <span class="coming-soon-label">Work in progress</span>
+  <h2 class="coming-soon-title">COMING SOON</h2>
+  <p class="coming-soon-text">
+    This page is still being built. Check back soon for the full write-up on the VEX Robotics project.
+  </p>
+</section>
+
+<div class="project-nav">
+  <a href="projects.html">← Back to Projects</a>
+  <a href="readassist.html">Next: ReadAssist →</a>
+</div>
+
+<footer style="border-top:1px solid rgba(26,26,26,0.12);padding:24px clamp(24px,6vw,80px);background:#F5E3C8;">
+  <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:300;color:rgba(26,26,26,0.4);letter-spacing:0.5px;">Selin Orbay</span>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 13V5M9 5L4.5 9.5M9 5L13.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script>
+  const nav = document.getElementById('nav');
+  const btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+    btn.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+
+</body>
+</html>
