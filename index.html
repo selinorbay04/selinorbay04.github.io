@@ -152,43 +152,25 @@
 
 
     /* ══════════════════════════════════════
-       COMBINED STICKY SECTION
-       — Phrases animate in the upper zone
-       — "Check out my... WORK" stays fixed
-         at the bottom of the same viewport
-       300vh total: each of 4 phrases gets
-       ~half a viewport of scroll (faster)
+       PHRASE SECTION  (plain 100vh, no sticky)
+       Phrases auto-cycle; no scroll gap.
     ══════════════════════════════════════ */
     .tagline-section {
-      height: 120vh;
-      position: relative;
-      background: var(--cream);
-    }
-
-    .tagline-sticky {
-      position: sticky;
-      top: 0;
       height: 100vh;
+      background: var(--cream);
       display: flex;
       flex-direction: column;
-      /* No left/right padding here — phrase-zone handles it,
-         so the WORK row can bleed edge-to-edge */
       padding-top: calc(var(--nav-h) + 20px);
-      padding-bottom: 0;
       overflow: hidden;
     }
 
-    /* ── Upper zone: animated phrases ── */
+    /* ── Phrase zone fills the section ── */
     .phrase-zone {
       position: relative;
       flex: 1;
-      /* Taglines are position:absolute so they don't need much layout height —
-         just enough so they don't visually bleed into the WORK section */
-      min-height: clamp(180px, 22vh, 260px);
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       padding: 0 clamp(28px, 5vw, 60px);
-      margin-bottom: clamp(16px, 2vh, 32px);
     }
 
     .tagline {
@@ -512,9 +494,8 @@
       only the phrase changes)
 ════════════════════════ -->
 <section class="tagline-section" id="tagline-section">
-  <div class="tagline-sticky">
 
-    <!-- Phrase zone (top) -->
+    <!-- Phrase zone -->
     <div class="phrase-zone">
 
       <div class="tagline active" data-index="0">
@@ -535,7 +516,6 @@
 
     </div>
 
-  </div>
 </section>
 
 
@@ -704,53 +684,28 @@
   updateNav();
 
 
-  /* ── 2. Sticky phrase scroll animation + auto-cycle ── */
+  /* ── 2. Phrase auto-cycle ── */
   const section  = document.getElementById('tagline-section');
   const taglines = document.querySelectorAll('.tagline');
   let   current  = 0;
   let   autoTimer = null;
-  let   userScrolling = false;
-  let   scrollPauseTimer = null;
 
   function showPhrase(index) {
-    // wrap around for auto-cycle; clamp for scroll-driven
     index = ((index % taglines.length) + taglines.length) % taglines.length;
     if (index === current) return;
-
     taglines[current].classList.remove('active');
     taglines[current].classList.add('exit');
     const leaving = taglines[current];
     setTimeout(() => leaving.classList.remove('exit'), 350);
-
     current = index;
     taglines[current].classList.add('active');
   }
 
-  // Scroll drives phrase index (each phrase = 0.5 viewport of scroll)
-  function onScroll() {
-    // Pause auto-cycle briefly while user is scrolling
-    userScrolling = true;
-    clearTimeout(scrollPauseTimer);
-    scrollPauseTimer = setTimeout(() => { userScrolling = false; }, 1200);
-
-    const scrolled = window.scrollY - section.offsetTop;
-    if (scrolled >= 0) {
-      const index = Math.floor(scrolled / (window.innerHeight * 0.5));
-      showPhrase(index);
-    }
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  // Auto-cycle: advance to next phrase every 1.6s when section is visible
-  // and user isn't actively scrolling
+  // Cycle every 1.6s while section is visible
   const observer = new IntersectionObserver(entries => {
     if (entries[0].isIntersecting) {
       clearInterval(autoTimer);
-      autoTimer = setInterval(() => {
-        if (!userScrolling) showPhrase(current + 1);
-      }, 1600);
+      autoTimer = setInterval(() => showPhrase(current + 1), 1600);
     } else {
       clearInterval(autoTimer);
       autoTimer = null;
