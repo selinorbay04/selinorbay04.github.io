@@ -152,30 +152,25 @@
 
 
     /* ══════════════════════════════════════
-       PHRASE SECTION  (plain 100vh, no sticky)
-       Phrases auto-cycle; no scroll gap.
+       PHRASE SECTION — shrinks to content, no gap below
     ══════════════════════════════════════ */
     .tagline-section {
-      height: 100vh;
       background: var(--cream);
-      display: flex;
-      flex-direction: column;
-      padding-top: calc(var(--nav-h) + 20px);
+      padding-top: calc(var(--nav-h) + clamp(32px, 5vh, 60px));
+      padding-bottom: 0;
       overflow: hidden;
     }
 
-    /* ── Phrase zone fills the section ── */
+    /* ── Phrase zone: explicit height so absolute children show ── */
     .phrase-zone {
       position: relative;
-      flex: 1;
-      display: flex;
-      align-items: center;
+      height: clamp(80px, 13vw, 160px);
       padding: 0 clamp(28px, 5vw, 60px);
     }
 
     .tagline {
       position: absolute;
-      top: clamp(36px, 7vh, 72px);
+      top: 0;
       left: clamp(28px, 5vw, 60px);
       font-family: var(--font-display);
       font-size: clamp(52px, 9.5vw, 116px);
