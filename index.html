@@ -363,84 +363,6 @@
       text-align: center;
     }
 
-    /* ══════════════════════════════════════
-       BRIDGE SENTENCE  (site-green bg)
-    ══════════════════════════════════════ */
-    .bridge-section {
-      background: #344524;
-      padding: clamp(40px, 6vh, 72px) clamp(28px, 6vw, 80px);
-      text-align: center;
-    }
-    .bridge-text {
-      font-family: var(--font-body);
-      font-size: clamp(15px, 1.8vw, 20px);
-      font-style: italic;
-      font-weight: 300;
-      color: #FFF3DF;
-      letter-spacing: 0.3px;
-      line-height: 1.75;
-      max-width: 560px;
-      margin: 0 auto;
-    }
-
-    /* ══════════════════════════════════════
-       PLAYGROUND SECTION  (cream bg)
-    ══════════════════════════════════════ */
-    .playground-section {
-      background: var(--cream);
-      padding: clamp(40px, 6vh, 72px) 40px clamp(40px, 6vh, 72px);
-    }
-    .discover-text {
-      font-family: var(--font-display);
-      font-size: clamp(48px, 8vw, 96px);
-      color: var(--green-dark);
-      letter-spacing: 2px;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-    .letter-rows {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .letter-row {
-      display: flex;
-      gap: 0;
-    }
-    .pg-letter {
-      font-family: var(--font-display);
-      font-size: clamp(80px, 16vw, 200px);
-      line-height: 0.88;
-      letter-spacing: 0;
-      color: #8aaa5c;           /* light green default */
-      text-decoration: none;
-      transition: color 0.22s ease;
-      flex: 1;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .pg-letter:hover { color: #344524; } /* dark green on hover */
-
-    @keyframes float-a { 0%,100%{transform:translate(0,0)} 30%{transform:translate(3px,-5px)} 70%{transform:translate(-2px,3px)} }
-    @keyframes float-b { 0%,100%{transform:translate(0,0)} 25%{transform:translate(-4px,-3px)} 65%{transform:translate(3px,4px)} }
-    @keyframes float-c { 0%,100%{transform:translate(0,0)} 40%{transform:translate(2px,-6px)} 80%{transform:translate(-3px,2px)} }
-    @keyframes float-d { 0%,100%{transform:translate(0,0)} 20%{transform:translate(-3px,4px)} 60%{transform:translate(4px,-3px)} }
-    @keyframes float-e { 0%,100%{transform:translate(0,0)} 35%{transform:translate(4px,3px)} 75%{transform:translate(-2px,-5px)} }
-    @keyframes float-f { 0%,100%{transform:translate(0,0)} 45%{transform:translate(-4px,-4px)} 85%{transform:translate(2px,5px)} }
-
-    .pg-letter:nth-child(1) { animation: float-a 3.1s ease-in-out infinite; }
-    .pg-letter:nth-child(2) { animation: float-b 3.6s ease-in-out infinite; }
-    .pg-letter:nth-child(3) { animation: float-c 2.9s ease-in-out infinite; }
-    .pg-letter:nth-child(4) { animation: float-d 3.4s ease-in-out infinite; }
-    .letter-row:nth-child(2) .pg-letter:nth-child(1) { animation: float-e 3.2s ease-in-out infinite; }
-    .letter-row:nth-child(2) .pg-letter:nth-child(2) { animation: float-f 2.8s ease-in-out infinite; }
-    .letter-row:nth-child(2) .pg-letter:nth-child(3) { animation: float-a 3.5s ease-in-out infinite; }
-    .letter-row:nth-child(2) .pg-letter:nth-child(4) { animation: float-b 3.0s ease-in-out infinite; }
-    .letter-row:nth-child(2) .pg-letter:nth-child(5) { animation: float-c 3.7s ease-in-out infinite; }
-    .letter-row:nth-child(2) .pg-letter:nth-child(6) { animation: float-d 3.3s ease-in-out infinite; }
-
   </style>
 </head>
 <body>
@@ -575,31 +497,32 @@
       aria-label="Go to Projects"
       onclick="window.location.href='projects.html'"
     >
-      <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+      <svg viewBox="0 0 200 162" xmlns="http://www.w3.org/2000/svg" overflow="visible">
 
-        <!-- ① Back panel -->
-        <rect x="4" y="46" width="192" height="110" rx="10" fill="#344524"/>
+        <!-- ① Back panel + tab (dark green) -->
+        <rect x="3" y="50" width="194" height="112" rx="11" fill="#2a3d18"/>
+        <path d="M3,50 L3,27 Q3,19 12,19 L70,19 Q78,19 82,27 L89,43 Q93,50 103,50 Z" fill="#2a3d18"/>
 
-        <!-- ② Folder tab -->
-        <path d="M4,46 L4,28 Q4,18 14,18 L70,18 Q80,18 84,29 L88,46 Z" fill="#344524"/>
-
-        <!-- ③ Documents — slides up on hover -->
+        <!-- ② Paper sheet — slides up on hover -->
         <g class="folder-docs">
-          <rect x="28" y="52" width="144" height="100" rx="5" fill="#e8dcc8" opacity="0.85"/>
-          <rect x="20" y="58" width="144" height="100" rx="5" fill="#f0e8d8" opacity="0.95"/>
-          <rect x="34" y="78"  width="80" height="6" rx="3" fill="rgba(90,90,70,0.30)"/>
-          <rect x="34" y="92"  width="56" height="6" rx="3" fill="rgba(90,90,70,0.20)"/>
-          <rect x="34" y="106" width="68" height="6" rx="3" fill="rgba(90,90,70,0.14)"/>
+          <rect x="12" y="44" width="176" height="114" rx="7" fill="#f5ede0"/>
+          <rect x="26" y="74"  width="96" height="5" rx="2.5" fill="rgba(75,60,40,0.22)"/>
+          <rect x="26" y="87"  width="68" height="5" rx="2.5" fill="rgba(75,60,40,0.15)"/>
+          <rect x="26" y="100" width="80" height="5" rx="2.5" fill="rgba(75,60,40,0.10)"/>
         </g>
 
-        <!-- ④ Front lid — tilts on hover -->
+        <!-- ③ Front panel — tilts on hover -->
         <g class="folder-front">
-          <rect x="4" y="46" width="192" height="110" rx="10" fill="#5C7040"/>
-          <rect x="4" y="46" width="192" height="18" rx="10" fill="#6d8a50" opacity="0.7"/>
+          <!-- Main front body -->
+          <rect x="3" y="52" width="194" height="110" rx="11" fill="#5C7040"/>
+          <!-- Top fold-crease highlight -->
+          <rect x="3" y="52" width="194" height="13" rx="11" fill="#6d8a50" opacity="0.55"/>
+          <!-- Bottom-right gloss (Figma style) -->
+          <path d="M 197,138 Q 197,162 173,162 L 143,162 Q 175,158 197,138 Z" fill="rgba(255,255,255,0.09)"/>
         </g>
 
-        <!-- ⑤ Orange arrow — appears on hover -->
-        <g transform="translate(100, 101)">
+        <!-- ④ Orange arrow — appears on hover -->
+        <g transform="translate(100, 107)">
           <g class="folder-arrow">
             <circle cx="0" cy="0" r="22" fill="#F97316"/>
             <polyline points="-7,-5 2,0 -7,5"
@@ -615,44 +538,6 @@
 
     <span class="work-ghost">RK</span>
   </div>
-</section>
-
-
-<!-- ════════════════════════
-     BRIDGE
-════════════════════════ -->
-<section class="bridge-section">
-  <p class="bridge-text">The work tells you what I build. The playground tells you who I am.</p>
-</section>
-
-
-<!-- ════════════════════════
-     DISCOVER MY PLAYGROUND
-════════════════════════ -->
-<section class="playground-section">
-
-  <p class="discover-text">Discover my</p>
-
-  <div class="letter-rows">
-
-    <div class="letter-row">
-      <a class="pg-letter" href="playground.html">P</a>
-      <a class="pg-letter" href="playground.html">L</a>
-      <a class="pg-letter" href="playground.html">A</a>
-      <a class="pg-letter" href="playground.html">Y</a>
-    </div>
-
-    <div class="letter-row">
-      <a class="pg-letter" href="playground.html">G</a>
-      <a class="pg-letter" href="playground.html">R</a>
-      <a class="pg-letter" href="playground.html">O</a>
-      <a class="pg-letter" href="playground.html">U</a>
-      <a class="pg-letter" href="playground.html">N</a>
-      <a class="pg-letter" href="playground.html">D</a>
-    </div>
-
-  </div>
-
 </section>
 
 
