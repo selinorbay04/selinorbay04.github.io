@@ -154,6 +154,40 @@
 
 
     /* ══════════════════════════════════════
+       WHOLE BRAIN ENGINEERING PARAGRAPH
+       Northwestern purple left border (single accent only)
+    ══════════════════════════════════════ */
+    .whole-brain-section {
+      background: var(--cream);
+      padding: 0 clamp(28px, 8vw, 120px) clamp(40px, 6vh, 64px);
+      max-width: 900px;
+    }
+    .whole-brain-section p {
+      font-size: clamp(15px, 1.6vw, 18px);
+      line-height: 1.75;
+      color: var(--black);
+      font-weight: 300;
+      border-left: 3px solid #4E2A84;
+      padding-left: clamp(18px, 2vw, 28px);
+    }
+
+
+    /* ══════════════════════════════════════
+       ANCHOR STATEMENTS
+       Pull-quote style — large display text,
+       generous vertical breathing room
+    ══════════════════════════════════════ */
+    .anchor-stmt {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4vw, 50px);
+      letter-spacing: 1.5px;
+      line-height: 1.05;
+      color: var(--black);
+      margin: clamp(20px, 3.5vh, 40px) 0;
+    }
+
+
+    /* ══════════════════════════════════════
        TWO-COLUMN SECTION
        Left: portrait photo
        Right: body paragraphs (pushed right)
@@ -310,6 +344,14 @@
 
 
 <!-- ════════════════════════
+     WHOLE BRAIN ENGINEERING
+════════════════════════ -->
+<section class="whole-brain-section">
+  <p>Northwestern's approach to "whole brain engineering" has become a part of who I am over the years. I believe that the best solutions come from people who can hold technical excellence and creative thinking at once. I think it's something I'd already started to believe before I had a name for it. The Segal Design Certificate isn't a hobby alongside my CS degree; it's the other half of how I think. I'm an engineer who designs, and a designer who builds things that have to work.</p>
+</section>
+
+
+<!-- ════════════════════════
      BIO — photo + paragraphs
      Replace src with your portrait:
      assets/images/about-portrait.jpg
@@ -324,9 +366,11 @@
 
   <div class="bio-text">
     <p>
-      I'm drawn to the space where engineering gets physical: control systems,
-      automation, hands-on builds.
+      <span class="hl">I'm drawn to the space where engineering gets physical: control systems,
+      automation, hands-on builds.</span>
     </p>
+
+    <p class="anchor-stmt">I think in diagrams.</p>
 
     <p>
       My approach to any problem starts by getting everything out of my head and onto
@@ -340,10 +384,10 @@
       Outside of engineering, I sketch constantly, pen and paper for thinking, CAD for
       making. I've modeled vases, aquarium structures, things that sit somewhere between
       functional objects and design exercise. I came up through VEX Robotics, starting
-      as a team programmer and eventually captaining an 80-person team, which is
-      probably where <span class="hl">I learned that the technical problems are rarely
-      the hardest ones to solve.</span>
+      as a team programmer and eventually captaining an 80-person team.
     </p>
+
+    <p class="anchor-stmt">The technical problems are rarely the hardest ones.</p>
 
     <p>
       I value creativity, originality, and being someone people can count on.
