@@ -225,13 +225,13 @@
       padding: clamp(40px, 6vh, 72px) 0;
       display: grid;
       /* Photo gets a fixed left-padded column; text runs to the right edge */
-      grid-template-columns: clamp(28px, 6vw, 80px) minmax(0, 340px) clamp(32px, 4vw, 60px) 1fr clamp(28px, 6vw, 80px);
+      grid-template-columns: clamp(28px, 6vw, 80px) 1fr clamp(32px, 4vw, 60px) minmax(0, 340px) clamp(28px, 6vw, 80px);
       align-items: start;
     }
 
-    /* Photo sits in column 2 */
+    /* Photo sits in column 4 (right side) */
     .bio-photo {
-      grid-column: 2;
+      grid-column: 4;
       width: 100%;
       aspect-ratio: 3/4;
       object-fit: cover;
@@ -239,9 +239,9 @@
       display: block;
     }
 
-    /* Text sits in column 4 — pushed toward the right edge */
+    /* Text sits in column 2 (left side) */
     .bio-text {
-      grid-column: 4;
+      grid-column: 2;
       display: flex;
       flex-direction: column;
       gap: 22px;
@@ -383,12 +383,6 @@
 ════════════════════════ -->
 <section class="bio-section">
 
-  <img
-    class="bio-photo"
-    src="assests/images/about-portrait.gif"
-    alt="Selin Orbay"
-  >
-
   <div class="bio-text">
     <p>
       <span class="hl">I'm drawn to the space where engineering gets physical: control systems,
@@ -403,6 +397,12 @@
       building things that have to actually work in the real world.</span>
     </p>
   </div>
+
+  <img
+    class="bio-photo"
+    src="assests/images/about-portrait.gif"
+    alt="Selin Orbay"
+  >
 
 </section>
 
