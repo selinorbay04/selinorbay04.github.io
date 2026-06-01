@@ -174,17 +174,38 @@
 
     /* ══════════════════════════════════════
        ANCHOR STATEMENTS
-       Pull-quote style — large display text,
-       generous vertical breathing room
+       Full-width pull-quote — same treatment
+       as the homepage cycling phrases
     ══════════════════════════════════════ */
+    .anchor-section {
+      background: var(--cream);
+      padding: clamp(8px, 1.5vh, 16px) clamp(28px, 6vw, 80px);
+    }
+
     .anchor-stmt {
       font-family: var(--font-display);
       font-size: clamp(52px, 9.5vw, 116px);
       letter-spacing: 2px;
       line-height: 1.0;
       color: var(--black);
-      margin: clamp(20px, 3.5vh, 40px) 0;
     }
+
+    /* Text-only bio rows that appear after the photo section */
+    .bio-text-section {
+      background: var(--cream);
+      padding: 0 clamp(28px, 6vw, 80px) clamp(24px, 4vh, 40px);
+      max-width: 900px;
+    }
+    .bio-text-section p {
+      font-size: clamp(14px, 1.45vw, 16px);
+      line-height: 1.85;
+      color: var(--black);
+      font-weight: 300;
+      text-align: justify;
+      hyphens: auto;
+      margin-bottom: 16px;
+    }
+    .bio-text-section p:last-child { margin-bottom: 0; }
 
 
     /* ══════════════════════════════════════
@@ -352,9 +373,7 @@
 
 
 <!-- ════════════════════════
-     BIO — photo + paragraphs
-     Replace src with your portrait:
-     assets/images/about-portrait.jpg
+     BIO — photo + opening paragraphs
 ════════════════════════ -->
 <section class="bio-section">
 
@@ -370,8 +389,6 @@
       automation, hands-on builds.</span>
     </p>
 
-    <p class="anchor-stmt">I think in diagrams.</p>
-
     <p>
       My approach to any problem starts by getting everything out of my head and onto
       a surface — diagrams, scenarios, failure modes — until I can see the shape of it
@@ -379,22 +396,48 @@
       <span class="hl">I like problems that don't have obvious answers, and I like
       building things that have to actually work in the real world.</span>
     </p>
-
-    <p>
-      Outside of engineering, I sketch constantly, pen and paper for thinking, CAD for
-      making. I've modeled vases, aquarium structures, things that sit somewhere between
-      functional objects and design exercise. I came up through VEX Robotics, starting
-      as a team programmer and eventually captaining an 80-person team.
-    </p>
-
-    <p class="anchor-stmt">The technical problems are rarely the hardest ones.</p>
-
-    <p>
-      I value creativity, originality, and being someone people can count on.
-      I take it seriously.
-    </p>
   </div>
 
+</section>
+
+
+<!-- ════════════════════════
+     ANCHOR — I think in diagrams.
+════════════════════════ -->
+<section class="anchor-section">
+  <p class="anchor-stmt">I think in diagrams.</p>
+</section>
+
+
+<!-- ════════════════════════
+     BIO — continued (VEX paragraph)
+════════════════════════ -->
+<section class="bio-text-section">
+  <p>
+    Outside of engineering, I sketch constantly, pen and paper for thinking, CAD for
+    making. I've modeled vases, aquarium structures, things that sit somewhere between
+    functional objects and design exercise. I came up through VEX Robotics, starting
+    as a team programmer and eventually captaining an 80-person team.
+  </p>
+</section>
+
+
+<!-- ════════════════════════
+     ANCHOR — The technical problems…
+════════════════════════ -->
+<section class="anchor-section">
+  <p class="anchor-stmt">The technical problems are rarely the hardest ones.</p>
+</section>
+
+
+<!-- ════════════════════════
+     BIO — closing line
+════════════════════════ -->
+<section class="bio-text-section">
+  <p>
+    I value creativity, originality, and being someone people can count on.
+    I take it seriously.
+  </p>
 </section>
 
 
