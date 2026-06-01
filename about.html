@@ -184,11 +184,17 @@
 
     .anchor-stmt {
       font-family: var(--font-display);
-      font-size: clamp(52px, 9.5vw, 116px);
+      font-size: clamp(32px, 7.5vw, 96px);
       letter-spacing: 2px;
       line-height: 1.0;
       color: var(--black);
     }
+
+    /* colour accents inside anchor phrases */
+    .hl-brown  { color: #3d1000; }
+
+    /* purple bold for inline paragraph highlights */
+    .hl-purple { color: #4E2A84; font-weight: 700; }
 
     /* Text-only bio rows that appear after the photo section */
     .bio-text-section {
@@ -368,7 +374,7 @@
      WHOLE BRAIN ENGINEERING
 ════════════════════════ -->
 <section class="whole-brain-section">
-  <p>Northwestern's approach to "whole brain engineering" has become a part of who I am over the years. I believe that the best solutions come from people who can hold technical excellence and creative thinking at once. I think it's something I'd already started to believe before I had a name for it. The Segal Design Certificate isn't a hobby alongside my CS degree; it's the other half of how I think. I'm an engineer who designs, and a designer who builds things that have to work.</p>
+  <p>Northwestern's approach to "<span class="hl-purple">whole brain engineering</span>" has become a part of who I am over the years. I believe that the best solutions come from people who can hold technical excellence and creative thinking at once. I think it's something I'd already started to believe before I had a name for it. The Segal Design Certificate isn't a hobby alongside my CS degree; it's the other half of how I think. I'm an engineer who designs, and a designer who builds things that have to work.</p>
 </section>
 
 
@@ -405,7 +411,7 @@
      ANCHOR — I think in diagrams.
 ════════════════════════ -->
 <section class="anchor-section">
-  <p class="anchor-stmt">I think in diagrams.</p>
+  <p class="anchor-stmt">I think in <span class="hl-brown">diagrams.</span></p>
 </section>
 
 
@@ -426,7 +432,7 @@
      ANCHOR — The technical problems…
 ════════════════════════ -->
 <section class="anchor-section">
-  <p class="anchor-stmt">The technical problems are rarely the hardest ones.</p>
+  <p class="anchor-stmt">The <span class="hl-brown">technical problems</span> are <span class="hl-brown">rarely the hardest</span> ones to solve.</p>
 </section>
 
 
