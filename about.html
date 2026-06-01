@@ -191,7 +191,7 @@
     }
 
     /* colour accents inside anchor phrases */
-    .hl-brown  { color: #3d1000; }
+    .hl-brown  { color: var(--orange-burnt) }
 
     /* purple bold for inline paragraph highlights */
     .hl-purple { color: #4E2A84; font-weight: 700; }
@@ -222,7 +222,7 @@
     .bio-section {
       background: var(--cream);
       /* Full width — no max-width so text reaches the right edge */
-      padding: clamp(40px, 6vh, 72px) 0;
+      padding: clamp(48px, 8vh, 80px) 0 clamp(40px, 6vh, 72px);
       display: grid;
       /* Photo gets a fixed left-padded column; text runs to the right edge */
       grid-template-columns: clamp(28px, 6vw, 80px) 1fr clamp(32px, 4vw, 60px) minmax(0, 340px) clamp(28px, 6vw, 80px);
@@ -235,7 +235,7 @@
       width: 100%;
       aspect-ratio: 3/4;
       object-fit: cover;
-      object-position: center top;
+      object-position: top;
       display: block;
     }
 
@@ -251,58 +251,25 @@
       font-size: clamp(14px, 1.45vw, 16px);
       line-height: 1.85;
       color: var(--black);
-      font-weight: 300;         /* thinner than default 400 */
+      font-weight: 300;
       text-align: justify;      /* flush both left and right */
       hyphens: auto;            /* avoids ugly gaps on narrow lines */
     }
 
-
-    /* ══════════════════════════════════════
-       SKILLS SECTION
-       Dark brown background, 3 light boxes
-    ══════════════════════════════════════ */
-    .skills-section {
-      background: var(--brown);
-      padding: clamp(48px, 7vh, 80px) clamp(28px, 6vw, 80px);
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: clamp(16px, 2.5vw, 32px);
-    }
-
-    /* Each column lives inside a lighter box */
-    .skill-col {
-      background: rgba(255, 243, 223, 0.10);  /* translucent cream lift */
-      border: 1px solid rgba(255, 243, 223, 0.14);
-      border-radius: 6px;
-      padding: clamp(24px, 3vw, 36px) clamp(20px, 2.5vw, 32px);
-    }
-
-    .skill-col h3 {
-      font-family: var(--font-body);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: rgba(255,243,223,0.55);
-      margin-bottom: 20px;
-    }
-
-    .skill-col ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .skill-col ul li {
-      font-family: var(--font-body);
-      font-size: clamp(13px, 1.3vw, 15px);
+    .bio-text .intro-p {
+      font-size: clamp(15px, 1.6vw, 18px);
+      line-height: 1.75;
       font-weight: 400;
-      color: var(--cream);
-      line-height: 1.4;
+      text-align: left;
+    }
+
+    .bio-text .whole-brain-p {
+      font-size: clamp(15px, 1.6vw, 18px);
+      line-height: 1.75;
+      font-weight: 300;
+      border-left: 3px solid #4E2A84;
+      padding-left: clamp(18px, 2vw, 28px);
+      text-align: left;
     }
 
 
@@ -358,44 +325,19 @@
 
 
 <!-- ════════════════════════
-     INTRO PARAGRAPH
-════════════════════════ -->
-<section class="intro-section">
-  <p>
-    <span class="hl">Hi, I'm Selin Orbay.</span>
-    I'm a junior at Northwestern University studying Computer Science with a concentration
-    in Robotics and pursuing the Segal Design Certificate, which is a long way of saying
-    <span class="hl">I care equally about how things work and how they're made.</span>
-  </p>
-</section>
-
-
-<!-- ════════════════════════
-     WHOLE BRAIN ENGINEERING
-════════════════════════ -->
-<section class="whole-brain-section">
-  <p>Northwestern's approach to "<span class="hl-purple">whole brain engineering</span>" has become a part of who I am over the years. I believe that the best solutions come from people who can hold technical excellence and creative thinking at once. I think it's something I'd already started to believe before I had a name for it. The Segal Design Certificate isn't a hobby alongside my CS degree; it's the other half of how I think. I'm an engineer who designs, and a designer who builds things that have to work.</p>
-</section>
-
-
-<!-- ════════════════════════
-     BIO — photo + opening paragraphs
+     BIO — intro + whole brain + photo
 ════════════════════════ -->
 <section class="bio-section">
 
   <div class="bio-text">
-    <p>
-      <span class="hl">I'm drawn to the space where engineering gets physical: control systems,
-      automation, hands-on builds.</span>
+    <p class="intro-p">
+      <span class="hl">Hi, I'm Selin Orbay.</span>
+      I'm a junior at Northwestern University studying Computer Science with a concentration
+      in Robotics and pursuing the Segal Design Certificate, which is a long way of saying
+      <span class="hl">I care equally about how things work and how they're made.</span>
     </p>
 
-    <p>
-      My approach to any problem starts by getting everything out of my head and onto
-      a surface — diagrams, scenarios, failure modes — until I can see the shape of it
-      clearly enough to start connecting the dots.
-      <span class="hl">I like problems that don't have obvious answers, and I like
-      building things that have to actually work in the real world.</span>
-    </p>
+    <p class="whole-brain-p">Northwestern's approach to "<span class="hl-purple">whole brain engineering</span>" has become a part of who I am over the years. I believe that the best solutions come from people who can hold technical excellence and creative thinking at once. I think it's something I'd already started to believe before I had a name for it. The Segal Design Certificate isn't a hobby alongside my CS degree; it's the other half of how I think. I'm an engineer who designs, and a designer who builds things that have to work.</p>
   </div>
 
   <img
@@ -404,6 +346,25 @@
     alt="Selin Orbay"
   >
 
+</section>
+
+
+<!-- ════════════════════════
+     BIO — opening paragraphs
+════════════════════════ -->
+<section class="bio-text-section">
+  <p>
+    <span class="hl">I'm drawn to the space where engineering gets physical: control systems,
+    automation, hands-on builds.</span>
+  </p>
+
+  <p>
+    My approach to any problem starts by getting everything out of my head and onto
+    a surface — diagrams, scenarios, failure modes — until I can see the shape of it
+    clearly enough to start connecting the dots.
+    <span class="hl">I like problems that don't have obvious answers, and I like
+    building things that have to actually work in the real world.</span>
+  </p>
 </section>
 
 
@@ -444,51 +405,6 @@
     I value creativity, originality, and being someone people can count on.
     I take it seriously.
   </p>
-</section>
-
-
-<!-- ════════════════════════
-     SKILLS
-════════════════════════ -->
-<section class="skills-section">
-  <div class="skills-grid">
-
-    <div class="skill-col">
-      <h3>Software</h3>
-      <ul>
-        <li>C / C++</li>
-        <li>Python</li>
-        <li>React / Node.js</li>
-        <li>AWS (Lambda, S3, RDS)</li>
-        <li>PID Control</li>
-        <li>Machine Learning</li>
-      </ul>
-    </div>
-
-    <div class="skill-col">
-      <h3>Engineering</h3>
-      <ul>
-        <li>Engineering Design Steps</li>
-        <li>Embedded Systems</li>
-        <li>Robotics &amp; Automation</li>
-        <li>FMEA</li>
-        <li>Fabrication &amp; Prototyping</li>
-      </ul>
-    </div>
-
-    <div class="skill-col">
-      <h3>Design &amp; Tools</h3>
-      <ul>
-        <li>CAD — Solidworks</li>
-        <li>Figma</li>
-        <li>Segal Design Certificate</li>
-        <li>Ideation &amp; Sketching</li>
-        <li>Rapid Prototyping</li>
-        <li>Industrial Design Methods</li>
-      </ul>
-    </div>
-
-  </div>
 </section>
 
 
