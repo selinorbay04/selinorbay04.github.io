@@ -228,8 +228,8 @@
     .dashboard-card {
       margin: clamp(28px,4vh,48px) 0;
       padding: clamp(20px,3vw,32px);
-      border: 1px solid var(--line);
-      background: rgba(26,26,26,0.03);
+      border: 1px solid rgba(245,227,200,0.15);
+      background: var(--green);
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: clamp(20px,3vh,32px) clamp(28px,4vw,52px);
@@ -241,7 +241,7 @@
       font-weight: 600;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: rgba(26,26,26,0.45);
+      color: rgba(245,227,200,0.55);
       margin-bottom: 6px;
     }
 
@@ -249,8 +249,14 @@
       font-family: var(--font-body);
       font-size: clamp(13px,1.3vw,15px);
       font-weight: 300;
-      color: var(--text);
+      color: var(--cream);
       line-height: 1.5;
+    }
+
+    .dashboard-card .meta-tag {
+      background: rgba(245,227,200,0.15);
+      color: var(--cream);
+      border: 1px solid rgba(245,227,200,0.3);
     }
 
     .video-wrap {
