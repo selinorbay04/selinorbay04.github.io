@@ -80,9 +80,11 @@
 
 
     /* ══════════════════════════════════════
-       3 × 3 PLAYGROUND GRID
-       Labels sit on the true diagonal: (1,1) · (2,2) · (3,3)
-       Column & row gaps bleed through as 1px dividers (--divider colour).
+       3 × 3 GRID
+       3 vertical columns, 3 rows.
+       Column 1 = ART, Column 2 = SKETCHES, Column 3 = CAD.
+       Labels on the diagonal: (col1,row1) · (col2,row2) · (col3,row3)
+       1px gap bleeds --divider colour as full-height column dividers.
     ══════════════════════════════════════ */
     .pg-grid {
       position: fixed;
@@ -91,8 +93,76 @@
       grid-template-columns: 1fr 1fr 1fr;
       grid-template-rows:    1fr 1fr 1fr;
       gap: 1px;
-      background: var(--divider); /* shows through gap as full-height/width dividers */
+      background: var(--divider);
       cursor: none;
+    }
+
+
+    /* ── Explicit cell positions ──────────
+       Each category stays in its own column (vertical).
+       Labels hit the diagonal.
+    ─────────────────────────────────────── */
+
+    /* Column 1 — ART */
+    .cell-art-label { grid-column: 1; grid-row: 1; }  /* diagonal (1,1) */
+    .cell-art-img1  { grid-column: 1; grid-row: 2; }
+    .cell-art-img2  { grid-column: 1; grid-row: 3; }
+
+    /* Column 2 — SKETCHES */
+    .cell-sk-img1   { grid-column: 2; grid-row: 1; }
+    .cell-sk-label  { grid-column: 2; grid-row: 2; }  /* diagonal (2,2) */
+    .cell-sk-img2   { grid-column: 2; grid-row: 3; }
+
+    /* Column 3 — CAD */
+    .cell-cad-img1  { grid-column: 3; grid-row: 1; }
+    .cell-cad-img2  { grid-column: 3; grid-row: 2; }
+    .cell-cad-label { grid-column: 3; grid-row: 3; }  /* diagonal (3,3) */
+
+
+    /* ── Label cell ─────────────────────── */
+    .pg-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      padding: 10px 8px;
+      cursor: none;
+      box-shadow: inset 0 0 0 1px var(--cream);
+      transition: background .25s ease;
+    }
+    .pg-label:hover { background: rgba(0,0,0,0.06); }
+
+    .kw-text {
+      font-family: var(--font-graffiti);
+      line-height: 1;
+      letter-spacing: 5px;
+      display: block;
+      user-select: none;
+      text-align: center;
+      transition: letter-spacing .28s ease, filter .28s ease;
+    }
+    .pg-label:hover .kw-text { letter-spacing: 9px; filter: brightness(1.12); }
+
+    /* ART — orange */
+    .kw-art {
+      font-size: clamp(52px, 8vw, 114px);
+      color: var(--orange);
+      -webkit-text-stroke: 2.5px var(--black);
+      text-shadow: 4px 4px 0 var(--black), -1px -1px 0 var(--burnt), 6px 8px 14px rgba(0,0,0,.3);
+    }
+    /* SKETCHES — cream */
+    .kw-sketches {
+      font-size: clamp(26px, 3.8vw, 55px);
+      color: var(--cream);
+      -webkit-text-stroke: 2px var(--black);
+      text-shadow: 3px 3px 0 var(--black), -1px -1px 0 rgba(139,56,0,.5), 5px 7px 12px rgba(0,0,0,.35);
+    }
+    /* CAD — dark green */
+    .kw-cad {
+      font-size: clamp(52px, 8vw, 114px);
+      color: #1a2510;
+      -webkit-text-stroke: 2.5px rgba(245,227,200,.55);
+      text-shadow: 3px 3px 0 rgba(0,0,0,.4), 5px 7px 12px rgba(0,0,0,.3);
     }
 
 
@@ -109,64 +179,26 @@
     .pg-img img {
       width: 100%; height: 100%;
       display: block;
-      object-fit: contain;        /* full frame visible — no cropping */
+      object-fit: contain;
       object-position: center;
       transition: transform .5s ease;
     }
     .pg-img:hover img { transform: scale(1.04); }
+
+    /* sketch images need 90° counter-clockwise rotation */
+    .pg-img--rotated img          { transform: rotate(-90deg); }
+    .pg-img--rotated:hover img    { transform: rotate(-90deg) scale(1.04); }
 
     /* hover darkening overlay */
     .pg-img::before {
       content: '';
       position: absolute; inset: 0;
       background: rgba(0,0,0,0.32);
-      opacity: 0;
-      z-index: 1;
+      opacity: 0; z-index: 1;
       transition: opacity .4s ease;
       pointer-events: none;
     }
     .pg-img:hover::before { opacity: 1; }
-
-
-    /* ── Label cell ─────────────────────── */
-    .pg-label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg);
-      text-decoration: none;
-      cursor: none;
-      /* inset box-shadow = visible border that doesn't interfere with gap lines */
-      box-shadow: inset 0 0 0 1px var(--cream);
-      transition: background .25s ease;
-    }
-    .pg-label:hover { background: rgba(0,0,0,0.08); }
-
-    .pg-label-text {
-      font-family: var(--font-display);
-      font-size: clamp(28px, 3.6vw, 60px);
-      letter-spacing: 5px;
-      color: var(--cream);
-      user-select: none;
-      text-align: center;
-    }
-
-
-    /* ── Explicit grid positions ──────────
-       Labels — mathematically on the diagonal
-       (col 1, row 1), (col 2, row 2), (col 3, row 3)
-    ─────────────────────────────────────── */
-    .pg-label-art      { grid-column: 1; grid-row: 1; }
-    .pg-label-sketches { grid-column: 2; grid-row: 2; }
-    .pg-label-cad      { grid-column: 3; grid-row: 3; }
-
-    /* Images — remaining 6 cells */
-    .pg-img-r1c2 { grid-column: 2; grid-row: 1; }
-    .pg-img-r1c3 { grid-column: 3; grid-row: 1; }
-    .pg-img-r2c1 { grid-column: 1; grid-row: 2; }
-    .pg-img-r2c3 { grid-column: 3; grid-row: 2; }
-    .pg-img-r3c1 { grid-column: 1; grid-row: 3; }
-    .pg-img-r3c2 { grid-column: 2; grid-row: 3; }
 
 
     /* ══════════════════════════════════════
@@ -181,15 +213,16 @@
         column-gap: 0;
       }
 
-      /* hide all images */
       .pg-img { display: none; }
 
-      /* reset column, keep row — labels stack vertically */
-      .pg-label-art      { grid-column: 1; grid-row: 1; }
-      .pg-label-sketches { grid-column: 1; grid-row: 2; }
-      .pg-label-cad      { grid-column: 1; grid-row: 3; }
+      /* stack labels in their natural column order */
+      .cell-art-label { grid-column: 1; grid-row: 1; }
+      .cell-sk-label  { grid-column: 1; grid-row: 2; }
+      .cell-cad-label { grid-column: 1; grid-row: 3; }
 
-      .pg-label-text { font-size: clamp(56px, 15vw, 100px); }
+      .kw-art      { font-size: clamp(72px, 20vw, 120px); }
+      .kw-sketches { font-size: clamp(48px, 13vw, 88px);  }
+      .kw-cad      { font-size: clamp(72px, 20vw, 120px); }
     }
 
   </style>
@@ -212,43 +245,43 @@
 
 <!-- ════════════════════════════════════════
      3 × 3 PLAYGROUND GRID
-     Row 1 (ART):      label at col 1 · images at col 2, col 3
-     Row 2 (SKETCHES): image at col 1 · label at col 2 · image at col 3
-     Row 3 (CAD):      images at col 1, col 2 · label at col 3
+     Column 1 = ART   (label row 1 — top-left)
+     Column 2 = SKETCHES (label row 2 — centre)
+     Column 3 = CAD   (label row 3 — bottom-right)
 ════════════════════════════════════════ -->
 <div class="pg-grid">
 
-  <!-- ── Row 1 — ART ── -->
-  <a class="pg-label pg-label-art" href="art.html">
-    <span class="pg-label-text">ART</span>
+  <!-- ── Column 1 — ART ── -->
+  <a class="pg-label cell-art-label" href="art.html">
+    <span class="kw-text kw-art">ART</span>
   </a>
-  <a class="pg-img pg-img-r1c2" href="art.html">
+  <a class="pg-img cell-art-img1" href="art.html">
     <img src="assests/playground/drawings/Drawing_13.jpg" alt="Drawing 13" loading="lazy">
   </a>
-  <a class="pg-img pg-img-r1c3" href="art.html">
+  <a class="pg-img cell-art-img2" href="art.html">
     <img src="assests/playground/drawings/Drawing_01.jpg" alt="Drawing 01" loading="lazy">
   </a>
 
-  <!-- ── Row 2 — SKETCHES ── -->
-  <a class="pg-img pg-img-r2c1" href="sketches.html">
+  <!-- ── Column 2 — SKETCHES ── -->
+  <a class="pg-img pg-img--rotated cell-sk-img1" href="sketches.html">
     <img src="assests/playground/sketches/coffeemaker/coffee_maker_01.jpg" alt="Coffee maker sketch" loading="lazy">
   </a>
-  <a class="pg-label pg-label-sketches" href="sketches.html">
-    <span class="pg-label-text">SKETCHES</span>
+  <a class="pg-label cell-sk-label" href="sketches.html">
+    <span class="kw-text kw-sketches">SKETCHES</span>
   </a>
-  <a class="pg-img pg-img-r2c3" href="sketches.html">
+  <a class="pg-img pg-img--rotated cell-sk-img2" href="sketches.html">
     <img src="assests/playground/sketches/shoes/shoes_01.jpg" alt="Shoe sketch" loading="lazy">
   </a>
 
-  <!-- ── Row 3 — CAD ── -->
-  <a class="pg-img pg-img-r3c1" href="cad.html">
+  <!-- ── Column 3 — CAD ── -->
+  <a class="pg-img cell-cad-img1" href="cad.html">
     <img src="assests/playground/images_to_display/CT_.png" alt="CT scanner CAD model" loading="lazy">
   </a>
-  <a class="pg-img pg-img-r3c2" href="cad.html">
+  <a class="pg-img cell-cad-img2" href="cad.html">
     <img src="assests/playground/images_to_display/Dode_.png" alt="Dodecahedron CAD model" loading="lazy">
   </a>
-  <a class="pg-label pg-label-cad" href="cad.html">
-    <span class="pg-label-text">CAD</span>
+  <a class="pg-label cell-cad-label" href="cad.html">
+    <span class="kw-text kw-cad">CAD</span>
   </a>
 
 </div><!-- /pg-grid -->
