@@ -116,6 +116,61 @@
       display: flex; justify-content: space-between; align-items: center;
     }
     footer span { font-size: 12px; font-weight: 300; color: rgba(15,15,15,.35); letter-spacing: .5px; }
+
+    /* ── Lightbox ─────────────────────────── */
+    #lightbox {
+      position: fixed; inset: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    #lightbox.open { opacity: 1; pointer-events: all; }
+    #lb-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(10,8,6,0.92);
+      cursor: zoom-out;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    #lb-frame {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+      transform: scale(0.82);
+      transition: transform .42s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    #lightbox.open #lb-frame { transform: scale(1); }
+    #lb-img {
+      display: block;
+      max-width: 90vw; max-height: 90vh;
+      width: auto; height: auto;
+      border-radius: 6px;
+      box-shadow: 0 32px 96px rgba(0,0,0,.7), 0 8px 24px rgba(0,0,0,.4);
+      transition: opacity .18s ease;
+    }
+    #lb-close {
+      position: absolute; top: -44px; right: 0;
+      background: none; border: none; cursor: pointer;
+      color: rgba(245,227,200,.7); font-size: 20px;
+      font-family: var(--font-body); line-height: 1; padding: 6px 10px;
+      transition: color .2s, transform .2s;
+    }
+    #lb-close:hover { color: var(--burnt); transform: scale(1.25); }
+    #lb-counter {
+      position: absolute; bottom: -34px; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-body); font-size: 11px; font-weight: 600;
+      letter-spacing: 2px; color: rgba(245,227,200,.4); white-space: nowrap;
+    }
+    .lb-arrow {
+      position: fixed; top: 50%; z-index: 2;
+      background: none; border: none; cursor: pointer;
+      color: rgba(245,227,200,.55); padding: 16px;
+      transform: translateY(-50%);
+      transition: color .2s, transform .25s;
+    }
+    #lb-prev { left: clamp(10px,2vw,32px); }
+    #lb-next { right: clamp(10px,2vw,32px); }
+    #lb-prev:hover { color: var(--burnt); transform: translateY(-50%) translateX(-4px); }
+    #lb-next:hover { color: var(--burnt); transform: translateY(-50%) translateX(4px); }
   </style>
 </head>
 <body>
@@ -177,9 +232,66 @@
   <span><a href="sketches.html" style="color:rgba(15,15,15,.3);text-decoration:none;font-size:12px;font-weight:300;">← Back to Sketches</a></span>
 </footer>
 
+<!-- Lightbox -->
+<div id="lightbox">
+  <div id="lb-backdrop"></div>
+  <div id="lb-frame">
+    <button id="lb-close" aria-label="Close">✕</button>
+    <img id="lb-img" src="" alt="">
+    <div id="lb-counter"></div>
+  </div>
+  <button class="lb-arrow" id="lb-prev" aria-label="Previous">
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M19 7l-10 8 10 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="lb-arrow" id="lb-next" aria-label="Next">
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M11 7l10 8-10 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</div>
+
 <script>
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); }, { passive: true });
+
+  // Lightbox
+  (function() {
+    const lb      = document.getElementById('lightbox');
+    const lbImg   = document.getElementById('lb-img');
+    const lbCount = document.getElementById('lb-counter');
+    const items   = Array.from(document.querySelectorAll('.gallery-item'));
+    let cur = 0;
+
+    function show(i) {
+      cur = (i + items.length) % items.length;
+      const src = items[cur].querySelector('img').src;
+      const alt = items[cur].querySelector('img').alt;
+      if (lb.classList.contains('open')) {
+        lbImg.style.opacity = '0';
+        setTimeout(() => { lbImg.src = src; lbImg.alt = alt; lbImg.style.opacity = '1'; }, 160);
+      } else {
+        lbImg.src = src; lbImg.alt = alt;
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      lbCount.textContent = (cur + 1) + ' / ' + items.length;
+    }
+
+    function close() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    items.forEach((item, i) => item.addEventListener('click', e => { e.preventDefault(); show(i); }));
+    document.getElementById('lb-backdrop').addEventListener('click', close);
+    document.getElementById('lb-close').addEventListener('click', close);
+    document.getElementById('lb-prev').addEventListener('click', () => show(cur - 1));
+    document.getElementById('lb-next').addEventListener('click', () => show(cur + 1));
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape')     close();
+      if (e.key === 'ArrowLeft')  show(cur - 1);
+      if (e.key === 'ArrowRight') show(cur + 1);
+    });
+  })();
 </script>
 </body>
 </html>
