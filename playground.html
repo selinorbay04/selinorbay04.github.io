@@ -179,15 +179,39 @@
     .pg-img img {
       width: 100%; height: 100%;
       display: block;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
       transition: transform .5s ease;
     }
     .pg-img:hover img { transform: scale(1.04); }
 
-    /* sketch images need 90° counter-clockwise rotation */
-    .pg-img--rotated img          { transform: rotate(-90deg); }
-    .pg-img--rotated:hover img    { transform: rotate(-90deg) scale(1.04); }
+    /* sketch images: rotated -90° and scaled to fill the landscape cell */
+    .pg-img--rotated img {
+      position: absolute;
+      top: 50%; left: 50%;
+      /* swap cell dimensions: pre-rotation width = cell height, pre-rotation height = cell width */
+      width:  calc((100vh - var(--nav-h)) / 3);
+      height: calc(100vw / 3);
+      object-fit: cover;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      transition: transform .5s ease;
+    }
+    .pg-img--rotated:hover img {
+      transform: translate(-50%, -50%) rotate(-90deg) scale(1.04);
+    }
+
+    /* split pair: two images side-by-side in one cell */
+    .split-pair {
+      display: flex;
+      width: 100%; height: 100%;
+    }
+    .pg-img .split-pair img {
+      width: 50%; height: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .pg-img:hover .split-pair img { transform: scale(1.04); }
 
     /* hover darkening overlay */
     .pg-img::before {
@@ -259,7 +283,10 @@
     <img src="assests/playground/drawings/Drawing_13.jpg" alt="Drawing 13" loading="lazy">
   </a>
   <a class="pg-img cell-art-img2" href="art.html">
-    <img src="assests/playground/drawings/Drawing_01.jpg" alt="Drawing 01" loading="lazy">
+    <div class="split-pair">
+      <img src="assests/playground/drawings/Drawing_03.jpg" alt="Drawing 03" loading="lazy">
+      <img src="assests/playground/drawings/Drawing_04.jpg" alt="Drawing 04" loading="lazy">
+    </div>
   </a>
 
   <!-- ── Column 2 — SKETCHES ── -->
