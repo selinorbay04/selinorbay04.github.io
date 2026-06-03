@@ -183,6 +183,10 @@
     }
     .cat-card:hover img { transform: scale(1.05); }
 
+    /* Thumbnails that need 90° CCW correction (coffeemaker, shoes, furniture) */
+    .cat-card--rotated img       { transform: rotate(-90deg); }
+    .cat-card--rotated:hover img { transform: rotate(-90deg) scale(1.05); }
+
     /* hover darkening overlay — same approach as projects.html */
     .cat-card::before {
       content: '';
@@ -326,7 +330,7 @@
   </a>
 
   <!-- 2 — Coffee Maker -->
-  <a class="cat-card" href="coffeemaker.html">
+  <a class="cat-card cat-card--rotated" href="coffeemaker.html">
     <img src="assests/playground/sketches/coffeemaker/coffee_maker_01.jpg" alt="Coffee Maker sketches" loading="lazy">
     <div class="cat-label">
       <span class="cat-num">02</span>
@@ -346,7 +350,7 @@
   </a>
 
   <!-- 4 — Shoes -->
-  <a class="cat-card" href="shoes.html">
+  <a class="cat-card cat-card--rotated" href="shoes.html">
     <img src="assests/playground/sketches/shoes/shoes_01.jpg" alt="Shoe sketches" loading="lazy">
     <div class="cat-label">
       <span class="cat-num">04</span>
@@ -356,7 +360,7 @@
   </a>
 
   <!-- 5 — Furniture (full-width strip) -->
-  <a class="cat-card" href="furniture.html">
+  <a class="cat-card cat-card--rotated" href="furniture.html">
     <img src="assests/playground/sketches/furniture/furniture_04.jpg" alt="Furniture sketches" loading="lazy">
     <div class="cat-label">
       <span class="cat-num">05</span>
