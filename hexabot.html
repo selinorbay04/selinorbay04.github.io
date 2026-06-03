@@ -125,7 +125,7 @@
 
 
     /* ══════════════════════════════════════
-       CLICK TO SEE + PROJECT CARDS
+       CLICK TO SEE + PROJECT FLIP CARDS
     ══════════════════════════════════════ */
     .cta-label {
       text-align: center;
@@ -144,17 +144,43 @@
       padding: 0 3px 3px;
     }
 
+    /* Outer link — establishes dimensions + perspective */
     .proj-card {
       position: relative;
       aspect-ratio: 4/3;
-      overflow: hidden;
       display: block;
       text-decoration: none;
-      background: #1a1a1a;
       cursor: pointer;
+      perspective: 900px;
     }
 
-    .proj-card img {
+    /* Inner container — flips on hover / .flipped */
+    .proj-card-inner {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
+    }
+
+    .proj-card:hover .proj-card-inner,
+    .proj-card.flipped .proj-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    /* Shared face styles */
+    .proj-card-front,
+    .proj-card-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      overflow: hidden;
+    }
+
+    /* ── Front face ── */
+    .proj-card-front { background: #1a1a1a; }
+
+    .proj-card-front img {
       position: absolute;
       inset: 0;
       width: 100%; height: 100%;
@@ -163,20 +189,17 @@
       transition: transform 0.5s ease;
     }
 
-    .proj-card:hover img {
+    /* Scale image on front-face hover (before flip) */
+    .proj-card:not(.flipped):hover .proj-card-front img {
       transform: scale(1.04);
     }
 
-    /* Warm dark gradient overlay */
-    .proj-card::after {
+    /* Gradient overlay on front */
+    .proj-card-front::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to bottom,
-        transparent 30%,
-        rgba(40, 15, 0, 0.82) 100%
-      );
+      background: linear-gradient(to bottom, transparent 30%, rgba(40,15,0,0.82) 100%);
     }
 
     .proj-card-label {
@@ -193,6 +216,25 @@
       line-height: 1;
       color: #F5E3C8;
       display: block;
+    }
+
+    /* ── Back face ── */
+    .proj-card-back {
+      transform: rotateY(180deg);
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(20px, 3.5vw, 40px);
+      border: 1px solid rgba(245,227,200,0.1);
+    }
+
+    .proj-card-back p {
+      font-family: var(--font-body);
+      font-size: clamp(12px, 1.15vw, 14px);
+      font-weight: 300;
+      line-height: 1.7;
+      color: #F5E3C8;
     }
 
 
@@ -298,19 +340,31 @@
 
   <!-- Gait Correction -->
   <a class="proj-card" href="gait-correction.html">
-    <!-- assets/images/hexabot/gait-thumb.jpg — top-down robot photo -->
-    <img src="assests/images/projects/hexabot/gait-hero.gif" alt="Gait Correction with Q-Learning">
-    <div class="proj-card-label">
-      <span>GAIT CORRECTION WITH Q-LEARNING</span>
+    <div class="proj-card-inner">
+      <div class="proj-card-front">
+        <img src="assests/images/projects/hexabot/gait-hero.gif" alt="Gait Correction with Q-Learning">
+        <div class="proj-card-label">
+          <span>GAIT CORRECTION WITH Q-LEARNING</span>
+        </div>
+      </div>
+      <div class="proj-card-back">
+        <p>The SpiderPi hexapod consistently veered left due to small mechanical asymmetries that couldn't be corrected by hand. We framed this as a reinforcement learning problem: a Q-learning agent that observes yaw error and selects stride timing adjustments in real time — no manual tuning required.</p>
+      </div>
     </div>
   </a>
 
   <!-- Mapping -->
   <a class="proj-card" href="mapping.html">
-    <!-- assets/images/hexabot/mapping-thumb.jpg — robot in corridor -->
-    <img src="assests/images/projects/hexabot/mapping-hero.gif" alt="Mapping an Unknown Maze">
-    <div class="proj-card-label">
-      <span>MAPPING AN UNKNOWN MAZE</span>
+    <div class="proj-card-inner">
+      <div class="proj-card-front">
+        <img src="assests/images/projects/hexabot/mapping-hero.gif" alt="Mapping an Unknown Maze">
+        <div class="proj-card-label">
+          <span>MAPPING AN UNKNOWN MAZE</span>
+        </div>
+      </div>
+      <div class="proj-card-back">
+        <p>Given a completely unknown maze, the robot had to explore every corridor, build a grid map of what it found, and return to its starting position — using only a single sonar sensor and dead-reckoned position estimates. No prior layout, no external localization.</p>
+      </div>
     </div>
   </a>
 
@@ -356,6 +410,17 @@
     btt.classList.toggle('visible', window.scrollY > 400);
   }, { passive: true });
   btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  document.querySelectorAll('.proj-card').forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      if (window.matchMedia('(hover: none)').matches) {
+        if (!this.classList.contains('flipped')) {
+          e.preventDefault();
+          this.classList.add('flipped');
+        }
+      }
+    });
+  });
 </script>
 
 </body>

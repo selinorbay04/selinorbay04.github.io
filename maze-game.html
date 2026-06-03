@@ -220,6 +220,38 @@
 
 
     /* ══════════════════════════════════════
+       DASHBOARD CARD
+    ══════════════════════════════════════ */
+    .dashboard-card {
+      margin: clamp(28px,4vh,48px) var(--pad-x);
+      padding: clamp(20px,3vw,32px);
+      border: 1px solid var(--line);
+      background: rgba(26,26,26,0.03);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(20px,3vh,32px) clamp(28px,4vw,52px);
+    }
+
+    .dash-label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.45);
+      margin-bottom: 6px;
+    }
+
+    .dash-value {
+      font-family: var(--font-body);
+      font-size: clamp(13px,1.3vw,15px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+
+    /* ══════════════════════════════════════
        SHARED SECTION STYLES
     ══════════════════════════════════════ */
     .section {
@@ -447,35 +479,39 @@
      META STRIP
      Full-width subtitle, then left meta / right photo
 ════════════════════════ -->
-<section class="meta-strip">
-  <div class="meta-left">
-
-    <div class="meta-item">
-      <label>Year</label>
-      <span>Feb 2024 – Mar 2024</span>
-    </div>
-
-    <div class="meta-item">
-      <label>Role</label>
-      <span>Programmer + Hardware Assembly</span>
-    </div>
-
-    <div class="meta-item">
-      <label>Tags</label>
-      <div class="tags">
-        <span class="tag">Embedded C</span>
-        <span class="tag">RF Communication</span>
-        <span class="tag">Backtracking</span>
-        <span class="tag">MicroBit</span>
-        <span class="tag">State Machine</span>
-      </div>
-    </div>
-
+<!-- ════════════════════════
+     DASHBOARD CARD
+════════════════════════ -->
+<div class="dashboard-card">
+  <div>
+    <p class="dash-label">Goal</p>
+    <p class="dash-value">Build a human-in-the-loop maze robot that autonomously handles navigation but defers to a wireless controller at decision junctions</p>
   </div>
-
-  <div class="meta-photo-wrap">
-    <img class="meta-photo" src="assests/images/projects/maze-game/robot.gif" alt="Line-following robot">
+  <div>
+    <p class="dash-label">Role</p>
+    <p class="dash-value">Programmer + Hardware Assembly</p>
   </div>
+  <div>
+    <p class="dash-label">Skills</p>
+    <div class="tags">
+      <span class="tag">Embedded C</span>
+      <span class="tag">RF Communication</span>
+      <span class="tag">State Machines</span>
+      <span class="tag">Sensor Integration</span>
+      <span class="tag">Backtracking Algorithm</span>
+      <span class="tag">Hardware Debugging</span>
+    </div>
+  </div>
+  <div>
+    <p class="dash-label">Outcome</p>
+    <p class="dash-value">Full maze navigation demonstrated · hardware shadow bug diagnosed and fixed with underside LED fill lighting · clean RF communication between two micro:bits</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<section class="section">
+  <p class="body-text">The goal was to build a maze-navigating robot that sits at the boundary between autonomous and human-controlled: the robot handles line following, obstacle detection, and backtracking on its own, but pauses at decision junctions and defers to a human operator via a wireless handheld controller. The system then autonomously retraces the correct path back to start once the finish is reached. Everything — driving logic, RF communication, and state tracking — was written from scratch in C on two micro:bit v2 microcontrollers.</p>
 </section>
 
 <hr class="divider">

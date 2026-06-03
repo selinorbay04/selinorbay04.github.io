@@ -224,6 +224,39 @@
       border-radius: 3px;
     }
 
+
+    /* ══════════════════════════════════════
+       DASHBOARD CARD
+    ══════════════════════════════════════ */
+    .dashboard-card {
+      margin: clamp(28px,4vh,48px) 0;
+      padding: clamp(20px,3vw,32px);
+      border: 1px solid var(--line);
+      background: rgba(26,26,26,0.03);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(20px,3vh,32px) clamp(28px,4vw,52px);
+    }
+
+    .dash-label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.45);
+      margin-bottom: 6px;
+    }
+
+    .dash-value {
+      font-family: var(--font-body);
+      font-size: clamp(13px,1.3vw,15px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+
     /* Two stacked videos on the right */
     .video-wrap {
       position: relative;
@@ -440,44 +473,37 @@
   <hr class="divider">
 
   <!-- ════════════════════════
-       META STRIP
+       DASHBOARD CARD
   ════════════════════════ -->
-  <div class="meta-section">
-    <div class="meta-grid">
-
-      <div class="meta-left">
-
-        <div class="meta-item">
-          <p class="meta-label">Year</p>
-          <p class="meta-value">Mar 2026 – Apr 2026</p>
-        </div>
-
-        <div class="meta-item">
-          <p class="meta-label">Role</p>
-          <p class="meta-value">Programmer</p>
-        </div>
-
-        <div class="meta-item">
-          <p class="meta-label">Tags</p>
-          <div class="meta-tags">
-            <span class="meta-tag">Dead-End Sonar</span>
-            <span class="meta-tag">Sonar Sensor</span>
-            <span class="meta-tag">Wandering Algorithm</span>
-            <span class="meta-tag">Mapping Algorithm</span>
-          </div>
-        </div>
-
+  <div class="dashboard-card">
+    <div>
+      <p class="dash-label">Goal</p>
+      <p class="dash-value">Autonomous maze exploration and return-to-start on a hexapod using only sonar sensing and dead-reckoning — no prior map</p>
+    </div>
+    <div>
+      <p class="dash-label">Role</p>
+      <p class="dash-value">Programmer</p>
+    </div>
+    <div>
+      <p class="dash-label">Skills</p>
+      <div class="meta-tags">
+        <span class="meta-tag">Dead Reckoning</span>
+        <span class="meta-tag">Sonar Sensing</span>
+        <span class="meta-tag">Path Planning</span>
+        <span class="meta-tag">Depth-First Search</span>
+        <span class="meta-tag">Python</span>
+        <span class="meta-tag">Real-Time Mapping</span>
       </div>
-
-      <!-- Right: first video only -->
-      <div class="meta-right">
-        <div class="video-wrap">
-          <iframe src="https://www.youtube.com/embed/n77c9bGH0yg?si=eCFgO_SAKz3bn-__&rel=0" title="Mapping demo 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-      </div>
-
+    </div>
+    <div>
+      <p class="dash-label">Outcome</p>
+      <p class="dash-value">Successful maze exploration and backtrack-to-start · sonar noise resolved with median filtering · drift bounded by landmark-based origin detection</p>
     </div>
   </div>
+
+  <hr class="divider">
+
+  <p class="body-text">Given a completely unknown maze and no prior map, the robot needed to explore every reachable corridor, build a grid representation of what it found, and return to its starting position. The challenge was doing this with only a single front-facing sonar sensor and no external localization — no GPS, no camera, no pre-loaded layout. The system had to decide where to go, track where it had been, and know when it was done, entirely from its own dead-reckoned position estimate.</p>
 
   <hr class="divider">
 

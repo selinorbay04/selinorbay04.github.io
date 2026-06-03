@@ -213,6 +213,38 @@
 
 
     /* ══════════════════════════════════════
+       DASHBOARD CARD
+    ══════════════════════════════════════ */
+    .dashboard-card {
+      margin: clamp(28px,4vh,48px) var(--pad-x);
+      padding: clamp(20px,3vw,32px);
+      border: 1px solid var(--line);
+      background: rgba(26,26,26,0.03);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(20px,3vh,32px) clamp(28px,4vw,52px);
+    }
+
+    .dash-label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.45);
+      margin-bottom: 6px;
+    }
+
+    .dash-value {
+      font-family: var(--font-body);
+      font-size: clamp(13px,1.3vw,15px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+
+    /* ══════════════════════════════════════
        SHARED SECTION STYLES
     ══════════════════════════════════════ */
     .section {
@@ -431,31 +463,40 @@
      META STRIP
      Vertical line between left meta column and right photo
 ════════════════════════ -->
-<section class="meta-strip">
-
-  <div class="meta-left">
-    <div class="meta-item">
-      <label>Year</label>
-      <span>Sept 2024 – Mar 2025</span>
-    </div>
-    <div class="meta-item">
-      <label>Role</label>
-      <span>Designer + Fabricator</span>
-    </div>
-    <div class="meta-item">
-      <label>Tags</label>
-      <div class="tags">
-        <span class="tag">Product Design</span>
-        <span class="tag">Fabrication</span>
-        <span class="tag">DFR</span>
-      </div>
+<!-- ════════════════════════
+     DASHBOARD CARD
+════════════════════════ -->
+<div class="dashboard-card">
+  <div>
+    <p class="dash-label">Goal</p>
+    <p class="dash-value">Design a removable waterproofing liner and runoff collection system for a CT scanner used with live aquatic animals at Shedd Aquarium</p>
+  </div>
+  <div>
+    <p class="dash-label">Role</p>
+    <p class="dash-value">Designer + Fabricator</p>
+  </div>
+  <div>
+    <p class="dash-label">Skills</p>
+    <div class="tags">
+      <span class="tag">Product Design</span>
+      <span class="tag">FMEA</span>
+      <span class="tag">Fabrication</span>
+      <span class="tag">CAD (SolidWorks)</span>
+      <span class="tag">DFR</span>
+      <span class="tag">Heat Welding</span>
+      <span class="tag">Material Selection</span>
     </div>
   </div>
-
-  <div class="meta-photo-wrap">
-    <img class="meta-photo" src="assests/images/projects/waterguard/device.gif" alt="WaterGuard device">
+  <div>
+    <p class="dash-label">Outcome</p>
+    <p class="dash-value">Setup time cut from 45 min to under 3 min (>90% reduction) · zero water contact · zero radiographic artifacts · full-scale prototype installed on-site</p>
   </div>
+</div>
 
+<hr class="divider">
+
+<section class="section">
+  <p class="body-text">Shedd Aquarium needed to scan live aquatic animals in a CT scanner designed for dry operating rooms. Their team was spending 45+ minutes improvising a plastic-and-tape moisture barrier before every procedure — fragile, inconsistent, and stressful for the animals. The goal was to design a clinician-ready waterproofing system: fast to install, fully removable, and guaranteed not to interfere with the imaging beam or require any permanent modifications to the scanner.</p>
 </section>
 
 <hr class="divider">
@@ -607,7 +648,7 @@
 ════════════════════════ -->
 <div class="project-nav">
   <a href="projects.html">← Back to Projects</a>
-  <a href="vex.html">Next: VEX Robotics →</a>
+  <span style="font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(26,26,26,0.3);">Coming Soon</span>
 </div>
 
 <!-- ════════════════════════
