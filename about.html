@@ -144,7 +144,7 @@
     }
 
     .intro-section p {
-      font-size: clamp(15px, 1.6vw, 18px);
+      font-size: clamp(14px, 1.45vw, 16px);
       line-height: 1.75;
       color: var(--black);
     }
@@ -159,11 +159,11 @@
     ══════════════════════════════════════ */
     .whole-brain-section {
       background: var(--cream);
-      padding: 0 clamp(28px, 8vw, 120px) clamp(40px, 6vh, 64px);
+      padding: 0 clamp(28px, 8vw, 120px) 0;
       max-width: 900px;
     }
     .whole-brain-section p {
-      font-size: clamp(15px, 1.6vw, 18px);
+      font-size: clamp(14px, 1.45vw, 16px);
       line-height: 1.75;
       color: var(--black);
       font-weight: 300;
@@ -221,17 +221,15 @@
     ══════════════════════════════════════ */
     .bio-section {
       background: var(--cream);
-      /* Full width — no max-width so text reaches the right edge */
-      padding: clamp(48px, 8vh, 80px) 0 clamp(40px, 6vh, 72px);
+      padding: clamp(28px, 4vh, 48px) 0 0;
       display: grid;
-      /* Photo gets a fixed left-padded column; text runs to the right edge */
-      grid-template-columns: clamp(28px, 6vw, 80px) 1fr clamp(32px, 4vw, 60px) minmax(0, 340px) clamp(28px, 6vw, 80px);
+      grid-template-columns: clamp(28px, 6vw, 80px) minmax(0, 374px) clamp(32px, 4vw, 60px) 1fr clamp(28px, 6vw, 80px);
       align-items: start;
     }
 
-    /* Photo sits in column 4 (right side) */
+    /* Photo sits in column 2 (left side), 10% larger than before */
     .bio-photo {
-      grid-column: 4;
+      grid-column: 2;
       width: 100%;
       aspect-ratio: 3/4;
       object-fit: cover;
@@ -239,9 +237,9 @@
       display: block;
     }
 
-    /* Text sits in column 2 (left side) */
+    /* Text sits in column 4 (right side) */
     .bio-text {
-      grid-column: 2;
+      grid-column: 4;
       display: flex;
       flex-direction: column;
       gap: 22px;
@@ -257,7 +255,7 @@
     }
 
     .bio-text .intro-p {
-      font-size: clamp(15px, 1.6vw, 18px);
+      font-size: clamp(14px, 1.45vw, 16px);
       line-height: 1.75;
       font-weight: 400;
       text-align: left;
@@ -329,6 +327,12 @@
 ════════════════════════ -->
 <section class="bio-section">
 
+  <img
+    class="bio-photo"
+    src="assests/images/about-portrait.gif"
+    alt="Selin Orbay"
+  >
+
   <div class="bio-text">
     <p class="intro-p">
       <span class="hl">Hi, I'm Selin Orbay.</span>
@@ -339,12 +343,6 @@
 
     <p class="whole-brain-p">Northwestern's approach to "<span class="hl-purple">whole brain engineering</span>" has become a part of who I am over the years. I believe that the best solutions come from people who can hold technical excellence and creative thinking at once. I think it's something I'd already started to believe before I had a name for it. The Segal Design Certificate isn't a hobby alongside my CS degree; it's the other half of how I think. I'm an engineer who designs, and a designer who builds things that have to work.</p>
   </div>
-
-  <img
-    class="bio-photo"
-    src="assests/images/about-portrait.gif"
-    alt="Selin Orbay"
-  >
 
 </section>
 
