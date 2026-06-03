@@ -260,15 +260,34 @@
     const items   = Array.from(document.querySelectorAll('.gallery-item'));
     let cur = 0;
 
+    function applyImage(src, alt) {
+      lbImg.alt = alt;
+      lbImg.onload = function() {
+        if (this.naturalHeight > this.naturalWidth) {
+          // portrait file → rotate to landscape
+          this.style.transform = 'rotate(-90deg)';
+          this.style.maxWidth  = '90vh';
+          this.style.maxHeight = '90vw';
+        } else {
+          this.style.transform = 'none';
+          this.style.maxWidth  = '90vw';
+          this.style.maxHeight = '90vh';
+        }
+        this.style.opacity = '1';
+      };
+      lbImg.src = src;
+      if (lbImg.complete && lbImg.naturalWidth) lbImg.onload.call(lbImg);
+    }
+
     function show(i) {
       cur = (i + items.length) % items.length;
       const src = items[cur].querySelector('img').src;
       const alt = items[cur].querySelector('img').alt;
       if (lb.classList.contains('open')) {
         lbImg.style.opacity = '0';
-        setTimeout(() => { lbImg.src = src; lbImg.alt = alt; lbImg.style.opacity = '1'; }, 160);
+        setTimeout(() => applyImage(src, alt), 160);
       } else {
-        lbImg.src = src; lbImg.alt = alt;
+        applyImage(src, alt);
         lb.classList.add('open');
         document.body.style.overflow = 'hidden';
       }
