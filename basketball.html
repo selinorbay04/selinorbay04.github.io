@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Autonomous Quadrotor Control — Selin Orbay</title>
+  <title>Basketball Shot Classifier — Selin Orbay</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
@@ -95,7 +95,7 @@
       inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center 45%;   /* portrait photo — keep drone + marker in frame */
+      object-position: center 62%;   /* portrait photo — keep hoop + sensor unit in frame */
       opacity: 0.6;
     }
 
@@ -302,7 +302,7 @@
       padding: clamp(48px, 7vh, 72px) 0;
     }
 
-    /* Separator: a step response settling onto a hairline setpoint */
+    /* Separator: an impact spike ringing down onto a hairline */
     .zz-sep {
       display: flex;
       align-items: center;
@@ -398,32 +398,65 @@
     }
 
 
+    /* ── Fitted rows: media hugs its (height-capped) image,
+          text takes the remaining width ── */
+    .zz-row.fit       { grid-template-columns: auto 1fr; }
+    .zz-row.fit.flip  { grid-template-columns: 1fr auto; }
+    .zz-row.fit .zz-text { max-width: 600px; }
+
+    .fit-fig { width: fit-content; max-width: 100%; }
+    .fit-fig .caption { width: 0; min-width: 100%; }   /* caption wraps to image width */
+    .zz-row.fit.flip .fit-fig { justify-self: end; }
+
+    .photo,
+    .plot {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: 0 6px 20px rgba(26,26,26,0.06);
+    }
+    .photo { max-height: 520px; }
+    .plot  { max-height: 560px; background: #fff; }
+
+
     /* ══════════════════════════════════════
-       ASIDE BAND (DLPF triptych)
+       METRICS TABLE
     ══════════════════════════════════════ */
-    .aside-band {
-      background: var(--green);
-      color: var(--cream);
-      padding: clamp(40px, 6vh, 64px) var(--pad-x);
+    .metrics {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 24px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 300;
+      font-variant-numeric: tabular-nums;
+      color: var(--text);
     }
-
-    .aside-band .zz-heading { color: var(--cream); }
-
-    .aside-band .zz-body {
-      color: rgba(245,227,200,0.85);
-      max-width: 760px;
-      margin-bottom: clamp(24px, 4vh, 36px);
+    .metrics th {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.45);
+      text-align: right;
+      padding: 0 0 8px 12px;
+      border-bottom: 1px solid var(--line);
     }
-    .aside-band .zz-body code { background: rgba(245,227,200,0.12); }
-
-    .triptych {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: clamp(12px, 1.6vw, 20px);
+    .metrics td {
+      text-align: right;
+      padding: 7px 0 7px 12px;
+      border-bottom: 1px solid var(--line);
     }
-    .triptych .graph { border-color: transparent; box-shadow: none; }
-
-    .aside-band .caption { color: rgba(245,227,200,0.65); max-width: none; }
+    .metrics th:first-child,
+    .metrics td:first-child { text-align: left; padding-left: 0; }
+    .metrics tfoot td {
+      font-weight: 500;
+      border-top: 1px solid var(--text);
+      border-bottom: none;
+    }
 
 
     /* ══════════════════════════════════════
@@ -487,6 +520,12 @@
     .back-to-top:hover { transform: translateY(-3px); }
 
 
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+    }
+
+
     /* ══════════════════════════════════════
        RESPONSIVE
     ══════════════════════════════════════ */
@@ -500,7 +539,11 @@
         gap: 20px;
       }
 
-      .triptych { grid-template-columns: 1fr; }
+      .zz-row.fit,
+      .zz-row.fit.flip { grid-template-columns: 1fr; }
+      .zz-row.fit .fit-fig,
+      .zz-row.fit.flip .fit-fig { justify-self: start; }
+      .photo { max-height: 440px; }
     }
 
   </style>
@@ -526,11 +569,11 @@
      HERO
 ════════════════════════ -->
 <section class="hero">
-  <img class="hero-photo" src="assests/images/projects/quadrotor/quadrotor-hero.png" alt="Custom-built quadrotor with an ArUco fiducial marker mounted on top, used for camera-based position tracking.">
+  <img class="hero-photo" src="assests/images/projects/basketball/bball-hero.png" alt="Mini basketball hoop instrumented with a microphone, two piezo vibration sensors, and an ESP32 wired on a breadboard.">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <p class="hero-kicker">Embedded Control · CS/ME 410 · Northwestern</p>
-    <h1 class="hero-title">AUTONOMOUS<br>QUADROTOR CONTROL</h1>
+    <p class="hero-kicker">Machine Learning &amp; Sensing · CS 396 · Northwestern</p>
+    <h1 class="hero-title">BASKETBALL<br>SHOT CLASSIFIER</h1>
   </div>
 </section>
 
@@ -542,7 +585,7 @@
   ════════════════════════ -->
   <div class="quote-section">
     <blockquote>
-      "Our code was right. Our data was clean. And then it had to fly."
+      "A rim make and a rim miss sound identical the instant the ball hits — the difference is all in what happens next."
     </blockquote>
   </div>
 
@@ -554,28 +597,27 @@
   <div class="dashboard-card">
     <div>
       <p class="dash-label">Goal</p>
-      <p class="dash-value">Build a quadrotor from bare parts and write every layer of its flight software — raw IMU registers to camera-based autonomous position hold.</p>
+      <p class="dash-value">Classify basketball shot outcomes from sound and vibration alone — no camera, no IR beam-break — using low-cost sensors on a mini hoop.</p>
     </div>
     <div>
       <p class="dash-label">Role</p>
-      <p class="dash-value">Controls &amp; embedded software; two-person team with Michael Bayer.</p>
+      <p class="dash-value">Multimodal sensing + ML pipeline, in a three-person team (Selin Orbay, Shayan Shabani, Aaron Ragsdale).</p>
     </div>
     <div>
       <p class="dash-label">Skills</p>
       <div class="meta-tags">
-        <span class="meta-tag">C++</span>
         <span class="meta-tag">Python</span>
-        <span class="meta-tag">Cascaded PID control</span>
-        <span class="meta-tag">Complementary filtering</span>
-        <span class="meta-tag">BMI088 IMU / I²C</span>
-        <span class="meta-tag">Raspberry Pi Zero 2W</span>
-        <span class="meta-tag">ArUco camera tracking</span>
-        <span class="meta-tag">Shared memory</span>
+        <span class="meta-tag">scikit-learn</span>
+        <span class="meta-tag">Random Forest / SVM</span>
+        <span class="meta-tag">Time-domain feature engineering</span>
+        <span class="meta-tag">ESP32 firmware</span>
+        <span class="meta-tag">I2S mic + dual-piezo sensing</span>
+        <span class="meta-tag">Signal processing</span>
       </div>
     </div>
     <div>
       <p class="dash-label">Outcome</p>
-      <p class="dash-value">Manual stabilized flight and camera-based X/Y/Z + yaw autonomy working; reached genuine autonomous flight, not fully fine-tuned before the 10-week quarter ended.</p>
+      <p class="dash-value">Random Forest at 68% validation accuracy (0.67 macro-F1) across five shot outcomes, with a real-time live demo — and an honest holdout set that exposed the generalization gap.</p>
     </div>
   </div>
 
@@ -585,204 +627,138 @@
        INTRO LEDE
   ════════════════════════ -->
   <p class="lede">
-    Ten weeks from a bare Raspberry Pi and an IMU to a quadrotor that holds its own position
-    from an overhead camera. Michael and I built every layer by hand — sensor fusion, PID loops
-    for pitch, roll, and yaw, and camera feedback on top. Here's the build, told through the data.
+    Can you tell a made shot from a miss without seeing the ball? We tried, using only a
+    microphone and two vibration sensors on a mini hoop. The catch: a rim make and a rim miss
+    hit the rim almost identically — the real signal is in the rattle, bounce, and decay that
+    follow. This is the end-to-end sensing-and-ML pipeline we built to hear the difference.
   </p>
 
   <hr class="divider">
 
   <!-- ════════════════════════
-       ZIG-ZAG · ROWS 1–5
+       ZIG-ZAG
   ════════════════════════ -->
   <div class="zz">
 
     <!-- Row 1 — image LEFT -->
-    <div class="zz-row">
-      <figure class="zz-media">
-        <img class="graph" src="assests/images/projects/quadrotor/quad-comp-filter-pitch.png" alt="Line graph of pitch: accelerometer and filtered signals overlapping while the integrated gyro drifts downward." loading="lazy">
-        <figcaption class="caption">Accelerometer (blue) and filter (red) track together; the integrated gyro (yellow) drifts past −200°. Roll behaved identically.</figcaption>
+    <div class="zz-row fit">
+      <figure class="zz-media fit-fig">
+        <img class="photo" src="assests/images/projects/basketball/bball-rim.png" alt="Close view of the mini hoop rim and net with a piezo sensor and wiring on the backboard support." loading="lazy">
+        <figcaption class="caption">The as-built sensor unit — microphone at the net, piezo discs on the structure, ESP32 wired to the backboard.</figcaption>
       </figure>
       <div class="zz-text">
-        <h2 class="zz-heading">Sensing before controlling</h2>
+        <h2 class="zz-heading">The rig</h2>
         <p class="zz-body">
-          You can't hold an angle you can't measure. A complementary filter fuses the noisy
-          accelerometer with the drifting gyro into one clean signal —
-          <code>roll_filtered = ALPHA·roll_angle + (1−ALPHA)·(gyro_roll_dt + roll_filtered)</code>,
-          with <code>ALPHA = 0.02</code> (98% gyro).
+          An INMP441 I2S microphone sits by the net for airborne sound; two piezo discs on the rim
+          and backboard support pick up structural vibration; an ESP32 reads all three together and
+          streams each event to a laptop. We chose dual piezos over an IMU or IR beam-break — cheap,
+          responsive to sharp impacts, and two of them give a left/right energy-balance cue a single
+          sensor can't.
         </p>
       </div>
     </div>
 
     <div class="zz-sep" aria-hidden="true">
-      <svg viewBox="0 0 46 24"><path d="M0 20 H14 L20 5 Q23 1 26 7 Q29 14 32 11.5 Q35 9.5 38 12 Q41 13 46 12"/></svg>
+      <svg viewBox="0 0 46 24"><path d="M0 12 H6 L8 2 L10 21 L12 5 L14 18 Q16 8 18 15 Q20 10 22 13.5 Q24 11 26 12.6 Q28 11.6 30 12.2 Q32 11.9 34 12 H46"/></svg>
     </div>
 
     <!-- Row 2 — image RIGHT -->
-    <div class="zz-row flip">
-      <figure class="zz-media">
-        <img class="graph" src="assests/images/projects/quadrotor/quad-p.png" alt="P-control graph showing two motor signals in antiphase and pitch tracking the accelerometer." loading="lazy">
-        <figcaption class="caption">Motor pairs (yellow/green) drive in antiphase as pitch (orange) swings — the loop chases every move but never settles.</figcaption>
+    <div class="zz-row fit flip">
+      <figure class="zz-media fit-fig">
+        <img class="photo" src="assests/images/projects/basketball/bball-electronics.png" alt="Breadboards with an ESP32 microcontroller and jumper wiring for the microphone and piezo sensors." loading="lazy">
+        <figcaption class="caption">The ESP32 and dual-piezo front end on the breadboard — the whole capture rig cost a handful of dollars.</figcaption>
       </figure>
       <div class="zz-text">
-        <h2 class="zz-heading">P — the restoring force</h2>
+        <h2 class="zz-heading">From impact to labeled data</h2>
         <p class="zz-body">
-          The harder the frame tilts, the harder it torques back:
-          <code>thrust ± PITCH_P_GAIN·(pitch_desired − filtered_pitch)</code>, split across the
-          four motors. I tuned the gain from 3 up to 6. Pure P chases every move — but with no
-          damping, it overshoots and rings.
+          Each shot is a one-second event: the trigger fires at 0.25 s, keeping a short pre-impact
+          baseline plus 0.75 s of tail, saved as synchronized audio + piezo in one <code>.npz</code>.
+          We baseline-correct every channel, then extract 63 hand-built time-domain features — peak
+          energy, six post-impact energy windows, early/mid/late ratios, rattle counts, and two-piezo
+          balance. The make-vs-miss signal lives in that tail, not in raw loudness.
         </p>
       </div>
     </div>
 
     <div class="zz-sep" aria-hidden="true">
-      <svg viewBox="0 0 46 24"><path d="M0 20 H14 L20 5 Q23 1 26 7 Q29 14 32 11.5 Q35 9.5 38 12 Q41 13 46 12"/></svg>
+      <svg viewBox="0 0 46 24"><path d="M0 12 H6 L8 2 L10 21 L12 5 L14 18 Q16 8 18 15 Q20 10 22 13.5 Q24 11 26 12.6 Q28 11.6 30 12.2 Q32 11.9 34 12 H46"/></svg>
     </div>
 
     <!-- Row 3 — image LEFT -->
-    <div class="zz-row">
-      <figure class="zz-media">
-        <img class="graph" src="assests/images/projects/quadrotor/quad-d.png" alt="D-control graph showing very noisy gyro-speed signal and jittery motor commands." loading="lazy">
-        <figcaption class="caption">The gyro-speed signal (cyan) is a wall of noise and the motors chatter with it — D amplifying noise instead of damping.</figcaption>
+    <div class="zz-row fit">
+      <figure class="zz-media fit-fig">
+        <img class="plot" src="assests/images/projects/basketball/bball-confusion-validation.png" alt="Confusion matrix for the validation split showing strong diagonal except for the rim_miss row." loading="lazy">
+        <figcaption class="caption">Validation confusion matrix (Random Forest, with tail features). The diagonal is strongest for swish, rim_make, and backboard_miss; rim_miss scatters into the rim/backboard cells.</figcaption>
       </figure>
       <div class="zz-text">
-        <h2 class="zz-heading">D — the damper (and a noise problem)</h2>
+        <h2 class="zz-heading">Reading the make from the miss</h2>
         <p class="zz-body">
-          Derivative control brakes against rotation speed (the Y-axis gyro). But at
-          <code>ALPHA = 0.02</code> the estimate is 98% gyro, so any real D gain fed sensor noise
-          straight through as high-frequency motor jitter. I pulled D back and pushed P higher instead.
+          We trained six classifiers on the same features (80/20 stratified split); Random Forest
+          won, at 68% accuracy and 0.67 macro-F1. Swish and rim_make came through cleanly. As
+          expected, rim_miss stayed the hardest class — its first impact is nearly identical to a
+          rim make, and even the tail only partly separates them.
         </p>
+        <table class="metrics">
+          <caption class="sr-only">Per-class validation metrics, Random Forest</caption>
+          <thead>
+            <tr><th scope="col">Class</th><th scope="col">Precision</th><th scope="col">Recall</th><th scope="col">F1</th><th scope="col">Support</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>backboard_make</td><td>0.80</td><td>0.57</td><td>0.67</td><td>7</td></tr>
+            <tr><td>backboard_miss</td><td>0.64</td><td>0.88</td><td>0.74</td><td>8</td></tr>
+            <tr><td>rim_make</td><td>0.55</td><td>0.86</td><td>0.67</td><td>7</td></tr>
+            <tr><td>rim_miss</td><td>0.75</td><td>0.38</td><td>0.50</td><td>8</td></tr>
+            <tr><td>swish</td><td>0.83</td><td>0.71</td><td>0.77</td><td>7</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td>macro avg</td><td>0.71</td><td>0.68</td><td>0.67</td><td>37</td></tr>
+          </tfoot>
+        </table>
       </div>
     </div>
 
     <div class="zz-sep" aria-hidden="true">
-      <svg viewBox="0 0 46 24"><path d="M0 20 H14 L20 5 Q23 1 26 7 Q29 14 32 11.5 Q35 9.5 38 12 Q41 13 46 12"/></svg>
+      <svg viewBox="0 0 46 24"><path d="M0 12 H6 L8 2 L10 21 L12 5 L14 18 Q16 8 18 15 Q20 10 22 13.5 Q24 11 26 12.6 Q28 11.6 30 12.2 Q32 11.9 34 12 H46"/></svg>
     </div>
 
     <!-- Row 4 — image RIGHT -->
-    <div class="zz-row flip">
-      <figure class="zz-media">
-        <img class="graph" src="assests/images/projects/quadrotor/quad-pd.png" alt="PD-control graph showing filtered pitch following stepped desired-pitch commands." loading="lazy">
-        <figcaption class="caption">Filtered pitch (orange) follows the commanded steps (cyan) smoothly — damped and on-target, but settling a hair off.</figcaption>
+    <div class="zz-row fit flip">
+      <figure class="zz-media fit-fig">
+        <img class="plot" src="assests/images/projects/basketball/bball-confusion-holdout.png" alt="Confusion matrix for the holdout set with a weaker diagonal and heavy confusion among rim and backboard classes." loading="lazy">
+        <figcaption class="caption">Holdout confusion matrix. Swish holds up (9/10), but the make-vs-miss pairs collapse on unseen data — the model had partly learned this specific hoop.</figcaption>
       </figure>
       <div class="zz-text">
-        <h2 class="zz-heading">P and D together — tracking</h2>
+        <h2 class="zz-heading">Does it generalize?</h2>
         <p class="zz-body">
-          With P restoring and a modest D damping it, the loop finally tracked commanded pitch
-          steps cleanly — no ringing, just a slight offset still left to fix.
+          The real test was a holdout set from completely unseen sessions. Accuracy dropped hard —
+          22 correct out of 50 — with almost all errors among the rim/backboard pairs while swish
+          stayed reliable. The gap is the honest read: the 20% split shares sessions with training,
+          so it flatters the model. One hoop and a small dataset don't generalize yet.
         </p>
       </div>
     </div>
 
     <div class="zz-sep" aria-hidden="true">
-      <svg viewBox="0 0 46 24"><path d="M0 20 H14 L20 5 Q23 1 26 7 Q29 14 32 11.5 Q35 9.5 38 12 Q41 13 46 12"/></svg>
-    </div>
-
-    <!-- Row 5 — image LEFT -->
-    <div class="zz-row">
-      <figure class="zz-media">
-        <img class="graph" src="assests/images/projects/quadrotor/quad-pid.png" alt="PID-control graph showing filtered pitch tracking stepped commands cleanly with no overshoot." loading="lazy">
-        <figcaption class="caption">Full PID: pitch (orange) locks onto each commanded step (cyan) and holds flat. The one loop the whole drone is built on.</figcaption>
-      </figure>
-      <div class="zz-text">
-        <h2 class="zz-heading">I — closing the last gap</h2>
-        <p class="zz-body">
-          Integral control accumulates error over time to erase that leftover offset — clamped to
-          <code>±I_SATURATE</code> against windup. Combined as <code>thrust ± P ± D ± I</code>, the
-          pitch axis became fast, damped, and dead-on.
-        </p>
-      </div>
-    </div>
-
-  </div>
-
-</div><!-- /.content -->
-
-
-<!-- ════════════════════════
-     ASIDE BAND · DLPF TRIPTYCH
-════════════════════════ -->
-<section class="aside-band">
-  <h2 class="zz-heading">Aside — tuning the sensor's own filter</h2>
-  <p class="zz-body">
-    The BMI088's own low-pass filter (<code>acc_con</code>, <code>0x40</code>) swept across three
-    bandwidths — <code>0x08</code> / <code>0x09</code> / <code>0x0A</code>. Wider filtering smoothed
-    the raw accelerometer; the fused estimate barely moved.
-  </p>
-  <div class="triptych">
-    <img class="graph" src="assests/images/projects/quadrotor/quad-dlpf-1.png" alt="Accelerometer pitch noise at IMU filter setting 0x89." loading="lazy">
-    <img class="graph" src="assests/images/projects/quadrotor/quad-dlpf-2.png" alt="Accelerometer pitch noise at IMU filter setting 0x99." loading="lazy">
-    <img class="graph" src="assests/images/projects/quadrotor/quad-dlpf-3.png" alt="Accelerometer pitch noise at IMU filter setting 0xA9." loading="lazy">
-  </div>
-  <p class="caption">Accelerometer pitch (cyan) at IMU filter settings 0x89 / 0x99 / 0xA9, left to right — cleaner as bandwidth narrows.</p>
-</section>
-
-
-<div class="content">
-
-  <!-- ════════════════════════
-       ZIG-ZAG · ROWS 6–7 + CLOSING
-  ════════════════════════ -->
-  <div class="zz">
-
-    <!-- Row 6 — image RIGHT -->
-    <div class="zz-row flip">
-      <figure class="zz-media">
-        <img class="graph" src="assests/images/projects/quadrotor/quad-yaw.png" alt="Yaw-control graph showing measured yaw rate tracking a stepped desired yaw rate." loading="lazy">
-        <figcaption class="caption">Measured yaw rate (cyan) tracks the commanded rate (orange) as it steps between setpoints — noisy, but clearly following.</figcaption>
-      </figure>
-      <div class="zz-text">
-        <h2 class="zz-heading">From one axis to four</h2>
-        <p class="zz-body">
-          One tuned axis, copied to all four. I rebuilt motor mixing around three sign arrays
-          (<code>pitch_signs {−1,1,−1,1}</code>, <code>roll_signs {−1,−1,1,1}</code>,
-          <code>yaw_signs {−1,1,1,−1}</code>) so each motor is one clean expression, then added yaw
-          as a rate P controller (<code>YAW_P_GAIN = 5</code>, 45°/s).
-        </p>
-      </div>
-    </div>
-
-    <div class="zz-sep" aria-hidden="true">
-      <svg viewBox="0 0 46 24"><path d="M0 20 H14 L20 5 Q23 1 26 7 Q29 14 32 11.5 Q35 9.5 38 12 Q41 13 46 12"/></svg>
-    </div>
-
-    <!-- Row 7 — image LEFT -->
-    <div class="zz-row">
-      <figure class="zz-media">
-        <img class="graph" src="assests/images/projects/quadrotor/quad-cam-yaw.png" alt="Camera-yaw graph showing yaw perturbed past ±45 degrees and returning to zero each time." loading="lazy">
-        <figcaption class="caption">Twisted past ±45°, the camera loop pulls yaw back to zero on its own — the first axis to hold itself, no hand on the stick.</figcaption>
-      </figure>
-      <div class="zz-text">
-        <h2 class="zz-heading">Handing control to a camera</h2>
-        <p class="zz-body">
-          An overhead camera tracked an ArUco tag and closed the outer loop. Yaw ran as two nested
-          P loops; X/Y as PD controllers driving desired pitch and roll from camera position, blended
-          50/50 with the joystick. Tuning those gains was the fight — until we landed on
-          P = 70, D = 15.
-        </p>
-      </div>
-    </div>
-
-    <div class="zz-sep" aria-hidden="true">
-      <svg viewBox="0 0 46 24"><path d="M0 20 H14 L20 5 Q23 1 26 7 Q29 14 32 11.5 Q35 9.5 38 12 Q41 13 46 12"/></svg>
+      <svg viewBox="0 0 46 24"><path d="M0 12 H6 L8 2 L10 21 L12 5 L14 18 Q16 8 18 15 Q20 10 22 13.5 Q24 11 26 12.6 Q28 11.6 30 12.2 Q32 11.9 34 12 H46"/></svg>
     </div>
 
     <!-- Closing — text LEFT / video RIGHT -->
     <div class="zz-row flip">
       <figure class="zz-media">
         <div class="video-wrap">
-          <iframe src="__VIDEO_EMBED_URL__" title="Autonomous quadrotor hover attempts" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/6kc_3ut4ryg?si=MCJby8OypolwyB6y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
-        <figcaption class="caption">Almost there — a reel of our closest autonomous hover attempts.</figcaption>
+        <figcaption class="caption">Live demo — real-time shot classification in the lab.</figcaption>
       </figure>
       <div class="zz-text">
-        <h2 class="zz-heading">What the data couldn't show me</h2>
+        <h2 class="zz-heading">What building it actually taught us</h2>
         <p class="zz-body">
-          On screen, everything worked. In the air, a battery a millimeter off drifted it and a
-          shift in lighting threw off the camera — every factor suddenly coupled to every other.
-          We reached genuine autonomous flight across all three axes before the quarter ended,
-          never perfectly tuned. The lesson: nothing behaves the way it does on the computer, and
-          closing that gap is the whole job.
+          Our biggest setback was avoidable. Prepping the live demo, we found the microphone hadn't
+          been recording during our entire first data collection — every model until then had
+          trained on piezo vibration alone. We fixed the wiring, re-collected everything, and the
+          best model flipped from SVM to Random Forest once real audio came back. The lessons stuck:
+          validate your sensors before you collect, feature design beat model choice here, and the
+          "best" model can change the moment the data does.
         </p>
       </div>
     </div>
@@ -797,7 +773,7 @@
 ════════════════════════ -->
 <div class="project-nav">
   <a href="projects.html">← Back to Projects</a>
-  <a href="basketball.html">Next: Basketball Shot Classifier →</a>
+  <a href="maze-game.html">Next: Semi-Autonomous Maze Game →</a>
 </div>
 
 <!-- ════════════════════════
