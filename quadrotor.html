@@ -298,8 +298,34 @@
     .zz {
       display: flex;
       flex-direction: column;
-      gap: clamp(56px, 9vh, 96px);
+      gap: clamp(36px, 5.5vh, 60px);
       padding: clamp(48px, 7vh, 72px) 0;
+    }
+
+    /* Separator: a step response settling onto a hairline setpoint */
+    .zz-sep {
+      display: flex;
+      align-items: center;
+      height: 24px;
+    }
+    .zz-sep svg {
+      flex: none;
+      width: 46px;
+      height: 24px;
+      overflow: visible;
+    }
+    .zz-sep path {
+      fill: none;
+      stroke: var(--green);
+      stroke-width: 1.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .zz-sep::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
     }
 
     .zz-row {
@@ -325,6 +351,11 @@
       border: 1px solid var(--line);
       border-radius: 6px;
       box-shadow: 0 6px 20px rgba(26,26,26,0.06);
+    }
+    .zz-row .graph {
+      aspect-ratio: 3 / 2;
+      object-fit: contain;
+      padding: 10px;
     }
     .zz-row.flip .graph { margin-left: auto; }
 
@@ -583,6 +614,10 @@
       </div>
     </div>
 
+    <div class="zz-sep" aria-hidden="true">
+      <svg viewBox="0 0 46 24"><path d="M0 20 H14 L20 5 Q23 1 26 7 Q29 14 32 11.5 Q35 9.5 38 12 Q41 13 46 12"/></svg>
+    </div>
+
     <!-- Row 2 — image RIGHT -->
     <div class="zz-row flip">
       <figure class="zz-media">
@@ -598,6 +633,10 @@
           damping, it overshoots and rings.
         </p>
       </div>
+    </div>
+
+    <div class="zz-sep" aria-hidden="true">
+      <svg viewBox="0 0 46 24"><path d="M0 20 H14 L20 5 Q23 1 26 7 Q29 14 32 11.5 Q35 9.5 38 12 Q41 13 46 12"/></svg>
     </div>
 
     <!-- Row 3 — image LEFT -->
@@ -616,6 +655,10 @@
       </div>
     </div>
 
+    <div class="zz-sep" aria-hidden="true">
+      <svg viewBox="0 0 46 24"><path d="M0 20 H14 L20 5 Q23 1 26 7 Q29 14 32 11.5 Q35 9.5 38 12 Q41 13 46 12"/></svg>
+    </div>
+
     <!-- Row 4 — image RIGHT -->
     <div class="zz-row flip">
       <figure class="zz-media">
@@ -629,6 +672,10 @@
           steps cleanly — no ringing, just a slight offset still left to fix.
         </p>
       </div>
+    </div>
+
+    <div class="zz-sep" aria-hidden="true">
+      <svg viewBox="0 0 46 24"><path d="M0 20 H14 L20 5 Q23 1 26 7 Q29 14 32 11.5 Q35 9.5 38 12 Q41 13 46 12"/></svg>
     </div>
 
     <!-- Row 5 — image LEFT -->
@@ -695,6 +742,10 @@
       </div>
     </div>
 
+    <div class="zz-sep" aria-hidden="true">
+      <svg viewBox="0 0 46 24"><path d="M0 20 H14 L20 5 Q23 1 26 7 Q29 14 32 11.5 Q35 9.5 38 12 Q41 13 46 12"/></svg>
+    </div>
+
     <!-- Row 7 — image LEFT -->
     <div class="zz-row">
       <figure class="zz-media">
@@ -710,6 +761,10 @@
           P = 70, D = 15.
         </p>
       </div>
+    </div>
+
+    <div class="zz-sep" aria-hidden="true">
+      <svg viewBox="0 0 46 24"><path d="M0 20 H14 L20 5 Q23 1 26 7 Q29 14 32 11.5 Q35 9.5 38 12 Q41 13 46 12"/></svg>
     </div>
 
     <!-- Closing — text LEFT / video RIGHT -->
