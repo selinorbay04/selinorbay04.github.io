@@ -304,11 +304,47 @@
 
 
     /* ══════════════════════════════════════
-       RESULTS — dark green cards
+       ENGINEERING — intro text + device photo
+    ══════════════════════════════════════ */
+    .engineering-intro { align-items: start; }
+    .device-photo {
+      width: 100%;
+      max-width: 420px;          /* 1076px source stays sharp at 2x */
+      height: auto;
+      display: block;
+      justify-self: end;
+    }
+
+
+    /* ══════════════════════════════════════
+       MY ROLE — three small portrait photos.
+       Never wider than their native 445–480px.
+    ══════════════════════════════════════ */
+    .role-text { max-width: 760px; }
+
+    .role-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, max-content));
+      justify-content: start;
+      gap: clamp(12px, 1.5vw, 20px);
+      margin-top: clamp(28px, 4vh, 48px);
+    }
+    .role-strip figure { margin: 0; }
+    /* shared height (≤ native 640px) so the row lines up; width follows
+       each photo's own ratio, so none is ever stretched past native size */
+    .role-strip img {
+      display: block;
+      height: min(479px, calc((100vw - 2 * var(--pad-x) - 40px) / 2.15));   /* 479 = shortest native height */
+      width: auto;
+    }
+
+
+    /* ══════════════════════════════════════
+       RESULTS — featured outcome + stat cards
     ══════════════════════════════════════ */
     .results-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       margin-top: clamp(24px, 3vh, 40px);
       /* 1px gaps show as thin lines between cards */
       gap: 1px;
@@ -332,9 +368,41 @@
       color: var(--cream);
     }
 
-    .result-icon {
-      font-size: clamp(28px, 4vw, 44px);
-      line-height: 1;
+
+    /* Featured outcome: full row, photo beside text (photo is 480×640,
+       so it is paired with text instead of being scaled up) */
+    .result-card--featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(0, 360px) 1fr;
+      align-items: center;
+      gap: clamp(24px, 4vw, 64px);
+      background: var(--brown-deep);
+      border-top: 4px solid var(--orange-burnt);
+      box-shadow: inset 0 0 0 1px var(--orange-burnt);
+      padding: clamp(20px, 3vw, 36px);
+    }
+    .result-card--featured img {
+      display: block;
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+    }
+    .featured-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 14px;
+    }
+    .featured-text {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4.2vw, 60px);
+      letter-spacing: 1px;
+      line-height: 1.02;
       color: var(--cream);
     }
 
@@ -344,6 +412,28 @@
       font-weight: 300;
       line-height: 1.65;
       color: rgba(245,227,200,0.65);
+    }
+
+    /* ── Mobile: sections rebuilt in Phase 1 ── */
+    @media (max-width: 767px) {
+      .engineering-intro { grid-template-columns: 1fr; }
+      .device-photo { justify-self: start; }
+
+      /* swipeable row; each photo capped at its native width */
+      .role-strip {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        margin-right: calc(-1 * var(--pad-x));
+        padding-right: var(--pad-x);
+        padding-bottom: 8px;
+      }
+      .role-strip figure { flex: 0 0 auto; scroll-snap-align: start; }
+      .role-strip img { height: min(420px, 100vw); }
+
+      .results-grid { grid-template-columns: 1fr; }
+      .result-card--featured { grid-template-columns: 1fr; }
     }
 
     /* ── Project nav footer ── */
@@ -411,7 +501,7 @@
 <div class="dashboard-card">
   <div>
     <p class="dash-label">Goal</p>
-    <p class="dash-value">Design a removable waterproofing liner and runoff collection system for a CT scanner used with live aquatic animals at Shedd Aquarium</p>
+    <p class="dash-value">Design a removable waterproofing liner and runoff collection system for a CT scanner used with live aquatic animals at a major aquarium in IL</p>
   </div>
   <div>
     <p class="dash-label">Role</p>
@@ -438,7 +528,7 @@
 <hr class="divider">
 
 <section class="section">
-  <p class="body-text">Shedd Aquarium needed to scan live aquatic animals in a CT scanner designed for dry operating rooms. Their team was spending 45+ minutes improvising a plastic-and-tape moisture barrier before every procedure — fragile, inconsistent, and stressful for the animals. The goal was to design a clinician-ready waterproofing system: fast to install, fully removable, and guaranteed not to interfere with the imaging beam or require any permanent modifications to the scanner.</p>
+  <p class="body-text">A major aquarium in IL needed to scan live aquatic animals in a CT scanner designed for dry operating rooms. Their team was spending 45+ minutes improvising a plastic-and-tape moisture barrier before every procedure — fragile, inconsistent, and stressful for the animals. The goal was to design a clinician-ready waterproofing system: fast to install, fully removable, and guaranteed not to interfere with the imaging beam or require any permanent modifications to the scanner.</p>
 </section>
 
 <hr class="divider">
@@ -476,11 +566,16 @@
 <section class="section">
   <h2 class="section-title">ENGINEERING THE SOLUTION</h2>
 
-  <p class="body-text">
-    Two subsystems: gantry waterproofing and runoff collection. The harder problem was the
-    gantry — sealed without interfering with the imaging laser, without permanent
-    modifications, fast enough to not stress the animal.
-  </p>
+  <div class="two-col engineering-intro">
+    <p class="body-text">
+      Two subsystems: gantry waterproofing and runoff collection. The harder problem was the
+      gantry — sealed without interfering with the imaging laser, without permanent
+      modifications, fast enough to not stress the animal.
+    </p>
+    <img class="device-photo" src="assests/images/projects/waterguard/device.jpeg"
+         width="1076" height="1430" loading="lazy"
+         alt="The finished WaterGuard liner fitted over the CT scanner's gantry">
+  </div>
 
   <div class="spec-table">
 
@@ -526,8 +621,7 @@
 <section class="section">
   <h2 class="section-title">MY ROLE</h2>
 
-  <div class="two-col">
-    <div class="two-col-text">
+  <div class="two-col-text role-text">
       <p class="body-text">
         Built a dimensionally accurate 3D model of the NeuroLogica BodyTom from
         manufacturer specs. Modeled early design directions and assemblies to evaluate
@@ -543,9 +637,15 @@
         throughout: every decision traceable to a failure mode, not just a prototype that
         happened to work.
       </p>
-    </div>
-    <!-- assets/images/waterguard/role.jpg -->
-    <img class="side-photo-tall" src="assests/images/projects/waterguard/role.gif" alt="Prototype build">
+  </div>
+
+  <div class="role-strip" aria-label="Build photos">
+    <figure><img src="assests/images/projects/waterguard/my-role-0.png" width="480" height="640" loading="lazy"
+                 alt="Scale mock-up of the gantry liner with numbered, shingled panels"></figure>
+    <figure><img src="assests/images/projects/waterguard/my-role-1.png" width="445" height="640" loading="lazy"
+                 alt="Liner on the scanner, annotated with the single seam and overlap direction"></figure>
+    <figure><img src="assests/images/projects/waterguard/my-role-2-cropped.png" width="359" height="479" loading="lazy"
+                 alt="Rear view of the scanner with the PVC-framed runoff collection bin"></figure>
   </div>
 </section>
 
@@ -554,15 +654,24 @@
 
 <!-- ════════════════════════
      RESULTS
-     Cards use dark green (#344524) background
+     Featured outcome first (full row), then stat cards
 ════════════════════════ -->
 <section class="section">
   <h2 class="section-title">RESULTS</h2>
 
   <div class="results-grid">
 
+    <div class="result-card result-card--featured">
+      <img src="assests/images/projects/waterguard/installation.png" width="480" height="640" loading="lazy"
+           alt="Installing the full-scale WaterGuard liner on the CT scanner">
+      <div>
+        <span class="featured-label">Featured outcome</span>
+        <p class="featured-text">Full-scale prototype installed on-site at the aquarium</p>
+      </div>
+    </div>
+
     <div class="result-card">
-      <span class="result-stat">&gt;%90</span>
+      <span class="result-stat">&gt;90%</span>
       <p class="result-desc">Reduction in setup time<br>45 min → under 3 min</p>
     </div>
 
@@ -574,11 +683,6 @@
     <div class="result-card">
       <span class="result-stat">0</span>
       <p class="result-desc">Radiographic artifacts — laser integrity maintained</p>
-    </div>
-
-    <div class="result-card">
-      <span class="result-icon">✓</span>
-      <p class="result-desc">Full-scale prototype installed on-site at the aquarium</p>
     </div>
 
   </div>
