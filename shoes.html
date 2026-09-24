@@ -77,21 +77,11 @@
       box-shadow: 0 16px 48px rgba(139,56,0,.18), 0 6px 16px rgba(0,0,0,.12);
     }
 
-    .img-rotator {
-      position: relative; width: 100%;
-      aspect-ratio: 3 / 4;
-      overflow: hidden;
-    }
-    .img-rotator img {
-      position: absolute;
-      width: 133.33%; height: auto;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%) rotate(-90deg);
+    .gallery-item img {
+      display: block; width: 100%; height: auto;
       transition: transform .5s ease;
     }
-    .gallery-item:hover .img-rotator img {
-      transform: translate(-50%, -50%) rotate(-90deg) scale(1.04);
-    }
+    .gallery-item:hover img { transform: scale(1.04); }
 
     .gallery-item::after {
       content: attr(data-num);
@@ -188,30 +178,30 @@
 </header>
 
 <main class="gallery">
-  <a class="gallery-item" href="#" data-num="01"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_01.jpg" alt="Shoes 01" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="02"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_02.jpg" alt="Shoes 02" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="03"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_03.jpg" alt="Shoes 03" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="04"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_04.jpg" alt="Shoes 04" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="05"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_05.jpg" alt="Shoes 05" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="06"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_06.jpg" alt="Shoes 06" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="07"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_07.jpg" alt="Shoes 07" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="08"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_08.jpg" alt="Shoes 08" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="09"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_09.jpg" alt="Shoes 09" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="10"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_10.jpg" alt="Shoes 10" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="11"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_11.jpg" alt="Shoes 11" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="12"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_12.jpg" alt="Shoes 12" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="13"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_13.jpg" alt="Shoes 13" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="14"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_14.jpg" alt="Shoes 14" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="15"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_15.jpg" alt="Shoes 15" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="16"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_16.jpg" alt="Shoes 16" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="17"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_17.jpg" alt="Shoes 17" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="18"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_18.jpg" alt="Shoes 18" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="19"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_19.jpg" alt="Shoes 19" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="20"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_20.jpg" alt="Shoes 20" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="21"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_21.jpg" alt="Shoes 21" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="22"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_22.jpg" alt="Shoes 22" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="23"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_23.jpg" alt="Shoes 23" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="24"><div class="img-rotator"><img src="assests/playground/sketches/shoes/shoes_24.jpg" alt="Shoes 24" loading="lazy"></div></a>
+  <a class="gallery-item" href="#" data-num="01"><img src="assests/playground/sketches/web/shoes/shoes_01.jpg" width="2000" height="1306" alt="Shoes 01" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="02"><img src="assests/playground/sketches/web/shoes/shoes_02.jpg" width="2000" height="1291" alt="Shoes 02" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="03"><img src="assests/playground/sketches/web/shoes/shoes_03.jpg" width="2000" height="1308" alt="Shoes 03" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="04"><img src="assests/playground/sketches/web/shoes/shoes_04.jpg" width="2000" height="1290" alt="Shoes 04" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="05"><img src="assests/playground/sketches/web/shoes/shoes_05.jpg" width="2000" height="1289" alt="Shoes 05" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="06"><img src="assests/playground/sketches/web/shoes/shoes_06.jpg" width="2000" height="1288" alt="Shoes 06" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="07"><img src="assests/playground/sketches/web/shoes/shoes_07.jpg" width="2000" height="1290" alt="Shoes 07" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="08"><img src="assests/playground/sketches/web/shoes/shoes_08.jpg" width="2000" height="1265" alt="Shoes 08" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="09"><img src="assests/playground/sketches/web/shoes/shoes_09.jpg" width="2000" height="1210" alt="Shoes 09" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="10"><img src="assests/playground/sketches/web/shoes/shoes_10.jpg" width="2000" height="1307" alt="Shoes 10" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="11"><img src="assests/playground/sketches/web/shoes/shoes_11.jpg" width="2000" height="1281" alt="Shoes 11" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="12"><img src="assests/playground/sketches/web/shoes/shoes_12.jpg" width="2000" height="1307" alt="Shoes 12" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="13"><img src="assests/playground/sketches/web/shoes/shoes_13.jpg" width="2000" height="1198" alt="Shoes 13" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="14"><img src="assests/playground/sketches/web/shoes/shoes_14.jpg" width="2000" height="1899" alt="Shoes 14" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="15"><img src="assests/playground/sketches/web/shoes/shoes_15.jpg" width="2000" height="791" alt="Shoes 15" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="16"><img src="assests/playground/sketches/web/shoes/shoes_16.jpg" width="2000" height="1290" alt="Shoes 16" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="17"><img src="assests/playground/sketches/web/shoes/shoes_17.jpg" width="2000" height="1289" alt="Shoes 17" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="18"><img src="assests/playground/sketches/web/shoes/shoes_18.jpg" width="2000" height="1308" alt="Shoes 18" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="19"><img src="assests/playground/sketches/web/shoes/shoes_19.jpg" width="2000" height="1296" alt="Shoes 19" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="20"><img src="assests/playground/sketches/web/shoes/shoes_20.jpg" width="2000" height="1306" alt="Shoes 20" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="21"><img src="assests/playground/sketches/web/shoes/shoes_21.jpg" width="2000" height="1292" alt="Shoes 21" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="22"><img src="assests/playground/sketches/web/shoes/shoes_22.jpg" width="2000" height="1277" alt="Shoes 22" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="23"><img src="assests/playground/sketches/web/shoes/shoes_23.jpg" width="2000" height="1273" alt="Shoes 23" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="24"><img src="assests/playground/sketches/web/shoes/shoes_24.jpg" width="2000" height="1265" alt="Shoes 24" loading="lazy"></a>
 </main>
 
 <footer class="footer--split">
@@ -246,19 +236,7 @@
 
     function applyImage(src, alt) {
       lbImg.alt = alt;
-      lbImg.onload = function() {
-        if (this.naturalHeight > this.naturalWidth) {
-          // portrait file → rotate to landscape
-          this.style.transform = 'rotate(-90deg)';
-          this.style.maxWidth  = '90vh';
-          this.style.maxHeight = '90vw';
-        } else {
-          this.style.transform = 'none';
-          this.style.maxWidth  = '90vw';
-          this.style.maxHeight = '90vh';
-        }
-        this.style.opacity = '1';
-      };
+      lbImg.onload = function() { this.style.opacity = '1'; };
       lbImg.src = src;
       if (lbImg.complete && lbImg.naturalWidth) lbImg.onload.call(lbImg);
     }

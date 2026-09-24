@@ -77,21 +77,11 @@
       box-shadow: 0 16px 48px rgba(139,56,0,.18), 0 6px 16px rgba(0,0,0,.12);
     }
 
-    .img-rotator {
-      position: relative; width: 100%;
-      aspect-ratio: 3 / 4;
-      overflow: hidden;
-    }
-    .img-rotator img {
-      position: absolute;
-      width: 133.33%; height: auto;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%) rotate(-90deg);
+    .gallery-item img {
+      display: block; width: 100%; height: auto;
       transition: transform .5s ease;
     }
-    .gallery-item:hover .img-rotator img {
-      transform: translate(-50%, -50%) rotate(-90deg) scale(1.04);
-    }
+    .gallery-item:hover img { transform: scale(1.04); }
 
     .gallery-item::after {
       content: attr(data-num);
@@ -188,30 +178,30 @@
 </header>
 
 <main class="gallery">
-  <a class="gallery-item" href="#" data-num="01"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_01.jpg" alt="Furniture 01" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="02"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_02.jpg" alt="Furniture 02" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="03"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_03.jpg" alt="Furniture 03" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="04"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_04.jpg" alt="Furniture 04" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="05"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_05.jpg" alt="Furniture 05" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="06"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_06.jpg" alt="Furniture 06" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="07"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_07.jpg" alt="Furniture 07" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="08"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_08.jpg" alt="Furniture 08" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="09"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_09.jpg" alt="Furniture 09" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="10"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_10.jpg" alt="Furniture 10" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="11"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_11.jpg" alt="Furniture 11" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="12"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_12.jpg" alt="Furniture 12" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="13"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_13.jpg" alt="Furniture 13" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="14"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_14.jpg" alt="Furniture 14" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="15"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_15.jpg" alt="Furniture 15" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="16"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_16.jpg" alt="Furniture 16" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="17"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_17.jpg" alt="Furniture 17" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="18"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_18.jpg" alt="Furniture 18" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="19"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_19.jpg" alt="Furniture 19" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="20"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_20.jpg" alt="Furniture 20" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="21"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_21.jpg" alt="Furniture 21" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="22"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_22.jpg" alt="Furniture 22" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="23"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_23.jpg" alt="Furniture 23" loading="lazy"></div></a>
-  <a class="gallery-item" href="#" data-num="24"><div class="img-rotator"><img src="assests/playground/sketches/furniture/furniture_24.jpg" alt="Furniture 24" loading="lazy"></div></a>
+  <a class="gallery-item" href="#" data-num="01"><img src="assests/playground/sketches/web/furniture/furniture_01.jpg" width="2000" height="1271" alt="Furniture 01" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="02"><img src="assests/playground/sketches/web/furniture/furniture_02.jpg" width="2000" height="1314" alt="Furniture 02" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="03"><img src="assests/playground/sketches/web/furniture/furniture_03.jpg" width="2000" height="1300" alt="Furniture 03" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="04"><img src="assests/playground/sketches/web/furniture/furniture_04.jpg" width="2000" height="1299" alt="Furniture 04" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="05"><img src="assests/playground/sketches/web/furniture/furniture_05.jpg" width="2000" height="1300" alt="Furniture 05" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="06"><img src="assests/playground/sketches/web/furniture/furniture_06.jpg" width="2000" height="1294" alt="Furniture 06" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="07"><img src="assests/playground/sketches/web/furniture/furniture_07.jpg" width="2000" height="1286" alt="Furniture 07" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="08"><img src="assests/playground/sketches/web/furniture/furniture_08.jpg" width="2000" height="1292" alt="Furniture 08" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="09"><img src="assests/playground/sketches/web/furniture/furniture_09.jpg" width="2000" height="1291" alt="Furniture 09" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="10"><img src="assests/playground/sketches/web/furniture/furniture_10.jpg" width="2000" height="1295" alt="Furniture 10" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="11"><img src="assests/playground/sketches/web/furniture/furniture_11.jpg" width="2000" height="1308" alt="Furniture 11" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="12"><img src="assests/playground/sketches/web/furniture/furniture_12.jpg" width="2000" height="1290" alt="Furniture 12" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="13"><img src="assests/playground/sketches/web/furniture/furniture_13.jpg" width="2000" height="1316" alt="Furniture 13" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="14"><img src="assests/playground/sketches/web/furniture/furniture_14.jpg" width="2000" height="1286" alt="Furniture 14" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="15"><img src="assests/playground/sketches/web/furniture/furniture_15.jpg" width="2000" height="1272" alt="Furniture 15" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="16"><img src="assests/playground/sketches/web/furniture/furniture_16.jpg" width="2000" height="1283" alt="Furniture 16" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="17"><img src="assests/playground/sketches/web/furniture/furniture_17.jpg" width="2000" height="1273" alt="Furniture 17" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="18"><img src="assests/playground/sketches/web/furniture/furniture_18.jpg" width="2000" height="1281" alt="Furniture 18" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="19"><img src="assests/playground/sketches/web/furniture/furniture_19.jpg" width="2000" height="1278" alt="Furniture 19" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="20"><img src="assests/playground/sketches/web/furniture/furniture_20.jpg" width="2000" height="1284" alt="Furniture 20" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="21"><img src="assests/playground/sketches/web/furniture/furniture_21.jpg" width="2000" height="1254" alt="Furniture 21" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="22"><img src="assests/playground/sketches/web/furniture/furniture_22.jpg" width="2000" height="1301" alt="Furniture 22" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="23"><img src="assests/playground/sketches/web/furniture/furniture_23.jpg" width="2000" height="1317" alt="Furniture 23" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="24"><img src="assests/playground/sketches/web/furniture/furniture_24.jpg" width="2000" height="1304" alt="Furniture 24" loading="lazy"></a>
 </main>
 
 <footer class="footer--split">
@@ -246,19 +236,7 @@
 
     function applyImage(src, alt) {
       lbImg.alt = alt;
-      lbImg.onload = function() {
-        if (this.naturalHeight > this.naturalWidth) {
-          // portrait file → rotate to landscape
-          this.style.transform = 'rotate(-90deg)';
-          this.style.maxWidth  = '90vh';
-          this.style.maxHeight = '90vw';
-        } else {
-          this.style.transform = 'none';
-          this.style.maxWidth  = '90vw';
-          this.style.maxHeight = '90vh';
-        }
-        this.style.opacity = '1';
-      };
+      lbImg.onload = function() { this.style.opacity = '1'; };
       lbImg.src = src;
       if (lbImg.complete && lbImg.naturalWidth) lbImg.onload.call(lbImg);
     }

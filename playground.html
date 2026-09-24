@@ -145,20 +145,6 @@
     }
     .pg-img:hover img { transform: scale(1.04); }
 
-    /* sketch images: rotated -90° and scaled to fill the landscape cell */
-    .pg-img--rotated img {
-      position: absolute;
-      top: 50%; left: 50%;
-      /* swap cell dimensions: pre-rotation width = cell height, pre-rotation height = cell width */
-      width:  calc((100vh - var(--nav-h)) / 3);
-      height: calc(100vw / 3);
-      object-fit: cover;
-      transform: translate(-50%, -50%) rotate(-90deg);
-      transition: transform .5s ease;
-    }
-    .pg-img--rotated:hover img {
-      transform: translate(-50%, -50%) rotate(-90deg) scale(1.04);
-    }
 
     /* split pair: two images side-by-side in one cell */
     .split-pair {
@@ -248,14 +234,14 @@
   </a>
 
   <!-- ── Column 2 — SKETCHES ── -->
-  <a class="pg-img pg-img--rotated cell-sk-img1" href="sketches.html">
-    <img src="assests/playground/sketches/coffeemaker/coffee_maker_01.jpg" alt="Coffee maker sketch" loading="lazy">
+  <a class="pg-img cell-sk-img1" href="sketches.html">
+    <img src="assests/playground/sketches/web/coffeemaker/coffee_maker_01.jpg" width="2000" height="1314" alt="Coffee maker sketch" loading="lazy">
   </a>
   <a class="pg-label cell-sk-label" href="sketches.html">
     <span class="kw-text kw-sketches">SKETCHES</span>
   </a>
-  <a class="pg-img pg-img--rotated cell-sk-img2" href="sketches.html">
-    <img src="assests/playground/sketches/shoes/shoes_01.jpg" alt="Shoe sketch" loading="lazy">
+  <a class="pg-img cell-sk-img2" href="sketches.html">
+    <img src="assests/playground/sketches/web/shoes/shoes_01.jpg" width="2000" height="1306" alt="Shoe sketch" loading="lazy">
   </a>
 
   <!-- ── Column 3 — CAD ── -->

@@ -178,12 +178,12 @@
 </header>
 
 <main class="gallery">
-  <a class="gallery-item" href="#" data-num="01"><img src="assests/playground/sketches/sprint/Sprint_page_01.jpg" alt="Sprint 01" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="02"><img src="assests/playground/sketches/sprint/Sprint_page_02.jpg" alt="Sprint 02" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="03"><img src="assests/playground/sketches/sprint/Sprint_page_03.jpg" alt="Sprint 03" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="04"><img src="assests/playground/sketches/sprint/Sprint_page_04.jpg" alt="Sprint 04" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="05"><img src="assests/playground/sketches/sprint/Sprint_page_05.jpg" alt="Sprint 05" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="06"><img src="assests/playground/sketches/sprint/Sprint_page_06.jpg" alt="Sprint 06" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="01"><img src="assests/playground/sketches/web/sprint/Sprint_page_01.jpg" width="2000" height="1271" alt="Sprint 01" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="02"><img src="assests/playground/sketches/web/sprint/Sprint_page_02.jpg" width="2000" height="1278" alt="Sprint 02" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="03"><img src="assests/playground/sketches/web/sprint/Sprint_page_03.jpg" width="2000" height="1257" alt="Sprint 03" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="04"><img src="assests/playground/sketches/web/sprint/Sprint_page_04.jpg" width="1232" height="2000" alt="Sprint 04" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="05"><img src="assests/playground/sketches/web/sprint/Sprint_page_05.jpg" width="1253" height="2000" alt="Sprint 05" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="06"><img src="assests/playground/sketches/web/sprint/Sprint_page_06.jpg" width="1277" height="2000" alt="Sprint 06" loading="lazy"></a>
 </main>
 
 <footer class="footer--split">
@@ -218,19 +218,7 @@
 
     function applyImage(src, alt) {
       lbImg.alt = alt;
-      lbImg.onload = function() {
-        if (this.naturalHeight > this.naturalWidth) {
-          // portrait file → rotate to landscape
-          this.style.transform = 'rotate(-90deg)';
-          this.style.maxWidth  = '90vh';
-          this.style.maxHeight = '90vw';
-        } else {
-          this.style.transform = 'none';
-          this.style.maxWidth  = '90vw';
-          this.style.maxHeight = '90vh';
-        }
-        this.style.opacity = '1';
-      };
+      lbImg.onload = function() { this.style.opacity = '1'; };
       lbImg.src = src;
       if (lbImg.complete && lbImg.naturalWidth) lbImg.onload.call(lbImg);
     }
