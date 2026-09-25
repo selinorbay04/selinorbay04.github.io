@@ -123,16 +123,34 @@
   initReveals();
 
 
-  /* ── Nav: solid background once past the hero (or 20px on pages without one) ── */
+  /* ── Nav: solid background once past the hero (or 20px on pages without one),
+        plus a thin scroll-progress line. html.nav-scrolled mirrors the state
+        for elements outside the nav (the docked hero name). ── */
   const nav = document.getElementById('nav');
   if (nav) {
     const hero = nav.hasAttribute('data-over-hero') ? document.querySelector('.hero') : null;
-    let threshold = 20;
-    const measure = () => { threshold = hero ? hero.offsetHeight - 80 : 20; };
-    const update  = () => nav.classList.toggle('scrolled', window.scrollY > threshold);
+    const bar  = document.createElement('div');
+    bar.className = 'nav-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    nav.appendChild(bar);
+
+    let threshold = 20, maxScroll = 1;
+    const measure = () => {
+      threshold = hero ? hero.offsetHeight - 80 : 20;
+      maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    };
+    const update = () => {
+      const y = window.scrollY;
+      const scrolled = y > threshold;
+      nav.classList.toggle('scrolled', scrolled);
+      root.classList.toggle('nav-scrolled', scrolled);
+      bar.style.transform = maxScroll > 0 ? `scaleX(${Math.min(1, Math.max(0, y / maxScroll))})` : 'scaleX(0)';
+    };
     measure(); update();
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', () => { measure(); update(); });
+    window.addEventListener('load', () => { measure(); update(); });
+    if (hasGsap) ScrollTrigger.addEventListener('refresh', () => { measure(); update(); });
   }
 
 

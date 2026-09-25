@@ -106,7 +106,14 @@ nav.scrolled {
 }
 nav.scrolled .logo { color: var(--nav-fg-scrolled); }
 
-.nav-links { display: flex; gap: var(--nav-gap); align-items: center; }
+/* Links are small pills: hover tints, the current page is outlined.
+   Padding is taken back out of the gap so links sit where they did. */
+.nav-links {
+  display: flex;
+  gap: max(2px, calc(var(--nav-gap) - 24px));
+  align-items: center;
+  margin-right: -12px;
+}
 .nav-links a {
   font-family: var(--font-body);
   font-size: 14px;
@@ -114,11 +121,33 @@ nav.scrolled .logo { color: var(--nav-fg-scrolled); }
   letter-spacing: var(--nav-link-ls);
   color: var(--nav-fg);
   text-decoration: none;
-  transition: color 0.4s ease, opacity 0.2s ease;
+  padding: 7px 12px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transition: color 0.4s ease, background-color 0.3s var(--ease-soft), border-color 0.3s var(--ease-soft);
 }
 nav.scrolled .nav-links a { color: var(--nav-fg-scrolled); }
-.nav-links a:hover { opacity: 0.55; }
-.nav-links a.active { text-decoration: underline; text-underline-offset: 4px; }
+.nav-links a:hover { background-color: color-mix(in srgb, currentColor 14%, transparent); }
+.nav-links a.active,
+.nav-links a[aria-current="page"] { border-color: currentColor; }
+
+/* Thin scroll-progress line under the nav (added by motion.js) */
+.nav-progress {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  nav { padding: 0 16px; }
+  .logo { font-size: min(var(--nav-logo-size), 26px); }
+  .nav-links { gap: 2px; margin-right: -8px; }
+  .nav-links a { font-size: 12px; letter-spacing: 0.2px; padding: 6px 8px; }
+}
 
 
 /* ══════════════════════════════════════
