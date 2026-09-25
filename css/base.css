@@ -269,6 +269,94 @@ footer span {
 
 
 /* ══════════════════════════════════════
+   PROJECT DETAIL PAGES  (<body class="project-page">)
+   Shared system: [01]-numbered section titles, a credits block
+   (COURSE / YEAR / STACK / ROLE) in each hero, and a figure stack.
+   Motion lives in js/project.js.
+══════════════════════════════════════ */
+.project-page { counter-reset: sec; }
+.project-page .section-title::before,
+.project-page .zz-heading::before {
+  counter-increment: sec;
+  content: '[' counter(sec, decimal-leading-zero) ']';
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 14px;
+  opacity: 0.5;
+}
+
+/* Credits — laid out like film credits: small label over value */
+.credits {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, max-content));
+  column-gap: clamp(24px, 4vw, 64px);
+  row-gap: 16px;
+  margin-top: clamp(18px, 2.4vh, 28px);
+  padding-top: 16px;
+  border-top: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  color: var(--credits-fg, var(--cream));
+}
+.credits div { min-width: 0; }
+.credits dt {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 6px;
+}
+.credits dd {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+}
+@media (max-width: 767px) {
+  .credits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Figure stack: photos with numbered footnote captions */
+.fig-stack { list-style: none; margin: 0; padding: 0; }
+.fig-stack figure { margin: 0; }
+.fig-stack img { display: block; max-width: 100%; height: auto; }
+.fig-stack figcaption {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  margin-top: 14px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+.fig-stack .fig-num {
+  font-weight: 600;
+  font-size: var(--fs-label);
+  letter-spacing: 2px;
+  line-height: 1.9;
+  color: var(--orange-burnt);
+}
+/* footnote markers in running text */
+.fn-ref {
+  font-family: var(--font-body);
+  font-size: 0.72em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  vertical-align: super;
+  line-height: 0;
+  color: var(--orange-burnt);
+  text-decoration: none;
+}
+.fn-ref:hover { text-decoration: underline; }
+
+
+/* ══════════════════════════════════════
    CUSTOM CURSOR  (opt-in: <body data-cursor>)
    motion.js only creates it on fine-pointer, hover-capable devices.
 ══════════════════════════════════════ */

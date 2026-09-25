@@ -6,7 +6,8 @@
   <title>Semi-Autonomous Maze Game — Selin Orbay</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" data-fonts onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"></noscript>
 
   <link rel="stylesheet" href="css/base.css">
   <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.SO)document.documentElement.classList.add('motion-off')},3000)</script>
@@ -383,7 +384,7 @@
 
   </style>
 </head>
-<body>
+<body class="project-page">
 
 
 <!-- ════════════════════════
@@ -408,9 +409,15 @@
   <img class="hero-photo" src="assests/images/projects/maze-game/hero.jpg" alt="Maze game setup">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <p class="hero-kicker">Computer Engineering · CE 346 · Northwestern</p>
-    <h1 class="hero-title">SEMI-AUTONOMOUS<br>MAZE GAME</h1>
-    <p class="hero-quote">Line-following Robot with Human-in-the-loop</p>
+    <p class="hero-kicker" data-reveal>Computer Engineering · CE 346 · Northwestern</p>
+    <h1 class="hero-title" data-reveal="lines">SEMI-AUTONOMOUS<br>MAZE GAME</h1>
+    <p class="hero-quote" data-reveal data-reveal-delay="0.2">Line-following Robot with Human-in-the-loop</p>
+    <dl class="credits" data-reveal data-reveal-delay="0.3">
+      <div><dt>Course</dt><dd>CE 346 · Northwestern</dd></div>
+      <div><dt>Year</dt><dd>2026</dd></div>
+      <div><dt>Stack</dt><dd>Embedded C · micro:bit · RF</dd></div>
+      <div><dt>Role</dt><dd>Programmer + hardware</dd></div>
+    </dl>
   </div>
 </section>
 
@@ -601,6 +608,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js" defer></script>
 <script src="js/motion.js" defer></script>
+<script src="js/project.js" defer></script>
 
 </body>
 </html>

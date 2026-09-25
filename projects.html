@@ -6,7 +6,8 @@
   <title>Projects — Selin Orbay</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" data-fonts onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"></noscript>
 
   <link rel="stylesheet" href="css/base.css">
   <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.SO)document.documentElement.classList.add('motion-off')},3000)</script>
@@ -49,110 +50,125 @@
 
 
     /* ══════════════════════════════════════
-       PROJECT CARDS GRID
-       2 columns, minimal gap, flush to edges
+       PROJECT DECK
+       Default (no JS, mobile, reduced motion): a vertical list.
+       Desktop with motion: js adds .deck--stacked, the section pins and
+       each card slides up over the previous one (Kail timing: each step
+       rests for 45% of its scroll, then moves), with a slight tilt; the
+       card underneath scales down and dims.
     ══════════════════════════════════════ */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3px;           /* as close as possible */
-      padding: 0 3px 3px; /* same gap on outer edges */
+    .deck { padding: 0 var(--pad-x) clamp(48px, 8vh, 96px); }
+    .deck-stage {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(20px, 3vh, 32px);
+      max-width: 1180px;
+      margin: 0 auto;
     }
 
-    .project-card {
+    .deck-card {
       position: relative;
-      aspect-ratio: 16 / 11;
+      border-radius: 14px;
       overflow: hidden;
-      display: block;
-      text-decoration: none;
-      background: #3d1000;  /* fallback while image loads */
-      cursor: pointer;
+      background: var(--brown-deep);
+      color: var(--cream);
+      box-shadow: 0 30px 60px -30px rgba(0,0,0,0.55);
+      transform-origin: 50% 50%;
     }
+    .deck-card:nth-child(even) { background: var(--cream); color: var(--black); --credits-fg: var(--black); }
 
-    /* Project photo — replace each src in the HTML */
-    .project-card img {
+    .deck-link {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      height: 100%;
+      color: inherit;
+      text-decoration: none;
+    }
+    .deck-media {
+      position: relative;
+      overflow: hidden;
+      min-height: 320px;
+      background: rgba(0,0,0,0.2);
+    }
+    .deck-media img {
       position: absolute;
       inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center;
-      transition: transform 0.5s ease;
+      transition: transform 0.9s var(--ease-out);
     }
-
-    .project-card:hover img {
-      transform: scale(1.05);
+    .deck-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: clamp(24px, 3.6vw, 48px);
     }
+    .deck-num {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      opacity: 0.6;
+      margin-bottom: auto;
+    }
+    .deck-title {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 5.6vw, 88px);
+      font-weight: 400;
+      letter-spacing: 1.5px;
+      line-height: 0.92;
+    }
+    .deck-sub {
+      font-family: var(--font-body);
+      font-size: clamp(14px, 1.2vw, 16px);
+      font-weight: 400;
+      opacity: 0.75;
+    }
+    .deck-card .credits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .deck-cta { align-self: flex-start; margin-top: 18px; }
+    .deck-card:nth-child(even) .deck-cta:hover { background: var(--black); color: var(--cream); border-color: var(--black); }
+    .deck-card:nth-child(odd)  .deck-cta:hover { background: var(--cream); color: var(--brown-deep); border-color: var(--cream); }
 
-    /* Hover darkening overlay */
-    .project-card::before {
-      content: '';
+    /* dims the card as the next one covers it (opacity only) */
+    .deck-shade {
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.38);
+      background: #000;
       opacity: 0;
-      z-index: 1;
-      transition: opacity 0.4s ease;
       pointer-events: none;
     }
-    .project-card:hover::before {
-      opacity: 1;
+
+    @media (hover: hover) and (pointer: fine) {
+      .deck-link:hover .deck-media img { transform: scale(1.04); }
+      .deck-link:hover .deck-cta { background: currentColor; }
+      .deck-link:hover .deck-cta span { color: var(--brown-deep); }
+      .deck-card:nth-child(even) .deck-link:hover .deck-cta span { color: var(--cream); }
     }
 
-    /* Dark gradient at bottom for label legibility */
-    .project-card::after {
-      content: '';
+    /* stacked (desktop + motion, set by the script below) */
+    .deck--stacked { padding: 0; }
+    .deck--stacked .deck-stage {
+      display: block;
+      position: relative;
+      height: 100vh;
+      max-width: none;
+    }
+    .deck--stacked .deck-card {
       position: absolute;
       inset: 0;
-      z-index: 2;
-      background: linear-gradient(
-        to bottom,
-        transparent 25%,
-        rgba(0,0,0,0.82) 100%
-      );
+      margin: auto;
+      top: var(--nav-h);
+      width: min(1180px, 100% - 2 * var(--pad-x));
+      height: min(calc(100vh - var(--nav-h) - 64px), 680px);
+      will-change: transform;
     }
 
-    /* Project label */
-    .card-label {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      z-index: 3;
-      padding: clamp(14px, 2vw, 24px) clamp(14px, 2vw, 24px);
-    }
-
-    .card-num {
-      font-family: var(--font-body);
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      color: rgba(255,255,255,0.55);
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .card-name {
-      font-family: var(--font-body);
-      font-size: clamp(13px, 1.3vw, 16px);
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.25;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .card-meta {
-      font-family: var(--font-body);
-      font-size: clamp(9px, 0.85vw, 11px);
-      font-weight: 500;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-      display: block;
-    }
-
-    /* Empty slot styling (ReadAssist — no image yet) */
-    .project-card.empty {
-      background: rgba(255,255,255,0.04);
-      border: 1px dashed rgba(255,255,255,0.1);
+    @media (max-width: 767px) {
+      .deck-link { grid-template-columns: 1fr; }
+      .deck-media { min-height: 0; aspect-ratio: 4 / 3; }
+      .deck-info { padding: 22px 20px 26px; }
+      .deck-card .credits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
 
@@ -190,7 +206,7 @@
       font-size: clamp(80px, 16vw, 200px);
       line-height: 0.88;
       letter-spacing: 0;
-      color: #8B3800;             /* default: burnt orange (blends into bg) */
+      color: var(--orange);       /* was burnt orange on brown (too low contrast) */
       text-decoration: none;
       transition: color 0.22s ease;
       /* Spread letters evenly across the available width */
@@ -201,10 +217,13 @@
       justify-content: center;
     }
 
-    /* Hover: burnt orange → cream (lights up) */
-    .pg-letter:hover {
-      color: #FFF3DF;
+    /* Hover: orange → cream (lights up) */
+    .pg-letter:hover,
+    .pg-letter:focus-visible {
+      color: var(--cream);
     }
+    /* the float lives on the inner span so the scroll-in can own the link's transform */
+    .pg-letter span { display: block; }
 
     /* Each letter floats independently */
     @keyframes float-a { 0%,100%{transform:translate(0,0)} 30%{transform:translate(3px,-5px)} 70%{transform:translate(-2px,3px)} }
@@ -214,17 +233,18 @@
     @keyframes float-e { 0%,100%{transform:translate(0,0)} 35%{transform:translate(4px,3px)} 75%{transform:translate(-2px,-5px)} }
     @keyframes float-f { 0%,100%{transform:translate(0,0)} 45%{transform:translate(-4px,-4px)} 85%{transform:translate(2px,5px)} }
 
-    .pg-letter:nth-child(1) { animation: float-a 3.1s ease-in-out infinite; }
-    .pg-letter:nth-child(2) { animation: float-b 3.6s ease-in-out infinite; }
-    .pg-letter:nth-child(3) { animation: float-c 2.9s ease-in-out infinite; }
-    .pg-letter:nth-child(4) { animation: float-d 3.4s ease-in-out infinite; }
-    .letter-row:nth-child(2) .pg-letter:nth-child(1) { animation: float-e 3.2s ease-in-out infinite; }
-    .letter-row:nth-child(2) .pg-letter:nth-child(2) { animation: float-f 2.8s ease-in-out infinite; }
-    .letter-row:nth-child(2) .pg-letter:nth-child(3) { animation: float-a 3.5s ease-in-out infinite; }
-    .letter-row:nth-child(2) .pg-letter:nth-child(4) { animation: float-b 3.0s ease-in-out infinite; }
-    .letter-row:nth-child(2) .pg-letter:nth-child(5) { animation: float-c 3.7s ease-in-out infinite; }
-    .letter-row:nth-child(2) .pg-letter:nth-child(6) { animation: float-d 3.3s ease-in-out infinite; }
+    .pg-letter:nth-child(1) span { animation: float-a 3.1s ease-in-out infinite; }
+    .pg-letter:nth-child(2) span { animation: float-b 3.6s ease-in-out infinite; }
+    .pg-letter:nth-child(3) span { animation: float-c 2.9s ease-in-out infinite; }
+    .pg-letter:nth-child(4) span { animation: float-d 3.4s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(1) span { animation: float-e 3.2s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(2) span { animation: float-f 2.8s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(3) span { animation: float-a 3.5s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(4) span { animation: float-b 3.0s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(5) span { animation: float-c 3.7s ease-in-out infinite; }
+    .letter-row:nth-child(2) .pg-letter:nth-child(6) span { animation: float-d 3.3s ease-in-out infinite; }
 
+    @media (prefers-reduced-motion: reduce) { .pg-letter span { animation: none !important; } }
   </style>
 </head>
 <body>
@@ -248,7 +268,7 @@
      PAGE HEADER
 ════════════════════════ -->
 <header class="page-header">
-  <h1>PROJECTS</h1>
+  <h1 data-reveal="lines">PROJECTS</h1>
 </header>
 
 
@@ -257,58 +277,105 @@
      Export each project photo from Figma and
      save to assets/images/projects/
 ════════════════════════ -->
-<section class="projects-grid">
+<section class="deck" id="deck" aria-label="Projects">
+  <div class="deck-stage">
 
-  <!-- 1 — Hexabot / Gait / Mapping -->
-  <a class="project-card" href="hexabot.html">
-    <img src="assests/images/projects/hexabot.png" alt="SpiderPi Hexabot">
-    <div class="card-label">
-      <span class="card-num">01</span>
-      <span class="card-name">SpiderPi Hexabot | Gait Correction &amp; Maze Mapping</span>
-      <span class="card-meta">Robotics · Python · 2026</span>
-    </div>
-  </a>
+    <article class="deck-card">
+      <a class="deck-link" href="hexabot.html">
+        <div class="deck-media"><img src="assests/images/projects/hexabot-card.jpg" alt="SpiderPi Hexabot on the lab floor"></div>
+        <div class="deck-info">
+          <span class="deck-num">[01]</span>
+          <h2 class="deck-title">SpiderPi Hexabot</h2>
+          <p class="deck-sub">Gait correction &amp; maze mapping</p>
+          <dl class="credits">
+            <div><dt>Course</dt><dd>CS/ME 301 · Northwestern</dd></div>
+            <div><dt>Year</dt><dd>2026</dd></div>
+            <div><dt>Stack</dt><dd>Python · Q-learning · Sonar</dd></div>
+            <div><dt>Role</dt><dd>Programmer</dd></div>
+          </dl>
+          <span class="pill deck-cta"><span>View project →</span></span>
+        </div>
+        <div class="deck-shade" aria-hidden="true"></div>
+      </a>
+    </article>
 
-  <!-- 2 — Autonomous Quadrotor -->
-  <a class="project-card" href="quadrotor.html">
-    <img src="assests/images/projects/quadrotor.png" alt="Autonomous Quadrotor Control">
-    <div class="card-label">
-      <span class="card-num">02</span>
-      <span class="card-name">Autonomous Quadrotor Control</span>
-      <span class="card-meta">Embedded Control · CS/ME 410 · Northwestern</span>
-    </div>
-  </a>
+    <article class="deck-card">
+      <a class="deck-link" href="quadrotor.html">
+        <div class="deck-media"><img src="assests/images/projects/quadrotor-card.jpg" alt="Hand-built quadrotor held in two hands" loading="lazy"></div>
+        <div class="deck-info">
+          <span class="deck-num">[02]</span>
+          <h2 class="deck-title">Autonomous Quadrotor</h2>
+          <p class="deck-sub">Embedded flight control, from IMU registers to camera autonomy</p>
+          <dl class="credits">
+            <div><dt>Course</dt><dd>CS/ME 410 · Northwestern</dd></div>
+            <div><dt>Year</dt><dd aria-label="Year to be confirmed">—</dd></div>
+            <div><dt>Stack</dt><dd>C++ · Python · PID · Raspberry Pi</dd></div>
+            <div><dt>Role</dt><dd>Controls &amp; embedded software</dd></div>
+          </dl>
+          <span class="pill deck-cta"><span>View project →</span></span>
+        </div>
+        <div class="deck-shade" aria-hidden="true"></div>
+      </a>
+    </article>
 
-  <!-- 3 — Basketball Shot Classifier -->
-  <a class="project-card" href="basketball.html">
-    <img src="assests/images/projects/basketball/bball-hero.png" alt="Basketball Shot Classifier">
-    <div class="card-label">
-      <span class="card-num">03</span>
-      <span class="card-name">Basketball Shot Classifier</span>
-      <span class="card-meta">Machine Learning &amp; Sensing · CS 396 · Northwestern</span>
-    </div>
-  </a>
+    <article class="deck-card">
+      <a class="deck-link" href="basketball.html">
+        <div class="deck-media"><img src="assests/images/projects/basketball-card.jpg" alt="Mini basketball hoop fitted with sensors" loading="lazy"></div>
+        <div class="deck-info">
+          <span class="deck-num">[03]</span>
+          <h2 class="deck-title">Basketball Shot Classifier</h2>
+          <p class="deck-sub">Machine learning &amp; sensing</p>
+          <dl class="credits">
+            <div><dt>Course</dt><dd>CS 396 · Northwestern</dd></div>
+            <div><dt>Year</dt><dd aria-label="Year to be confirmed">—</dd></div>
+            <div><dt>Stack</dt><dd>Python · scikit-learn · ESP32</dd></div>
+            <div><dt>Role</dt><dd>Sensing + ML pipeline</dd></div>
+          </dl>
+          <span class="pill deck-cta"><span>View project →</span></span>
+        </div>
+        <div class="deck-shade" aria-hidden="true"></div>
+      </a>
+    </article>
 
-  <!-- 4 — Maze Game -->
-  <a class="project-card" href="maze-game.html">
-    <img src="assests/images/projects/maze-game.jpg" alt="Semi-Autonomous Maze Game">
-    <div class="card-label">
-      <span class="card-num">04</span>
-      <span class="card-name">Semi-Autonomous Maze Game</span>
-      <span class="card-meta">Computer Engineering · Embedded C · 2026</span>
-    </div>
-  </a>
+    <article class="deck-card">
+      <a class="deck-link" href="maze-game.html">
+        <div class="deck-media"><img src="assests/images/projects/maze-game.jpg" alt="Line-following robot on a maze track" loading="lazy"></div>
+        <div class="deck-info">
+          <span class="deck-num">[04]</span>
+          <h2 class="deck-title">Semi-Autonomous Maze Game</h2>
+          <p class="deck-sub">Line-following robot with a human in the loop</p>
+          <dl class="credits">
+            <div><dt>Course</dt><dd>CE 346 · Northwestern</dd></div>
+            <div><dt>Year</dt><dd>2026</dd></div>
+            <div><dt>Stack</dt><dd>Embedded C · micro:bit · RF</dd></div>
+            <div><dt>Role</dt><dd>Programmer + hardware</dd></div>
+          </dl>
+          <span class="pill deck-cta"><span>View project →</span></span>
+        </div>
+        <div class="deck-shade" aria-hidden="true"></div>
+      </a>
+    </article>
 
-  <!-- 5 — WaterGuard -->
-  <a class="project-card" href="waterguard.html">
-    <img src="assests/images/projects/waterguard.png" alt="WaterGuard">
-    <div class="card-label">
-      <span class="card-num">05</span>
-      <span class="card-name">WaterGuard | Water-resistant CT Scanner</span>
-      <span class="card-meta">Product Design · Fabrication · 2025–2026</span>
-    </div>
-  </a>
+    <article class="deck-card">
+      <a class="deck-link" href="waterguard.html">
+        <div class="deck-media"><img src="assests/images/projects/waterguard-card.jpg" alt="The WaterGuard team beside the lined CT scanner" loading="lazy"></div>
+        <div class="deck-info">
+          <span class="deck-num">[05]</span>
+          <h2 class="deck-title">WaterGuard</h2>
+          <p class="deck-sub">Water-resistant CT scanner liner</p>
+          <dl class="credits">
+            <div><dt>Course</dt><dd>DSGN 384 · Northwestern</dd></div>
+            <div><dt>Year</dt><dd>2025–2026</dd></div>
+            <div><dt>Stack</dt><dd>SolidWorks · FMEA · Heat welding</dd></div>
+            <div><dt>Role</dt><dd>Designer + fabricator</dd></div>
+          </dl>
+          <span class="pill deck-cta"><span>View project →</span></span>
+        </div>
+        <div class="deck-shade" aria-hidden="true"></div>
+      </a>
+    </article>
 
+  </div>
 </section>
 
 
@@ -317,7 +384,7 @@
      Each letter links to playground.html.
      Hover: cream → #8B3800 (fades into bg).
 ════════════════════════ -->
-<section class="playground-section">
+<section class="playground-section" id="pg-teaser">
 
   <p class="discover-text">Discover my</p>
 
@@ -325,20 +392,20 @@
 
     <!-- Row 1: P L A Y -->
     <div class="letter-row">
-      <a class="pg-letter" href="playground.html">P</a>
-      <a class="pg-letter" href="playground.html">L</a>
-      <a class="pg-letter" href="playground.html">A</a>
-      <a class="pg-letter" href="playground.html">Y</a>
+      <a class="pg-letter" href="playground.html" aria-label="Discover my playground"><span aria-hidden="true">P</span></a>
+      <a class="pg-letter" href="playground.html" tabindex="-1" aria-hidden="true"><span aria-hidden="true">L</span></a>
+      <a class="pg-letter" href="playground.html" tabindex="-1" aria-hidden="true"><span aria-hidden="true">A</span></a>
+      <a class="pg-letter" href="playground.html" tabindex="-1" aria-hidden="true"><span aria-hidden="true">Y</span></a>
     </div>
 
     <!-- Row 2: G R O U N D -->
     <div class="letter-row">
-      <a class="pg-letter" href="playground.html">G</a>
-      <a class="pg-letter" href="playground.html">R</a>
-      <a class="pg-letter" href="playground.html">O</a>
-      <a class="pg-letter" href="playground.html">U</a>
-      <a class="pg-letter" href="playground.html">N</a>
-      <a class="pg-letter" href="playground.html">D</a>
+      <a class="pg-letter" href="playground.html" tabindex="-1" aria-hidden="true"><span aria-hidden="true">G</span></a>
+      <a class="pg-letter" href="playground.html" tabindex="-1" aria-hidden="true"><span aria-hidden="true">R</span></a>
+      <a class="pg-letter" href="playground.html" tabindex="-1" aria-hidden="true"><span aria-hidden="true">O</span></a>
+      <a class="pg-letter" href="playground.html" tabindex="-1" aria-hidden="true"><span aria-hidden="true">U</span></a>
+      <a class="pg-letter" href="playground.html" tabindex="-1" aria-hidden="true"><span aria-hidden="true">N</span></a>
+      <a class="pg-letter" href="playground.html" tabindex="-1" aria-hidden="true"><span aria-hidden="true">D</span></a>
     </div>
 
   </div>
@@ -359,6 +426,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js" defer></script>
 <script src="js/motion.js" defer></script>
+<script src="js/projects.js" defer></script>
 
 </body>
 </html>

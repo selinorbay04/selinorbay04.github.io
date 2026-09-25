@@ -6,7 +6,8 @@
   <title>WaterGuard | Selin Orbay</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" data-fonts onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"></noscript>
 
   <link rel="stylesheet" href="css/base.css">
   <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.SO)document.documentElement.classList.add('motion-off')},3000)</script>
@@ -301,40 +302,63 @@
     }
 
 
+    /* Content never stretches across ultra-wide screens */
+    .section { max-width: 1440px; margin-inline: auto; }
+
     /* ══════════════════════════════════════
-       ENGINEERING — intro text + device photo
+       ENGINEERING — text + spec table beside the device photo.
+       The photo is sticky, so the column never leaves a gap.
     ══════════════════════════════════════ */
-    .engineering-intro { align-items: start; }
+    .engineering-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+      gap: clamp(32px, 5vw, 80px);
+      align-items: start;
+    }
+    .engineering-grid .body-text { max-width: 62ch; }
+    .engineering-grid .spec-table { margin-top: clamp(24px, 3vh, 36px); }
+    .device-figure {
+      position: sticky;
+      top: calc(var(--nav-h) + 24px);
+      margin: 0;
+    }
     .device-photo {
       width: 100%;
       max-width: 420px;          /* 1076px source stays sharp at 2x */
       height: auto;
       display: block;
-      justify-self: end;
     }
 
 
     /* ══════════════════════════════════════
-       MY ROLE — three small portrait photos.
-       Never wider than their native 445–480px.
+       MY ROLE — text (sticky) beside three footnoted photos.
+       Each photo is capped at its native width so it never blurs.
     ══════════════════════════════════════ */
-    .role-text { max-width: 760px; }
-
-    .role-strip {
+    .role-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, max-content));
-      justify-content: start;
-      gap: clamp(12px, 1.5vw, 20px);
-      margin-top: clamp(28px, 4vh, 48px);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: clamp(32px, 5vw, 80px);
+      align-items: start;
     }
-    .role-strip figure { margin: 0; }
-    /* shared height (≤ native 640px) so the row lines up; width follows
-       each photo's own ratio, so none is ever stretched past native size */
-    .role-strip img {
-      display: block;
-      height: min(479px, calc((100vw - 2 * var(--pad-x) - 40px) / 2.15));   /* 479 = shortest native height */
-      width: auto;
+    .role-text {
+      position: sticky;
+      top: calc(var(--nav-h) + 24px);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-width: 62ch;
     }
+    .role-figs {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(40px, 7vh, 88px);
+      padding-top: 8px;
+    }
+    /* zig-zag inside the column */
+    .role-figs figure { width: min(100%, var(--w)); }
+    .role-figs figure:nth-child(2) { align-self: flex-end; }
+    .role-figs figure:nth-child(3) { align-self: center; }
+    .role-figs img { width: 100%; box-shadow: 0 18px 40px -24px rgba(61,16,0,0.45); }
 
 
     /* ══════════════════════════════════════
@@ -414,12 +438,16 @@
 
     /* ── Mobile: sections rebuilt in Phase 1 ── */
     @media (max-width: 767px) {
-      .engineering-intro { grid-template-columns: 1fr; }
-      .device-photo { justify-self: start; }
+      .engineering-grid { grid-template-columns: 1fr; }
+      .spec-row { grid-template-columns: 104px 1fr; }
+      .device-figure { position: static; order: -1; }
 
+      .role-grid { grid-template-columns: 1fr; }
+      .role-text { position: static; }
       /* swipeable row; each photo capped at its native width */
-      .role-strip {
-        display: flex;
+      .role-figs {
+        flex-direction: row;
+        gap: 16px;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
@@ -427,8 +455,8 @@
         padding-right: var(--pad-x);
         padding-bottom: 8px;
       }
-      .role-strip figure { flex: 0 0 auto; scroll-snap-align: start; }
-      .role-strip img { height: min(420px, 100vw); }
+      .role-figs figure,
+      .role-figs figure:nth-child(n) { flex: 0 0 auto; width: min(78vw, var(--w)); align-self: flex-start; scroll-snap-align: start; }
 
       .results-grid { grid-template-columns: 1fr; }
       .result-card--featured { grid-template-columns: 1fr; }
@@ -457,7 +485,7 @@
 
   </style>
 </head>
-<body>
+<body class="project-page">
 
 
 <!-- ════════════════════════
@@ -479,12 +507,18 @@
      assets/images/waterguard/hero.jpg
 ════════════════════════ -->
 <section class="hero">
-  <img class="hero-photo" src="assests/images/projects/waterguard/hero.png" alt="WaterGuard team">
+  <img class="hero-photo" src="assests/images/projects/waterguard/hero.jpg" fetchpriority="high" alt="WaterGuard team">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <p class="hero-kicker">Product Design · DSGN 384 · Northwestern</p>
-    <h1 class="hero-title">WATERGUARD</h1>
-    <p class="hero-quote">"What would you do if your client said they want to scan a 2,000 lb whale in a CT scanner?"</p>
+    <p class="hero-kicker" data-reveal>Product Design · DSGN 384 · Northwestern</p>
+    <h1 class="hero-title" data-reveal="lines">WATERGUARD</h1>
+    <p class="hero-quote" data-reveal data-reveal-delay="0.2">"What would you do if your client said they want to scan a 2,000 lb whale in a CT scanner?"</p>
+    <dl class="credits" data-reveal data-reveal-delay="0.3">
+      <div><dt>Course</dt><dd>DSGN 384 · Northwestern</dd></div>
+      <div><dt>Year</dt><dd>2025–2026</dd></div>
+      <div><dt>Stack</dt><dd>SolidWorks · FMEA · Heat welding</dd></div>
+      <div><dt>Role</dt><dd>Designer + fabricator</dd></div>
+    </dl>
   </div>
 </section>
 
@@ -564,49 +598,54 @@
 <section class="section">
   <h2 class="section-title">ENGINEERING THE SOLUTION</h2>
 
-  <div class="two-col engineering-intro">
-    <p class="body-text">
-      Two subsystems: gantry waterproofing and runoff collection. The harder problem was the
-      gantry — sealed without interfering with the imaging laser, without permanent
-      modifications, fast enough to not stress the animal.
-    </p>
-    <img class="device-photo" src="assests/images/projects/waterguard/device.jpeg"
-         width="1076" height="1430" loading="lazy"
-         alt="The finished WaterGuard liner fitted over the CT scanner's gantry">
-  </div>
+  <div class="engineering-grid">
+    <div>
+      <p class="body-text">
+        Two subsystems: gantry waterproofing and runoff collection. The harder problem was the
+        gantry — sealed without interfering with the imaging laser, without permanent
+        modifications, fast enough to not stress the animal.
+      </p>
 
-  <div class="spec-table">
+    <div class="spec-table">
 
-    <div class="spec-row">
-      <span class="spec-label">Material</span>
-      <span class="spec-value">10 mil LDPE – saltwater-resistant, heat-weldable, no radiographic artifacts</span>
+      <div class="spec-row">
+        <span class="spec-label">Material</span>
+        <span class="spec-value">10 mil LDPE – saltwater-resistant, heat-weldable, no radiographic artifacts</span>
+      </div>
+
+      <div class="spec-row">
+        <span class="spec-label">Laser Window</span>
+        <span class="spec-value">0.02" PETG, validated against a control – no measurable beam deflection</span>
+      </div>
+
+      <div class="spec-row">
+        <span class="spec-label">Geometry</span>
+        <span class="spec-value">12.5° incline routes water passively rearward; shingled face overlaps reduce seam ingress</span>
+      </div>
+
+      <div class="spec-row">
+        <span class="spec-label">Seam Placement</span>
+        <span class="spec-value">Positioned at the gantry's top (lowest water-contact risk) – driven by FMEA flagging weld separation as highest-likelihood failure mode</span>
+      </div>
+
+      <div class="spec-row">
+        <span class="spec-label">Attachment</span>
+        <span class="spec-value">3M Dual Lock fasteners – no tools, no permanent modifications, fully repeatable</span>
+      </div>
+
+      <div class="spec-row">
+        <span class="spec-label">Runoff</span>
+        <span class="spec-value">PVC-framed 7-gallon collection bin mounts on the scanner's rear pillars and travels with it</span>
+      </div>
+
+    </div>
     </div>
 
-    <div class="spec-row">
-      <span class="spec-label">Laser Window</span>
-      <span class="spec-value">0.02" PETG, validated against a control – no measurable beam deflection</span>
-    </div>
-
-    <div class="spec-row">
-      <span class="spec-label">Geometry</span>
-      <span class="spec-value">12.5° incline routes water passively rearward; shingled face overlaps reduce seam ingress</span>
-    </div>
-
-    <div class="spec-row">
-      <span class="spec-label">Seam Placement</span>
-      <span class="spec-value">Positioned at the gantry's top (lowest water-contact risk) – driven by FMEA flagging weld separation as highest-likelihood failure mode</span>
-    </div>
-
-    <div class="spec-row">
-      <span class="spec-label">Attachment</span>
-      <span class="spec-value">3M Dual Lock fasteners – no tools, no permanent modifications, fully repeatable</span>
-    </div>
-
-    <div class="spec-row">
-      <span class="spec-label">Runoff</span>
-      <span class="spec-value">PVC-framed 7-gallon collection bin mounts on the scanner's rear pillars and travels with it</span>
-    </div>
-
+    <figure class="device-figure">
+      <img class="device-photo" src="assests/images/projects/waterguard/device.jpeg"
+           width="1076" height="1430" loading="lazy"
+           alt="The finished WaterGuard liner fitted over the CT scanner's gantry">
+    </figure>
   </div>
 </section>
 
@@ -619,31 +658,42 @@
 <section class="section">
   <h2 class="section-title">MY ROLE</h2>
 
-  <div class="two-col-text role-text">
+  <div class="role-grid">
+    <div class="role-text">
       <p class="body-text">
         Built a dimensionally accurate 3D model of the NeuroLogica BodyTom from
         manufacturer specs. Modeled early design directions and assemblies to evaluate
-        geometry before committing materials.
+        geometry before committing materials.<a class="fn-ref" href="#fig-1" aria-label="See photo 1">1</a>
       </p>
       <p class="body-text">
         Led the physical prototype build. Heat-welded the majority of the final liner,
         including critical seam sections. Contributed the shingled overlap geometry central
-        to the liner's water-shedding behavior.
+        to the liner's water-shedding behavior.<a class="fn-ref" href="#fig-2" aria-label="See photos 2 and 3">2, 3</a>
       </p>
       <p class="body-text">
         Ran most ideation sessions. Mediated team conflicts. Maintained a DFR focus
         throughout: every decision traceable to a failure mode, not just a prototype that
         happened to work.
       </p>
-  </div>
+    </div>
 
-  <div class="role-strip" aria-label="Build photos">
-    <figure><img src="assests/images/projects/waterguard/my-role-0.png" width="480" height="640" loading="lazy"
-                 alt="Scale mock-up of the gantry liner with numbered, shingled panels"></figure>
-    <figure><img src="assests/images/projects/waterguard/my-role-1.png" width="445" height="640" loading="lazy"
-                 alt="Liner on the scanner, annotated with the single seam and overlap direction"></figure>
-    <figure><img src="assests/images/projects/waterguard/my-role-2-cropped.png" width="359" height="479" loading="lazy"
-                 alt="Rear view of the scanner with the PVC-framed runoff collection bin"></figure>
+    <div class="role-figs fig-stack" aria-label="Build photos">
+      <figure id="fig-1" style="--w: 480px">
+        <img src="assests/images/projects/waterguard/my-role-0.png" width="480" height="640" loading="lazy"
+             alt="Scaled-down prototype of the CT scanner gantry with numbered, shingled liner panels">
+        <figcaption><span class="fig-num">[1]</span><span>A prototype of the CT scanner, which I designed at full scale and then scaled down 85%.</span></figcaption>
+      </figure>
+      <figure id="fig-2" style="--w: 413px">
+        <img src="assests/images/projects/waterguard/my-role-1-clean.png" width="413" height="582" loading="lazy"
+             alt="The full liner on site, with the single seam and the overlapping shingles marked in red">
+        <figcaption><span class="fig-num">[2]</span><span>The full product on site. Highlighted: the single seam and the overlapping-shingle technique, two of its most prominent features.</span></figcaption>
+      </figure>
+      <figure id="fig-3" style="--w: 359px">
+        <img src="assests/images/projects/waterguard/my-role-2-cropped.png" width="359" height="479" loading="lazy"
+             alt="Back of the scanner on site, showing the slope that drains into the runoff collection bin">
+        <figcaption><span class="fig-num">[3]</span><span>The back of the full product on site: the slope carries water down into the runoff collection bin.</span></figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -714,6 +764,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js" defer></script>
 <script src="js/motion.js" defer></script>
+<script src="js/project.js" defer></script>
 
 </body>
 </html>

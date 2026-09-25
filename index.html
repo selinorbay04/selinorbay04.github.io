@@ -6,7 +6,8 @@
   <title>Selin Orbay — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" data-fonts onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"></noscript>
 
   <link rel="stylesheet" href="css/base.css">
   <script>
@@ -31,8 +32,17 @@
       window.SOintroSkip = end;
       addEventListener('pointerdown', end, { once: true });
       addEventListener('keydown', end, { once: true });
-      try { document.fonts.load('400 1em "Bebas Neue"').then(go, go); } catch (e) { go(); }
-      setTimeout(go, 700);   // never wait long for the font
+      // Wait for Bebas Neue (the font stylesheet loads async), but never long.
+      var t0 = Date.now();
+      (function waitFont() {
+        if (timer || over) return;
+        var face = null;
+        try { document.fonts.forEach(function (f) { if (/Bebas Neue/.test(f.family)) face = f; }); } catch (e) { return go(); }
+        if (face && face.status === 'loaded') return go();
+        if (face && face.status === 'unloaded') face.load().then(go, go);
+        if (Date.now() - t0 > 700) return go();
+        setTimeout(waitFont, 40);
+      })();
     })(document.documentElement);
   </script>
 
@@ -42,6 +52,12 @@
     ══════════════════════════════════════ */
     :root {
       --name-color:   #FFF3DF;   /* SELIN ORBAY matches background tone */
+      --hero-photo-w: min(50vw, 80vh);   /* portrait photo, shown near native size */
+      /* links sit over the photo's light ceiling: dark until the nav turns solid */
+      --nav-fg:       var(--brown-deep);
+    }
+    @media (min-width: 768px) {
+      nav:not(.scrolled) .logo { color: var(--name-color); }   /* logo sits on the brown */
     }
 
 
@@ -73,7 +89,7 @@
     }
     html.intro:not(.motion-off) .hero-name { z-index: 260; }
     html.intro:not(.motion-off) .hero-name .line { overflow: hidden; }
-    html.intro:not(.motion-off) .hero-name .line > span { transform: translateY(110%); }
+    html.intro:not(.motion-off) .hero-name .line > span { transform: translateY(130%); }
     html.intro:not(.motion-off) .hero-photo { transform: scale(1.1); }
     html.intro:not(.motion-off) #nav,
     html.intro:not(.motion-off) .hero-tagline,
@@ -87,7 +103,7 @@
     html.intro-go:not(.motion-off) .hero-tagline { animation: intro-ui 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 1.0s both; }
     html.intro-go:not(.motion-off) .scroll-hint  { animation: intro-ui 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 1.05s both; }
 
-    @keyframes intro-rise   { from { transform: translateY(110%); } to { transform: none; } }
+    @keyframes intro-rise   { from { transform: translateY(130%); } to { transform: none; } }
     @keyframes intro-settle { from { transform: scale(1.1); }       to { transform: none; } }
     @keyframes intro-ui     { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
     @keyframes intro-wipe {
@@ -108,29 +124,20 @@
       overflow: hidden;
     }
 
+    /* Split hero: brown panel with the name on the left, the ungraded
+       photo on the right. No overlay needed. */
     .hero-media {
       position: absolute;
-      inset: 0;
+      top: 0; right: 0; bottom: 0;
+      width: var(--hero-photo-w);
     }
     .hero-photo {
       position: absolute;
       inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center 15%;
-      filter: brightness(1.1) saturate(1.04);   /* lifts the baked-in brown grade */
+      object-position: center 40%;
       will-change: transform;
-    }
-
-    /* softened: only the lower third darkens, for the name */
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0) 45%,
-        rgba(0,0,0,0.32) 100%
-      );
     }
 
     /* "SELIN ORBAY" — display font.
@@ -215,7 +222,7 @@
     .scroll-hint {
       position: absolute;
       bottom: 44px;
-      right: 48px;
+      right: calc(var(--hero-photo-w) + 40px);
       z-index: 1;
       display: flex;
       align-items: center;
@@ -236,6 +243,7 @@
     }
 
     @media (max-width: 767px) {
+      .hero-media   { top: 0; left: 0; right: 0; bottom: auto; width: auto; height: 60%; }
       .hero-name    { left: 20px; bottom: calc(96px + 44px); }
       .hero-tagline { left: 20px; bottom: 88px; width: calc(100% - 40px); height: 44px; }
       .tagline      { font-size: 30px; }
@@ -454,11 +462,10 @@
 <section class="hero">
   <div class="hero-media">
     <picture>
-      <source srcset="assests/images/hero.webp" type="image/webp">
-      <img class="hero-photo" src="assests/images/hero.jpg" alt="Selin Orbay holding a small robot in a studio" width="1448" height="1086" fetchpriority="high">
+      <source srcset="assests/images/hero-clean.webp" type="image/webp">
+      <img class="hero-photo" src="assests/images/hero-clean.jpg" alt="Selin Orbay adjusting a small robot in a design studio" width="960" height="1280" fetchpriority="high">
     </picture>
   </div>
-  <div class="hero-overlay"></div>
 
   <h1 class="hero-name" aria-label="Selin Orbay">
     <span class="line" aria-hidden="true"><span>SELIN</span></span>

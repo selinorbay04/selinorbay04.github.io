@@ -6,7 +6,8 @@
   <title>Gait Correction with Q-Learning — Selin Orbay</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" data-fonts onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"></noscript>
 
   <link rel="stylesheet" href="css/base.css">
   <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.SO)document.documentElement.classList.add('motion-off')},3000)</script>
@@ -361,9 +362,13 @@
     .project-nav a:hover { opacity: 0.55; }
 
 
+    @media (max-width: 767px) {
+      .stat-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
   </style>
 </head>
-<body>
+<body class="project-page">
 
 
 <!-- ════════════════════════
@@ -388,8 +393,14 @@
   <img class="hero-photo" src="assests/images/projects/hexabot/gait-hero.jpg" alt="SpiderPi Hexabot Gait Correction">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <p class="hero-kicker">Robotics · CS/ME 301 · Northwestern</p>
-    <h1 class="hero-title">GAIT CORRECTION<br>WITH Q-LEARNING</h1>
+    <p class="hero-kicker" data-reveal>Robotics · CS/ME 301 · Northwestern</p>
+    <h1 class="hero-title" data-reveal="lines">GAIT CORRECTION<br>WITH Q-LEARNING</h1>
+    <dl class="credits" data-reveal data-reveal-delay="0.3">
+      <div><dt>Course</dt><dd>CS/ME 301 · Northwestern</dd></div>
+      <div><dt>Year</dt><dd>2026</dd></div>
+      <div><dt>Stack</dt><dd>Python · Q-learning · IMU</dd></div>
+      <div><dt>Role</dt><dd>Programmer</dd></div>
+    </dl>
   </div>
 </section>
 
@@ -560,6 +571,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js" defer></script>
 <script src="js/motion.js" defer></script>
+<script src="js/project.js" defer></script>
 
 </body>
 </html>
