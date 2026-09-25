@@ -123,6 +123,20 @@
   }
   initReveals();
 
+  /* ── Batched reveals: [data-reveal-batch] children rise in, staggered ── */
+  if (hasGsap && !SO.reduced) {
+    document.querySelectorAll('[data-reveal-batch]').forEach(box => {
+      ScrollTrigger.batch(box.children, {
+        start: 'top 92%',
+        once: true,
+        onEnter: batch => gsap.to(batch, {
+          opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08,
+          onComplete: () => gsap.set(batch, { clearProps: 'transform' }),
+        }),
+      });
+    });
+  }
+
 
   /* ── Nav: solid background once past the hero (or 20px on pages without one),
         plus a thin scroll-progress line. html.nav-scrolled mirrors the state

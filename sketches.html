@@ -34,31 +34,10 @@
 
 
     /* ══════════════════════════════════════
-       NAV
-    ══════════════════════════════════════ */
-
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: rgba(15,15,15,0.4);
-      text-decoration: none;
-      transition: color .2s;
-    }
-    .back-link:hover { color: var(--burnt); }
-    .back-link svg { width: 14px; height: 14px; }
-
-
-    /* ══════════════════════════════════════
        HERO
     ══════════════════════════════════════ */
     .hero {
-      padding: calc(var(--nav-h) + 40px) clamp(24px, 6vw, 80px) 0;
+      padding: calc(var(--nav-h) + 68px) clamp(24px, 6vw, 80px) 0;
       display: flex;
       align-items: flex-end;
       gap: clamp(16px, 3vw, 40px);
@@ -105,121 +84,75 @@
     }
 
 
+    .sk-back {
+      position: absolute;
+      top: calc(var(--nav-h) + 14px);
+      left: clamp(24px, 6vw, 80px);
+      color: var(--black);
+    }
+
+
     /* ══════════════════════════════════════
-       CATEGORY GRID
-       Same visual pattern as projects.html:
-       normal image + bottom gradient always on,
-       dark overlay fades in on hover.
+       FILTER PILLS  (sticky under the nav; need JS, so hidden without it)
     ══════════════════════════════════════ */
-    .cat-intro {
-      padding: clamp(28px, 4vh, 48px) clamp(24px, 6vw, 80px) clamp(14px, 1.8vh, 20px);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: rgba(15,15,15,0.35);
+    .filters {
+      position: sticky;
+      top: var(--nav-h);
+      z-index: 50;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 14px clamp(24px, 6vw, 80px);
+      background: color-mix(in srgb, var(--cream) 92%, transparent);
+      backdrop-filter: blur(8px);
+      color: var(--black);
     }
+    html:not(.js) .filters { display: none; }
 
-    .categories {
+
+    /* ══════════════════════════════════════
+       THE DESK
+       Sketches lie scattered: each has a seeded rotation (±4°) and a
+       small offset baked into its inline style, so the layout is the
+       same every visit and without JS. Hover lifts and straightens.
+    ══════════════════════════════════════ */
+    .desk {
+      list-style: none;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 3px;
-      padding: 0 3px 3px;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: clamp(36px, 4vw, 56px) clamp(28px, 3vw, 44px);
+      align-items: center;
+      padding: clamp(32px, 5vh, 56px) clamp(24px, 6vw, 80px) clamp(64px, 10vh, 120px);
+      max-width: 1600px;
+      margin: 0 auto;
     }
-
-    /* 5th card spans full width */
-    .cat-card:nth-child(5) {
-      grid-column: 1 / -1;
-    }
-
-    .cat-card {
-      position: relative;
+    .sk[hidden] { display: none; }
+    .sk { position: relative; }
+    .sk-paper {
       display: block;
-      text-decoration: none;
-      overflow: hidden;
-      aspect-ratio: 4 / 3;
-      cursor: pointer;
-      background: var(--cream-dark);
+      transform: translate(var(--dx), var(--dy)) rotate(var(--r));
+      box-shadow: 0 1px 2px rgba(61,16,0,0.12), 0 10px 22px -12px rgba(61,16,0,0.35);
+      transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+      background: var(--cream);
+    }
+    .sk-paper img { display: block; width: 100%; height: auto; }
+    .sk:hover { z-index: 5; }
+    .sk-paper:hover,
+    .sk-paper:focus-visible {
+      transform: translate(var(--dx), calc(var(--dy) - 10px)) rotate(0deg) scale(1.05);
+      box-shadow: 0 2px 4px rgba(61,16,0,0.12), 0 28px 48px -18px rgba(61,16,0,0.5);
     }
 
-    /* 5th card is a wide strip */
-    .cat-card:nth-child(5) { aspect-ratio: 16 / 5; }
-
-    /* photo */
-    .cat-card img {
-      position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
-      transition: transform 0.5s ease;
+    /* Mobile: two staggered columns, no scatter */
+    @media (max-width: 767px) {
+      .desk { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 14px; align-items: start; padding-inline: 16px; }
+      .sk-paper, .sk-paper:hover, .sk-paper:focus-visible { transform: none; }
+      .sk:nth-child(even) { margin-top: 28px; }
+      .filters { padding: 10px 16px; gap: 6px; }
     }
-    .cat-card:hover img { transform: scale(1.05); }
-
-
-    /* hover darkening overlay — same approach as projects.html */
-    .cat-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.38);
-      opacity: 0;
-      z-index: 1;
-      transition: opacity 0.4s ease;
-      pointer-events: none;
+    @media (prefers-reduced-motion: reduce) {
+      .sk-paper { transition: none; }
     }
-    .cat-card:hover::before { opacity: 1; }
-
-    /* bottom gradient for label legibility — always visible */
-    .cat-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      background: linear-gradient(
-        to bottom,
-        transparent 25%,
-        rgba(0,0,0,0.80) 100%
-      );
-    }
-
-    .cat-label {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      z-index: 3;
-      padding: clamp(16px, 2.5vw, 28px);
-    }
-
-    .cat-num {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      color: rgba(255,255,255,0.5);
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .cat-name {
-      font-family: var(--font-display);
-      font-size: clamp(26px, 4vw, 52px);
-      letter-spacing: 2px;
-      color: #fff;
-      display: block;
-      line-height: 1;
-      margin-bottom: 6px;
-      transition: letter-spacing .25s ease;
-    }
-    .cat-card:hover .cat-name { letter-spacing: 4px; }
-
-    .cat-count-tag {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.45);
-      display: block;
-    }
-
 
   </style>
 </head>
@@ -244,19 +177,12 @@
      HERO
 ════════════════════════ -->
 <header class="hero">
-
-  <a class="back-link" href="playground.html"
-     style="position:absolute;top:calc(var(--nav-h)+14px);left:clamp(24px,6vw,80px);">
-    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 4l-5 4 5 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    Playground
-  </a>
+  <a class="pill sk-back" href="playground.html">← Playground</a>
 
   <h1 class="hero-title">SKETCHES</h1>
 
   <div class="hero-meta">
-    <span class="hero-count">5</span>
+    <span class="hero-count">83</span>
     <p>Pen studies across five categories — from furniture to urban spaces.</p>
   </div>
 
@@ -265,63 +191,440 @@
 
 
 <!-- ════════════════════════
-     CATEGORY GRID
+     FILTERS
 ════════════════════════ -->
-<p class="cat-intro">Choose a category</p>
+<div class="filters" role="group" aria-label="Filter sketches by category">
+    <button type="button" class="pill is-active" data-filter="all" aria-pressed="true">All <span class="pill-count">83</span></button>
+    <button type="button" class="pill" data-filter="busstop" aria-pressed="false">Bus Stop <span class="pill-count">21</span></button>
+    <button type="button" class="pill" data-filter="coffeemaker" aria-pressed="false">Coffee Maker <span class="pill-count">11</span></button>
+    <button type="button" class="pill" data-filter="sprint" aria-pressed="false">Sprint <span class="pill-count">6</span></button>
+    <button type="button" class="pill" data-filter="shoes" aria-pressed="false">Shoes <span class="pill-count">24</span></button>
+    <button type="button" class="pill" data-filter="furniture" aria-pressed="false">Furniture <span class="pill-count">21</span></button>
+</div>
 
-<section class="categories">
 
-  <!-- 1 — Bus Stop -->
-  <a class="cat-card" href="busstop.html">
-    <img src="assests/playground/sketches/web/busstop/Bus_stop_01.jpg" width="1981" height="1321" alt="Bus Stop sketches" loading="lazy">
-    <div class="cat-label">
-      <span class="cat-num">01</span>
-      <span class="cat-name">BUS STOP</span>
-      <span class="cat-count-tag">21 sketches</span>
-    </div>
-  </a>
-
-  <!-- 2 — Coffee Maker -->
-  <a class="cat-card" href="coffeemaker.html">
-    <img src="assests/playground/sketches/web/coffeemaker/coffee_maker_01.jpg" width="1981" height="1292" alt="Coffee Maker sketches" loading="lazy">
-    <div class="cat-label">
-      <span class="cat-num">02</span>
-      <span class="cat-name">COFFEE MAKER</span>
-      <span class="cat-count-tag">11 sketches</span>
-    </div>
-  </a>
-
-  <!-- 3 — Sprint -->
-  <a class="cat-card" href="sprint.html">
-    <img src="assests/playground/sketches/web/sprint/Sprint_page_05.jpg" width="1244" height="1976" alt="Sprint sketches" loading="lazy">
-    <div class="cat-label">
-      <span class="cat-num">03</span>
-      <span class="cat-name">SPRINT</span>
-      <span class="cat-count-tag">6 sketches</span>
-    </div>
-  </a>
-
-  <!-- 4 — Shoes -->
-  <a class="cat-card" href="shoes.html">
-    <img src="assests/playground/sketches/web/shoes/shoes_01.jpg" width="1930" height="1289" alt="Shoe sketches" loading="lazy">
-    <div class="cat-label">
-      <span class="cat-num">04</span>
-      <span class="cat-name">SHOES</span>
-      <span class="cat-count-tag">24 sketches</span>
-    </div>
-  </a>
-
-  <!-- 5 — Furniture (full-width strip) -->
-  <a class="cat-card" href="furniture.html">
-    <img src="assests/playground/sketches/web/furniture/furniture_04.jpg" width="1942" height="1292" alt="Furniture sketches" loading="lazy">
-    <div class="cat-label">
-      <span class="cat-num">05</span>
-      <span class="cat-name">FURNITURE</span>
-      <span class="cat-count-tag">21 sketches</span>
-    </div>
-  </a>
-
-</section>
+<!-- ════════════════════════
+     THE DESK
+════════════════════════ -->
+<main>
+  <ul class="desk" id="desk">
+    <li class="sk" data-cat="busstop" style="--r:-1.4deg;--dx:-10px;--dy:16px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_01.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_01.jpg" width="720" height="480" alt="Bus Stop sketch 01" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:-3.1deg;--dx:4px;--dy:-1px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_02.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_02.jpg" width="720" height="471" alt="Bus Stop sketch 02" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:0.5deg;--dx:-2px;--dy:-11px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_03.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_03.jpg" width="720" height="468" alt="Bus Stop sketch 03" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:3.7deg;--dx:-6px;--dy:-16px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_04.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_04.jpg" width="720" height="465" alt="Bus Stop sketch 04" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:-1.6deg;--dx:-14px;--dy:5px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_05.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_05.jpg" width="720" height="480" alt="Bus Stop sketch 05" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:-2.1deg;--dx:5px;--dy:-2px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_06.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_06.jpg" width="720" height="463" alt="Bus Stop sketch 06" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:-0.3deg;--dx:11px;--dy:-16px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_07.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_07.jpg" width="720" height="464" alt="Bus Stop sketch 07" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:-3.1deg;--dx:-8px;--dy:16px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_08.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_08.jpg" width="720" height="457" alt="Bus Stop sketch 08" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:-2.0deg;--dx:4px;--dy:10px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_09.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_09.jpg" width="720" height="466" alt="Bus Stop sketch 09" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:-1.4deg;--dx:-7px;--dy:-2px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_10.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_10.jpg" width="720" height="468" alt="Bus Stop sketch 10" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:1.5deg;--dx:-1px;--dy:15px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_11.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_11.jpg" width="720" height="456" alt="Bus Stop sketch 11" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:3.2deg;--dx:0px;--dy:-15px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_12.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_12.jpg" width="720" height="464" alt="Bus Stop sketch 12" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:-3.4deg;--dx:-12px;--dy:2px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_13.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_13.jpg" width="720" height="456" alt="Bus Stop sketch 13" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:-0.3deg;--dx:-5px;--dy:-5px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_14.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_14.jpg" width="720" height="471" alt="Bus Stop sketch 14" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:1.3deg;--dx:0px;--dy:11px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_15.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_15.jpg" width="720" height="466" alt="Bus Stop sketch 15" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:-1.1deg;--dx:13px;--dy:11px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_16.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_16.jpg" width="720" height="472" alt="Bus Stop sketch 16" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:2.6deg;--dx:9px;--dy:9px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_17.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_17.jpg" width="720" height="461" alt="Bus Stop sketch 17" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:0.4deg;--dx:14px;--dy:15px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_18.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_18.jpg" width="720" height="470" alt="Bus Stop sketch 18" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:2.2deg;--dx:3px;--dy:-13px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_19.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_19.jpg" width="720" height="469" alt="Bus Stop sketch 19" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:2.5deg;--dx:2px;--dy:-9px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_20.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_20.jpg" width="720" height="484" alt="Bus Stop sketch 20" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="busstop" style="--r:2.9deg;--dx:4px;--dy:-6px">
+      <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_21.jpg" data-lightbox="sketches" data-label="Bus Stop">
+        <img src="assests/playground/sketches/web/thumb/busstop/Bus_stop_21.jpg" width="720" height="468" alt="Bus Stop sketch 21" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="coffeemaker" style="--r:-3.7deg;--dx:-11px;--dy:6px">
+      <a class="sk-paper" href="assests/playground/sketches/web/coffeemaker/coffee_maker_01.jpg" data-lightbox="sketches" data-label="Coffee Maker">
+        <img src="assests/playground/sketches/web/thumb/coffeemaker/coffee_maker_01.jpg" width="720" height="470" alt="Coffee Maker sketch 01" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="coffeemaker" style="--r:2.8deg;--dx:-8px;--dy:12px">
+      <a class="sk-paper" href="assests/playground/sketches/web/coffeemaker/coffee_maker_02.jpg" data-lightbox="sketches" data-label="Coffee Maker">
+        <img src="assests/playground/sketches/web/thumb/coffeemaker/coffee_maker_02.jpg" width="720" height="469" alt="Coffee Maker sketch 02" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="coffeemaker" style="--r:1.5deg;--dx:2px;--dy:-11px">
+      <a class="sk-paper" href="assests/playground/sketches/web/coffeemaker/coffee_maker_03.jpg" data-lightbox="sketches" data-label="Coffee Maker">
+        <img src="assests/playground/sketches/web/thumb/coffeemaker/coffee_maker_03.jpg" width="720" height="463" alt="Coffee Maker sketch 03" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="coffeemaker" style="--r:-1.7deg;--dx:0px;--dy:-2px">
+      <a class="sk-paper" href="assests/playground/sketches/web/coffeemaker/coffee_maker_04.jpg" data-lightbox="sketches" data-label="Coffee Maker">
+        <img src="assests/playground/sketches/web/thumb/coffeemaker/coffee_maker_04.jpg" width="720" height="464" alt="Coffee Maker sketch 04" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="coffeemaker" style="--r:3.3deg;--dx:-7px;--dy:15px">
+      <a class="sk-paper" href="assests/playground/sketches/web/coffeemaker/coffee_maker_05.jpg" data-lightbox="sketches" data-label="Coffee Maker">
+        <img src="assests/playground/sketches/web/thumb/coffeemaker/coffee_maker_05.jpg" width="720" height="467" alt="Coffee Maker sketch 05" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="coffeemaker" style="--r:-1.0deg;--dx:-4px;--dy:12px">
+      <a class="sk-paper" href="assests/playground/sketches/web/coffeemaker/coffee_maker_06.jpg" data-lightbox="sketches" data-label="Coffee Maker">
+        <img src="assests/playground/sketches/web/thumb/coffeemaker/coffee_maker_06.jpg" width="720" height="469" alt="Coffee Maker sketch 06" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="coffeemaker" style="--r:0.5deg;--dx:7px;--dy:-4px">
+      <a class="sk-paper" href="assests/playground/sketches/web/coffeemaker/coffee_maker_07.jpg" data-lightbox="sketches" data-label="Coffee Maker">
+        <img src="assests/playground/sketches/web/thumb/coffeemaker/coffee_maker_07.jpg" width="720" height="454" alt="Coffee Maker sketch 07" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="coffeemaker" style="--r:3.3deg;--dx:9px;--dy:6px">
+      <a class="sk-paper" href="assests/playground/sketches/web/coffeemaker/coffee_maker_08.jpg" data-lightbox="sketches" data-label="Coffee Maker">
+        <img src="assests/playground/sketches/web/thumb/coffeemaker/coffee_maker_08.jpg" width="720" height="471" alt="Coffee Maker sketch 08" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="coffeemaker" style="--r:-3.6deg;--dx:-3px;--dy:11px">
+      <a class="sk-paper" href="assests/playground/sketches/web/coffeemaker/coffee_maker_09.jpg" data-lightbox="sketches" data-label="Coffee Maker">
+        <img src="assests/playground/sketches/web/thumb/coffeemaker/coffee_maker_09.jpg" width="720" height="476" alt="Coffee Maker sketch 09" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="coffeemaker" style="--r:-3.6deg;--dx:-11px;--dy:-2px">
+      <a class="sk-paper" href="assests/playground/sketches/web/coffeemaker/coffee_maker_10.jpg" data-lightbox="sketches" data-label="Coffee Maker">
+        <img src="assests/playground/sketches/web/thumb/coffeemaker/coffee_maker_10.jpg" width="720" height="472" alt="Coffee Maker sketch 10" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="coffeemaker" style="--r:-0.8deg;--dx:13px;--dy:-1px">
+      <a class="sk-paper" href="assests/playground/sketches/web/coffeemaker/coffee_maker_11.jpg" data-lightbox="sketches" data-label="Coffee Maker">
+        <img src="assests/playground/sketches/web/thumb/coffeemaker/coffee_maker_11.jpg" width="720" height="463" alt="Coffee Maker sketch 11" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="sprint" style="--r:-2.3deg;--dx:2px;--dy:-8px">
+      <a class="sk-paper" href="assests/playground/sketches/web/sprint/Sprint_page_01.jpg" data-lightbox="sketches" data-label="Sprint">
+        <img src="assests/playground/sketches/web/thumb/sprint/Sprint_page_01.jpg" width="720" height="459" alt="Sprint sketch 01" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="sprint" style="--r:3.3deg;--dx:5px;--dy:16px">
+      <a class="sk-paper" href="assests/playground/sketches/web/sprint/Sprint_page_02.jpg" data-lightbox="sketches" data-label="Sprint">
+        <img src="assests/playground/sketches/web/thumb/sprint/Sprint_page_02.jpg" width="720" height="458" alt="Sprint sketch 02" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="sprint" style="--r:0.2deg;--dx:14px;--dy:10px">
+      <a class="sk-paper" href="assests/playground/sketches/web/sprint/Sprint_page_03.jpg" data-lightbox="sketches" data-label="Sprint">
+        <img src="assests/playground/sketches/web/thumb/sprint/Sprint_page_03.jpg" width="720" height="453" alt="Sprint sketch 03" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="sprint" style="--r:1.6deg;--dx:-11px;--dy:5px">
+      <a class="sk-paper" href="assests/playground/sketches/web/sprint/Sprint_page_04.jpg" data-lightbox="sketches" data-label="Sprint">
+        <img src="assests/playground/sketches/web/thumb/sprint/Sprint_page_04.jpg" width="445" height="720" alt="Sprint sketch 04" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="sprint" style="--r:2.1deg;--dx:-13px;--dy:-9px">
+      <a class="sk-paper" href="assests/playground/sketches/web/sprint/Sprint_page_05.jpg" data-lightbox="sketches" data-label="Sprint">
+        <img src="assests/playground/sketches/web/thumb/sprint/Sprint_page_05.jpg" width="453" height="720" alt="Sprint sketch 05" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="sprint" style="--r:-0.6deg;--dx:6px;--dy:5px">
+      <a class="sk-paper" href="assests/playground/sketches/web/sprint/Sprint_page_06.jpg" data-lightbox="sketches" data-label="Sprint">
+        <img src="assests/playground/sketches/web/thumb/sprint/Sprint_page_06.jpg" width="454" height="720" alt="Sprint sketch 06" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-3.0deg;--dx:-9px;--dy:-4px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_01.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_01.jpg" width="720" height="481" alt="Shoes sketch 01" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:3.5deg;--dx:-7px;--dy:-2px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_02.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_02.jpg" width="720" height="478" alt="Shoes sketch 02" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-0.7deg;--dx:13px;--dy:-15px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_03.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_03.jpg" width="720" height="484" alt="Shoes sketch 03" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-2.2deg;--dx:12px;--dy:-6px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_04.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_04.jpg" width="720" height="477" alt="Shoes sketch 04" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-3.4deg;--dx:9px;--dy:-11px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_05.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_05.jpg" width="720" height="481" alt="Shoes sketch 05" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-3.0deg;--dx:-4px;--dy:-14px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_06.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_06.jpg" width="720" height="479" alt="Shoes sketch 06" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:1.9deg;--dx:9px;--dy:11px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_07.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_07.jpg" width="720" height="478" alt="Shoes sketch 07" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-1.1deg;--dx:-6px;--dy:-7px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_08.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_08.jpg" width="720" height="468" alt="Shoes sketch 08" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-0.3deg;--dx:1px;--dy:-5px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_09.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_09.jpg" width="720" height="438" alt="Shoes sketch 09" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-3.1deg;--dx:14px;--dy:4px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_10.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_10.jpg" width="720" height="480" alt="Shoes sketch 10" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-0.8deg;--dx:-12px;--dy:-10px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_11.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_11.jpg" width="720" height="476" alt="Shoes sketch 11" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-0.6deg;--dx:7px;--dy:6px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_12.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_12.jpg" width="720" height="480" alt="Shoes sketch 12" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:0.3deg;--dx:-12px;--dy:11px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_13.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_13.jpg" width="720" height="439" alt="Shoes sketch 13" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-0.2deg;--dx:-6px;--dy:2px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_14.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_14.jpg" width="720" height="681" alt="Shoes sketch 14" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-2.7deg;--dx:4px;--dy:1px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_15.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_15.jpg" width="720" height="293" alt="Shoes sketch 15" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-3.6deg;--dx:-9px;--dy:16px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_16.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_16.jpg" width="720" height="470" alt="Shoes sketch 16" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:3.2deg;--dx:-2px;--dy:10px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_17.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_17.jpg" width="720" height="470" alt="Shoes sketch 17" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:2.5deg;--dx:-4px;--dy:13px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_18.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_18.jpg" width="720" height="472" alt="Shoes sketch 18" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-3.6deg;--dx:3px;--dy:-3px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_19.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_19.jpg" width="720" height="467" alt="Shoes sketch 19" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:-2.9deg;--dx:-11px;--dy:15px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_20.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_20.jpg" width="720" height="463" alt="Shoes sketch 20" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:2.4deg;--dx:13px;--dy:9px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_21.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_21.jpg" width="720" height="463" alt="Shoes sketch 21" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:2.6deg;--dx:-8px;--dy:10px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_22.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_22.jpg" width="720" height="461" alt="Shoes sketch 22" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:2.9deg;--dx:6px;--dy:15px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_23.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_23.jpg" width="720" height="458" alt="Shoes sketch 23" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="shoes" style="--r:3.4deg;--dx:4px;--dy:-12px">
+      <a class="sk-paper" href="assests/playground/sketches/web/shoes/shoes_24.jpg" data-lightbox="sketches" data-label="Shoes">
+        <img src="assests/playground/sketches/web/thumb/shoes/shoes_24.jpg" width="720" height="454" alt="Shoes sketch 24" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:-0.0deg;--dx:-12px;--dy:4px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_01.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_01.jpg" width="720" height="456" alt="Furniture sketch 01" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:-3.0deg;--dx:-2px;--dy:14px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_02.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_02.jpg" width="720" height="473" alt="Furniture sketch 02" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:-3.2deg;--dx:-4px;--dy:9px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_03.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_03.jpg" width="720" height="482" alt="Furniture sketch 03" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:0.2deg;--dx:-13px;--dy:15px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_04.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_04.jpg" width="720" height="479" alt="Furniture sketch 04" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:-1.6deg;--dx:-13px;--dy:0px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_05.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_05.jpg" width="720" height="482" alt="Furniture sketch 05" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:-1.4deg;--dx:7px;--dy:-14px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_06.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_06.jpg" width="720" height="480" alt="Furniture sketch 06" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:-1.5deg;--dx:-9px;--dy:-7px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_07.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_07.jpg" width="720" height="472" alt="Furniture sketch 07" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:-0.1deg;--dx:-4px;--dy:14px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_08.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_08.jpg" width="720" height="479" alt="Furniture sketch 08" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:0.4deg;--dx:-11px;--dy:4px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_09.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_09.jpg" width="720" height="476" alt="Furniture sketch 09" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:-3.4deg;--dx:-1px;--dy:-3px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_10.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_10.jpg" width="720" height="479" alt="Furniture sketch 10" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:0.9deg;--dx:13px;--dy:-4px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_11.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_11.jpg" width="720" height="481" alt="Furniture sketch 11" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:4.0deg;--dx:9px;--dy:1px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_12.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_12.jpg" width="720" height="482" alt="Furniture sketch 12" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:2.7deg;--dx:-13px;--dy:-6px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_13.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_13.jpg" width="720" height="489" alt="Furniture sketch 13" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:2.2deg;--dx:5px;--dy:13px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_14.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_14.jpg" width="720" height="468" alt="Furniture sketch 14" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:-3.1deg;--dx:-5px;--dy:6px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_15.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_15.jpg" width="720" height="473" alt="Furniture sketch 15" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:-1.4deg;--dx:-13px;--dy:-6px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_16.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_16.jpg" width="720" height="470" alt="Furniture sketch 16" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:-1.1deg;--dx:-5px;--dy:-14px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_17.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_17.jpg" width="720" height="473" alt="Furniture sketch 17" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:0.8deg;--dx:-12px;--dy:2px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_18.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_18.jpg" width="720" height="475" alt="Furniture sketch 18" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:-2.9deg;--dx:-14px;--dy:-10px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_19.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_19.jpg" width="720" height="474" alt="Furniture sketch 19" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:-1.0deg;--dx:8px;--dy:0px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_20.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_20.jpg" width="720" height="472" alt="Furniture sketch 20" loading="lazy" decoding="async">
+      </a>
+    </li>
+    <li class="sk" data-cat="furniture" style="--r:3.3deg;--dx:-4px;--dy:-12px">
+      <a class="sk-paper" href="assests/playground/sketches/web/furniture/furniture_21.jpg" data-lightbox="sketches" data-label="Furniture">
+        <img src="assests/playground/sketches/web/thumb/furniture/furniture_21.jpg" width="720" height="462" alt="Furniture sketch 21" loading="lazy" decoding="async">
+      </a>
+    </li>
+  </ul>
+</main>
 
 
 <!-- ════════════════════════
@@ -329,17 +632,18 @@
 ════════════════════════ -->
 <footer class="footer--split">
   <span>Selin Orbay</span>
-  <span>
-    <a href="playground.html" style="color:rgba(15,15,15,.3);text-decoration:none;font-size:12px;font-weight:300;">← Back to Playground</a>
-  </span>
+  <a class="pill" href="playground.html" style="color:var(--black)">← Back to Playground</a>
 </footer>
 
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Flip.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js" defer></script>
 <script src="js/motion.js" defer></script>
+<script src="js/lightbox.js" defer></script>
+<script src="js/sketches.js" defer></script>
 
 </body>
 </html>

@@ -62,7 +62,7 @@
     ══════════════════════════════════════ */
     .hero {
       padding-top: var(--nav-h);
-      padding: calc(var(--nav-h) + 40px) clamp(24px, 6vw, 80px) 0;
+      padding: calc(var(--nav-h) + 68px) clamp(24px, 6vw, 80px) 0;
       display: flex;
       align-items: flex-end;
       gap: clamp(16px, 3vw, 40px);
@@ -136,7 +136,7 @@
     }
     .gallery-item:hover {
       border-color: var(--orange);
-      transform: translateY(-4px) rotate(0.4deg);
+      transform: translateY(-4px);
       box-shadow: 0 16px 48px rgba(249,115,22,.28), 0 6px 16px rgba(0,0,0,.3);
     }
 
@@ -168,6 +168,9 @@
     .gallery-item:hover::after { opacity: 1; }
 
 
+    .pg-back { position: absolute; top: calc(var(--nav-h) + 14px); left: clamp(24px, 6vw, 80px); color: var(--cream); }
+    .hero { position: relative; }
+
   </style>
 </head>
 <body>
@@ -192,12 +195,7 @@
 ════════════════════════ -->
 <header class="hero">
 
-  <a class="back-link" href="playground.html" style="position:absolute;top:calc(var(--nav-h)+14px);left:clamp(24px,6vw,80px);">
-    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 4l-5 4 5 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    Playground
-  </a>
+  <a class="pill pg-back" href="playground.html">← Playground</a>
 
   <h1 class="hero-title">ART</h1>
 
@@ -213,64 +211,49 @@
 <!-- ════════════════════════
      GALLERY
 ════════════════════════ -->
-<main class="gallery">
-
-  <a class="gallery-item" href="art.html" data-num="01">
-    <img src="assests/playground/drawings/Drawing_01.jpg" alt="Drawing 01" loading="lazy">
+<main class="gallery" data-reveal-batch>
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_01.jpg" data-num="01" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_01.jpg" width="589" height="800" alt="Drawing 01" loading="lazy" decoding="async">
   </a>
-
-  <a class="gallery-item" href="art.html" data-num="02">
-    <img src="assests/playground/drawings/Drawing_02.jpg" alt="Drawing 02" loading="lazy">
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_02.jpg" data-num="02" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_02.jpg" width="664" height="800" alt="Drawing 02" loading="lazy" decoding="async">
   </a>
-
-  <a class="gallery-item" href="art.html" data-num="03">
-    <img src="assests/playground/drawings/Drawing_03.jpg" alt="Drawing 03" loading="lazy">
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_03.jpg" data-num="03" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_03.jpg" width="565" height="800" alt="Drawing 03" loading="lazy" decoding="async">
   </a>
-
-  <a class="gallery-item" href="art.html" data-num="04">
-    <img src="assests/playground/drawings/Drawing_04.jpg" alt="Drawing 04" loading="lazy">
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_04.jpg" data-num="04" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_04.jpg" width="676" height="800" alt="Drawing 04" loading="lazy" decoding="async">
   </a>
-
-  <a class="gallery-item" href="art.html" data-num="05">
-    <img src="assests/playground/drawings/Drawing_05.png" alt="Drawing 05" loading="lazy">
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_05.webp" data-num="05" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_05.webp" width="738" height="800" alt="Drawing 05" loading="lazy" decoding="async">
   </a>
-
-  <a class="gallery-item" href="art.html" data-num="06">
-    <img src="assests/playground/drawings/Drawing_06.png" alt="Drawing 06" loading="lazy">
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_06.webp" data-num="06" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_06.webp" width="561" height="800" alt="Drawing 06" loading="lazy" decoding="async">
   </a>
-
-  <a class="gallery-item" href="art.html" data-num="07">
-    <img src="assests/playground/drawings/Drawing_07.jpg" alt="Drawing 07" loading="lazy">
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_07.jpg" data-num="07" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_07.jpg" width="575" height="800" alt="Drawing 07" loading="lazy" decoding="async">
   </a>
-
-  <a class="gallery-item" href="art.html" data-num="08">
-    <img src="assests/playground/drawings/Drawing_08.jpg" alt="Drawing 08" loading="lazy">
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_08.jpg" data-num="08" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_08.jpg" width="682" height="800" alt="Drawing 08" loading="lazy" decoding="async">
   </a>
-
-  <a class="gallery-item" href="art.html" data-num="09">
-    <img src="assests/playground/drawings/Drawing_09.png" alt="Drawing 09" loading="lazy">
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_09.jpg" data-num="09" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_09.jpg" width="588" height="800" alt="Drawing 09" loading="lazy" decoding="async">
   </a>
-
-  <a class="gallery-item" href="art.html" data-num="10">
-    <img src="assests/playground/drawings/Drawing_10.jpg" alt="Drawing 10" loading="lazy">
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_10.jpg" data-num="10" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_10.jpg" width="707" height="800" alt="Drawing 10" loading="lazy" decoding="async">
   </a>
-
-  <a class="gallery-item" href="art.html" data-num="11">
-    <img src="assests/playground/drawings/Drawing_11.png" alt="Drawing 11" loading="lazy">
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_11.jpg" data-num="11" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_11.jpg" width="534" height="800" alt="Drawing 11" loading="lazy" decoding="async">
   </a>
-
-  <a class="gallery-item" href="art.html" data-num="12">
-    <img src="assests/playground/drawings/Drawing_12.jpg" alt="Drawing 12" loading="lazy">
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_12.jpg" data-num="12" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_12.jpg" width="575" height="800" alt="Drawing 12" loading="lazy" decoding="async">
   </a>
-
-  <a class="gallery-item" href="art.html" data-num="13">
-    <img src="assests/playground/drawings/Drawing_13.jpg" alt="Drawing 13" loading="lazy">
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_13.jpg" data-num="13" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_13.jpg" width="800" height="500" alt="Drawing 13" loading="lazy" decoding="async">
   </a>
-
-  <a class="gallery-item" href="art.html" data-num="14">
-    <img src="assests/playground/drawings/Drawing_14.jpg" alt="Drawing 14" loading="lazy">
+  <a class="gallery-item" href="assests/playground/drawings/web/Drawing_14.jpg" data-num="14" data-lightbox="art" data-label="Art">
+    <img src="assests/playground/drawings/web/thumb/Drawing_14.jpg" width="800" height="707" alt="Drawing 14" loading="lazy" decoding="async">
   </a>
-
 </main>
 
 
@@ -290,6 +273,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js" defer></script>
 <script src="js/motion.js" defer></script>
+<script src="js/lightbox.js" defer></script>
 
 </body>
 </html>

@@ -59,7 +59,7 @@
        HERO
     ══════════════════════════════════════ */
     .hero {
-      padding: calc(var(--nav-h) + 40px) clamp(24px, 6vw, 80px) 0;
+      padding: calc(var(--nav-h) + 68px) clamp(24px, 6vw, 80px) 0;
       display: flex;
       align-items: flex-end;
       gap: clamp(16px, 3vw, 40px);
@@ -122,112 +122,57 @@
       color: rgba(255,243,223,0.3);
     }
 
+    /* Three renders side by side on cream plinths. The renders have
+       white backgrounds; multiply turns that white into the cream, and
+       contain means nothing is ever cropped. */
     .models-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 3px;
-      padding: 0 3px 3px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(14px, 1.6vw, 24px);
+      padding: 0 clamp(24px, 6vw, 80px) clamp(56px, 9vh, 104px);
     }
-
-    /* 3rd card full width */
-    .model-card:nth-child(3) {
-      grid-column: 1 / -1;
-    }
-
     .model-card {
-      position: relative;
-      display: block;
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
       text-decoration: none;
-      aspect-ratio: 16 / 9;
-      background: #0f0f0f;
-      cursor: pointer;
+      color: var(--cream);
     }
-
-    .model-card img {
+    .model-plinth {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border-radius: 10px;
+      background: var(--cream);
+    }
+    .model-plinth img {
       position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
-      transition: transform 0.5s ease;
+      inset: 9%;
+      width: 82%; height: 82%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      will-change: transform;
     }
-    .model-card:hover img { transform: scale(1.05); }
-
-    /* hover darkening overlay */
-    .model-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.38);
-      opacity: 0;
-      z-index: 1;
-      transition: opacity 0.4s ease;
-      pointer-events: none;
-    }
-    .model-card:hover::before { opacity: 1; }
-
-    /* bottom gradient — always on */
-    .model-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      background: linear-gradient(
-        to bottom,
-        transparent 30%,
-        rgba(0,0,0,0.85) 100%
-      );
-    }
-
     .model-label {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      z-index: 3;
-      padding: clamp(16px, 2.5vw, 28px);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: baseline;
+      gap: 14px;
+      padding: 14px 2px 0;
+      border-top: 1px solid rgba(255,243,223,0.18);
+      margin-top: 14px;
+    }
+    .model-num  { font-size: 12px; font-weight: 500; letter-spacing: 2px; opacity: 0.55; }
+    .model-name { font-family: var(--font-display); font-size: clamp(26px, 2.6vw, 40px); letter-spacing: 2px; line-height: 1; }
+    .model-tool { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; opacity: 0.5; }
+    @media (hover: hover) and (pointer: fine) {
+      .model-card:hover .model-name { color: var(--orange); }
+    }
+    @media (max-width: 767px) {
+      .models-grid { grid-template-columns: 1fr; padding-inline: 16px; }
     }
 
-    .model-num {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      color: rgba(255,255,255,.4);
-      display: block;
-      margin-bottom: 5px;
-    }
-    .model-name {
-      font-family: var(--font-display);
-      font-size: clamp(22px, 3.5vw, 48px);
-      letter-spacing: 2px;
-      color: #fff;
-      display: block;
-      margin-bottom: 5px;
-      transition: letter-spacing .25s ease;
-    }
-    .model-card:hover .model-name { letter-spacing: 4px; }
-
-    .model-tool {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--orange-burnt);
-      display: block;
-    }
-
-    /* accent line slides in on hover */
-    .model-card .accent-bar {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 4px;
-      background: var(--brown);
-      z-index: 4;
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .45s cubic-bezier(.16,1,.3,1);
-    }
-    .model-card:hover .accent-bar { transform: scaleX(1); }
-
+    .pg-back { position: absolute; top: calc(var(--nav-h) + 14px); left: clamp(24px, 6vw, 80px); color: var(--cream); }
+    .hero { position: relative; }
 
   </style>
 </head>
@@ -253,13 +198,7 @@
 ════════════════════════ -->
 <header class="hero">
 
-  <a class="back-link" href="playground.html"
-     style="position:absolute;top:calc(var(--nav-h)+14px);left:clamp(24px,6vw,80px);">
-    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 4l-5 4 5 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    Playground
-  </a>
+  <a class="pill pg-back" href="playground.html">← Playground</a>
 
   <h1 class="hero-title">CAD</h1>
 
@@ -277,41 +216,31 @@
 ════════════════════════ -->
 <p class="section-label">Models</p>
 
-<section class="models-grid">
-
-  <!-- Model 01 -->
-  <a class="model-card" href="cad.html">
-    <div class="accent-bar"></div>
-    <img src="assests/playground/images_to_display/CT_.png" alt="CT Scanner CAD Model" loading="lazy">
+<section class="models-grid" data-reveal-batch>
+  <a class="model-card" href="assests/playground/images_to_display/web/CT_.jpg" data-lightbox="cad" data-label="CAD · Ct Scanner">
+    <div class="model-plinth" data-hover-parallax><img src="assests/playground/images_to_display/web/CT_.jpg" width="1578" height="1316" alt="CT scanner gantry, modelled in SolidWorks" loading="lazy" decoding="async"></div>
     <div class="model-label">
-      <span class="model-num">01</span>
+      <span class="model-num">[01]</span>
       <span class="model-name">CT SCANNER</span>
       <span class="model-tool">SolidWorks</span>
     </div>
   </a>
-
-  <!-- Model 02 -->
-  <a class="model-card" href="cad.html">
-    <div class="accent-bar"></div>
-    <img src="assests/playground/images_to_display/Dode_.png" alt="Dodecahedron CAD Model" loading="lazy">
+  <a class="model-card" href="assests/playground/images_to_display/web/Dode_.jpg" data-lightbox="cad" data-label="CAD · Dodecahedron">
+    <div class="model-plinth" data-hover-parallax><img src="assests/playground/images_to_display/web/Dode_.jpg" width="1220" height="1178" alt="Twisted-panel dodecahedron, modelled in SolidWorks" loading="lazy" decoding="async"></div>
     <div class="model-label">
-      <span class="model-num">02</span>
+      <span class="model-num">[02]</span>
       <span class="model-name">DODECAHEDRON</span>
       <span class="model-tool">SolidWorks</span>
     </div>
   </a>
-
-  <!-- Model 03 — full width -->
-  <a class="model-card" href="cad.html">
-    <div class="accent-bar"></div>
-    <img src="assests/playground/images_to_display/Vase_.png" alt="Vase CAD Model" loading="lazy">
+  <a class="model-card" href="assests/playground/images_to_display/web/Vase_.jpg" data-lightbox="cad" data-label="CAD · Vase">
+    <div class="model-plinth" data-hover-parallax><img src="assests/playground/images_to_display/web/Vase_.jpg" width="704" height="1208" alt="Wavy vase, modelled in SolidWorks" loading="lazy" decoding="async"></div>
     <div class="model-label">
-      <span class="model-num">03</span>
+      <span class="model-num">[03]</span>
       <span class="model-name">VASE</span>
       <span class="model-tool">SolidWorks</span>
     </div>
   </a>
-
 </section>
 
 
@@ -331,6 +260,8 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js" defer></script>
 <script src="js/motion.js" defer></script>
+<script src="js/lightbox.js" defer></script>
+<script src="js/playground.js" defer></script>
 
 </body>
 </html>
