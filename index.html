@@ -52,12 +52,6 @@
     ══════════════════════════════════════ */
     :root {
       --name-color:   #FFF3DF;   /* SELIN ORBAY matches background tone */
-      --hero-photo-w: min(50vw, 80vh);   /* portrait photo, shown near native size */
-      /* links sit over the photo's light ceiling: dark until the nav turns solid */
-      --nav-fg:       var(--brown-deep);
-    }
-    @media (min-width: 768px) {
-      nav:not(.scrolled) .logo { color: var(--name-color); }   /* logo sits on the brown */
     }
 
 
@@ -124,19 +118,18 @@
       overflow: hidden;
     }
 
-    /* Split hero: brown panel with the name on the left, the ungraded
-       photo on the right. No overlay needed. */
+    /* Full-width photo. The background is graded to a faded brown in the
+       image itself (hero-brown.*), so the subject stands out in colour. */
     .hero-media {
       position: absolute;
-      top: 0; right: 0; bottom: 0;
-      width: var(--hero-photo-w);
+      inset: 0;
     }
     .hero-photo {
       position: absolute;
       inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center 40%;
+      object-position: center 30%;
       will-change: transform;
     }
 
@@ -222,7 +215,7 @@
     .scroll-hint {
       position: absolute;
       bottom: 44px;
-      right: calc(var(--hero-photo-w) + 40px);
+      right: 48px;
       z-index: 1;
       display: flex;
       align-items: center;
@@ -243,7 +236,13 @@
     }
 
     @media (max-width: 767px) {
-      .hero-media   { top: 0; left: 0; right: 0; bottom: auto; width: auto; height: 60%; }
+      /* the name sits over the photo on phones: darken just the bottom */
+      .hero-media::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(61,16,0,0) 50%, rgba(61,16,0,0.75) 82%);
+      }
       .hero-name    { left: 20px; bottom: calc(96px + 44px); }
       .hero-tagline { left: 20px; bottom: 88px; width: calc(100% - 40px); height: 44px; }
       .tagline      { font-size: 30px; }
@@ -462,8 +461,8 @@
 <section class="hero">
   <div class="hero-media">
     <picture>
-      <source srcset="assests/images/hero-clean.webp" type="image/webp">
-      <img class="hero-photo" src="assests/images/hero-clean.jpg" alt="Selin Orbay adjusting a small robot in a design studio" width="960" height="1280" fetchpriority="high">
+      <source srcset="assests/images/hero-brown.webp" type="image/webp">
+      <img class="hero-photo" src="assests/images/hero-brown.jpg" alt="Selin Orbay adjusting a small robot in a design studio" width="2048" height="1280" fetchpriority="high">
     </picture>
   </div>
 

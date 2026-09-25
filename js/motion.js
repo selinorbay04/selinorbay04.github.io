@@ -68,8 +68,9 @@
       gsap.ticker.lagSmoothing(0);
     }
 
-    // late-loading images change page height; keep triggers accurate
+    // late-loading images and the async webfonts change layout; keep triggers accurate
     window.addEventListener('load', () => ScrollTrigger.refresh());
+    document.fonts?.addEventListener?.('loadingdone', () => ScrollTrigger.refresh());
   }
 
   function scrollTo(target) {

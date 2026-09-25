@@ -5,7 +5,7 @@
                 the title's line reveal is plain [data-reveal="lines"]
    · images     below-the-fold images open with a slight clip + scale
    · stats      numbers count up once when they come into view
-   · fig-stack  photos rise and settle with a small tilt, scrubbed (desktop)
+   · fig-stack  photos rise and un-crop as they scroll in, straight (desktop)
 
    Reduced motion: none of it runs; everything is already in place.
 ══════════════════════════════════════════════════════════════ */
@@ -68,16 +68,15 @@
   });
 
 
-  /* ── Figure stack: rise and settle with a slight tilt (desktop, scrubbed) ── */
+  /* ── Figure stack: rise and un-crop, scrubbed, no tilt (desktop) ── */
   const figs = document.querySelectorAll('.fig-stack figure');
   if (figs.length) {
     gsap.matchMedia()
       .add('(min-width: 768px)', () => {
         figs.forEach((fig, i) => {
-          const tilt = [-1.2, 1, -0.8][i % 3];
           const st = { trigger: fig, start: 'top 100%', end: 'top 45%', scrub: 0.8 };
-          gsap.fromTo(fig, { y: 120, rotate: tilt * 4, opacity: 0.2 },
-            { y: 0, rotate: tilt, opacity: 1, ease: 'none', scrollTrigger: st });
+          gsap.fromTo(fig, { y: 120, opacity: 0.2 },
+            { y: 0, opacity: 1, ease: 'none', scrollTrigger: st });
           const img = fig.querySelector('img');
           if (img) gsap.fromTo(img, { clipPath: 'inset(16% 0% 16% 0%)' },
             { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', scrollTrigger: { ...st } });

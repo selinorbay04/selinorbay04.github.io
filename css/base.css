@@ -321,6 +321,26 @@ footer span {
   .credits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+/* Back to projects — pill at the top of each hero and in the footer nav */
+.back-pill {
+  position: absolute;
+  top: calc(var(--nav-h) + 14px);
+  left: var(--pad-x);
+  z-index: 2;
+  color: var(--cream);
+  background: rgba(15,15,15,0.25);
+  backdrop-filter: blur(6px);
+}
+.back-pill:hover { background: var(--cream); color: var(--black); border-color: var(--cream); }
+.project-nav .back-pill--bottom {
+  position: static;
+  color: var(--page-fg);
+  background: transparent;
+  backdrop-filter: none;
+  opacity: 1;
+}
+.project-nav .back-pill--bottom:hover { background: var(--page-fg); color: var(--page-bg); border-color: var(--page-fg); opacity: 1; }
+
 /* Figure stack: photos with numbered footnote captions */
 .fig-stack { list-style: none; margin: 0; padding: 0; }
 .fig-stack figure { margin: 0; }
