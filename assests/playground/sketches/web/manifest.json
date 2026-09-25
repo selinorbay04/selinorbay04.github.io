@@ -2,169 +2,285 @@
  "busstop": [
   {
    "file": "Bus_stop_01.jpg",
-   "w": 2000,
-   "h": 1350,
+   "w": 1981,
+   "h": 1321,
    "rot": 0,
+   "crop": {
+    "top": 6,
+    "bottom": 17,
+    "left": 0,
+    "right": 16
+   },
    "q": 80,
-   "kb": 316
+   "kb": 298
   },
   {
    "file": "Bus_stop_02.jpg",
-   "w": 2000,
-   "h": 1339,
+   "w": 1983,
+   "h": 1298,
    "rot": 0,
+   "crop": {
+    "top": 8,
+    "bottom": 27,
+    "left": 0,
+    "right": 14
+   },
    "q": 80,
-   "kb": 219
+   "kb": 198
   },
   {
    "file": "Bus_stop_03.jpg",
-   "w": 2000,
-   "h": 1303,
+   "w": 1980,
+   "h": 1287,
    "rot": 0,
+   "crop": {
+    "top": 1,
+    "bottom": 9,
+    "left": 0,
+    "right": 17
+   },
    "q": 80,
-   "kb": 147
+   "kb": 133
   },
   {
    "file": "Bus_stop_04.jpg",
-   "w": 2000,
-   "h": 1303,
+   "w": 1971,
+   "h": 1274,
    "rot": 0,
+   "crop": {
+    "top": 5,
+    "bottom": 18,
+    "left": 5,
+    "right": 18
+   },
    "q": 80,
-   "kb": 223
+   "kb": 204
   },
   {
    "file": "Bus_stop_05.jpg",
-   "w": 2000,
-   "h": 1356,
+   "w": 1950,
+   "h": 1299,
    "rot": 0,
+   "crop": {
+    "top": 14,
+    "bottom": 37,
+    "left": 24,
+    "right": 20
+   },
    "q": 80,
-   "kb": 107
+   "kb": 82
   },
   {
    "file": "Bus_stop_06.jpg",
-   "w": 2000,
-   "h": 1291,
+   "w": 1967,
+   "h": 1265,
    "rot": 0,
+   "crop": {
+    "top": 4,
+    "bottom": 16,
+    "left": 0,
+    "right": 30
+   },
    "q": 80,
-   "kb": 316
+   "kb": 295
   },
   {
    "file": "Bus_stop_07.jpg",
-   "w": 2000,
-   "h": 1297,
+   "w": 1979,
+   "h": 1276,
    "rot": 0,
+   "crop": {
+    "top": 2,
+    "bottom": 13,
+    "left": 2,
+    "right": 13
+   },
    "q": 80,
-   "kb": 222
+   "kb": 206
   },
   {
    "file": "Bus_stop_08.jpg",
-   "w": 2000,
-   "h": 1296,
+   "w": 1980,
+   "h": 1258,
    "rot": 0,
+   "crop": {
+    "top": 7,
+    "bottom": 25,
+    "left": 9,
+    "right": 5
+   },
    "q": 80,
-   "kb": 194
+   "kb": 178
   },
   {
    "file": "Bus_stop_09.jpg",
-   "w": 2000,
-   "h": 1322,
+   "w": 1991,
+   "h": 1290,
    "rot": 0,
+   "crop": {
+    "top": 0,
+    "bottom": 29,
+    "left": 0,
+    "right": 6
+   },
    "q": 80,
-   "kb": 272
+   "kb": 255
   },
   {
    "file": "Bus_stop_10.jpg",
-   "w": 2000,
-   "h": 1308,
+   "w": 1961,
+   "h": 1274,
    "rot": 0,
-   "q": 72,
-   "kb": 336
+   "crop": {
+    "top": 0,
+    "bottom": 31,
+    "left": 8,
+    "right": 25
+   },
+   "q": 76,
+   "kb": 342
   },
   {
    "file": "Bus_stop_11.jpg",
-   "w": 2000,
-   "h": 1275,
+   "w": 1956,
+   "h": 1240,
    "rot": 0,
+   "crop": {
+    "top": 2,
+    "bottom": 27,
+    "left": 15,
+    "right": 23
+   },
    "q": 80,
-   "kb": 285
+   "kb": 262
   },
   {
    "file": "Bus_stop_12.jpg",
-   "w": 2000,
-   "h": 1301,
+   "w": 1981,
+   "h": 1276,
    "rot": 0,
+   "crop": {
+    "top": 0,
+    "bottom": 22,
+    "left": 0,
+    "right": 16
+   },
    "q": 80,
-   "kb": 311
+   "kb": 295
   },
   {
    "file": "Bus_stop_13.jpg",
-   "w": 2000,
-   "h": 1290,
+   "w": 1978,
+   "h": 1254,
    "rot": 0,
+   "crop": {
+    "top": 1,
+    "bottom": 29,
+    "left": 3,
+    "right": 13
+   },
    "q": 80,
-   "kb": 89
+   "kb": 68
   },
   {
    "file": "Bus_stop_14.jpg",
-   "w": 2000,
-   "h": 1323,
+   "w": 1969,
+   "h": 1288,
    "rot": 0,
+   "crop": {
+    "top": 3,
+    "bottom": 26,
+    "left": 11,
+    "right": 14
+   },
    "q": 80,
-   "kb": 215
+   "kb": 195
   },
   {
    "file": "Bus_stop_15.jpg",
-   "w": 2000,
-   "h": 1319,
+   "w": 1977,
+   "h": 1279,
    "rot": 0,
+   "crop": {
+    "top": 7,
+    "bottom": 27,
+    "left": 4,
+    "right": 13
+   },
    "q": 80,
-   "kb": 216
+   "kb": 195
   },
   {
    "file": "Bus_stop_16.jpg",
-   "w": 2000,
-   "h": 1356,
+   "w": 1962,
+   "h": 1287,
    "rot": 0,
+   "crop": {
+    "top": 16,
+    "bottom": 47,
+    "left": 10,
+    "right": 22
+   },
    "q": 80,
-   "kb": 226
+   "kb": 196
   },
   {
    "file": "Bus_stop_17.jpg",
-   "w": 2000,
-   "h": 1293,
+   "w": 1966,
+   "h": 1258,
    "rot": 0,
+   "crop": {
+    "top": 5,
+    "bottom": 24,
+    "left": 6,
+    "right": 22
+   },
    "q": 80,
-   "kb": 274
+   "kb": 253
   },
   {
    "file": "Bus_stop_18.jpg",
    "w": 2000,
    "h": 1305,
    "rot": 0,
+   "crop": null,
    "q": 80,
    "kb": 305
   },
   {
    "file": "Bus_stop_19.jpg",
-   "w": 2000,
-   "h": 1318,
+   "w": 1970,
+   "h": 1283,
    "rot": 0,
+   "crop": {
+    "top": 0,
+    "bottom": 32,
+    "left": 15,
+    "right": 9
+   },
    "q": 80,
-   "kb": 232
+   "kb": 216
   },
   {
    "file": "Bus_stop_20.jpg",
-   "w": 2000,
-   "h": 1351,
+   "w": 1958,
+   "h": 1317,
    "rot": 0,
+   "crop": {
+    "top": 6,
+    "bottom": 22,
+    "left": 9,
+    "right": 27
+   },
    "q": 80,
-   "kb": 201
+   "kb": 187
   },
   {
    "file": "Bus_stop_21.jpg",
    "w": 2000,
    "h": 1299,
    "rot": 0,
+   "crop": null,
    "q": 80,
    "kb": 207
   }
@@ -172,537 +288,877 @@
  "coffeemaker": [
   {
    "file": "coffee_maker_01.jpg",
-   "w": 2000,
-   "h": 1314,
+   "w": 1981,
+   "h": 1292,
    "rot": 90,
+   "crop": {
+    "top": 10,
+    "bottom": 6,
+    "left": 4,
+    "right": 9
+   },
    "q": 80,
-   "kb": 295
+   "kb": 281
   },
   {
    "file": "coffee_maker_02.jpg",
-   "w": 2000,
-   "h": 1309,
+   "w": 1971,
+   "h": 1283,
    "rot": 90,
+   "crop": {
+    "top": 13,
+    "bottom": 7,
+    "left": 16,
+    "right": 7
+   },
    "q": 80,
-   "kb": 330
+   "kb": 318
   },
   {
    "file": "coffee_maker_03.jpg",
-   "w": 2000,
-   "h": 1291,
+   "w": 1982,
+   "h": 1275,
    "rot": 90,
+   "crop": {
+    "top": 13,
+    "bottom": 0,
+    "left": 2,
+    "right": 10
+   },
    "q": 80,
-   "kb": 234
+   "kb": 224
   },
   {
    "file": "coffee_maker_04.jpg",
    "w": 2000,
-   "h": 1307,
+   "h": 1289,
    "rot": 90,
+   "crop": {
+    "top": 10,
+    "bottom": 2,
+    "left": 0,
+    "right": 0
+   },
    "q": 80,
-   "kb": 231
+   "kb": 224
   },
   {
    "file": "coffee_maker_05.jpg",
-   "w": 2000,
-   "h": 1291,
+   "w": 1978,
+   "h": 1282,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 6,
+    "left": 0,
+    "right": 19
+   },
    "q": 80,
-   "kb": 228
+   "kb": 219
   },
   {
    "file": "coffee_maker_06.jpg",
-   "w": 2000,
-   "h": 1308,
+   "w": 1982,
+   "h": 1292,
    "rot": 90,
+   "crop": {
+    "top": 5,
+    "bottom": 5,
+    "left": 0,
+    "right": 15
+   },
    "q": 80,
-   "kb": 296
+   "kb": 288
   },
   {
    "file": "coffee_maker_07.jpg",
-   "w": 2000,
-   "h": 1274,
+   "w": 1986,
+   "h": 1252,
    "rot": 90,
+   "crop": {
+    "top": 4,
+    "bottom": 12,
+    "left": 0,
+    "right": 11
+   },
    "q": 80,
-   "kb": 189
+   "kb": 175
   },
   {
    "file": "coffee_maker_08.jpg",
-   "w": 2000,
-   "h": 1316,
+   "w": 1990,
+   "h": 1302,
    "rot": 90,
+   "crop": {
+    "top": 5,
+    "bottom": 3,
+    "left": 0,
+    "right": 7
+   },
    "q": 80,
-   "kb": 163
+   "kb": 154
   },
   {
    "file": "coffee_maker_09.jpg",
-   "w": 2000,
-   "h": 1341,
+   "w": 1971,
+   "h": 1303,
    "rot": 90,
+   "crop": {
+    "top": 15,
+    "bottom": 17,
+    "left": 8,
+    "right": 15
+   },
    "q": 80,
-   "kb": 173
+   "kb": 153
   },
   {
    "file": "coffee_maker_10.jpg",
-   "w": 2000,
-   "h": 1315,
+   "w": 1984,
+   "h": 1300,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 12,
+    "left": 0,
+    "right": 13
+   },
    "q": 80,
-   "kb": 256
+   "kb": 241
   },
   {
    "file": "coffee_maker_11.jpg",
-   "w": 2000,
-   "h": 1289,
+   "w": 1991,
+   "h": 1281,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 5,
+    "left": 0,
+    "right": 6
+   },
    "q": 80,
-   "kb": 233
-  },
-  {
-   "file": "coffee_maker_12.jpg",
-   "w": 2000,
-   "h": 1298,
-   "rot": 90,
-   "q": 76,
-   "kb": 329
+   "kb": 226
   }
  ],
  "sprint": [
   {
    "file": "Sprint_page_01.jpg",
-   "w": 2000,
-   "h": 1271,
+   "w": 1976,
+   "h": 1260,
    "rot": 90,
+   "crop": {
+    "top": 8,
+    "bottom": 0,
+    "left": 3,
+    "right": 15
+   },
    "q": 80,
-   "kb": 176
+   "kb": 164
   },
   {
    "file": "Sprint_page_02.jpg",
-   "w": 2000,
-   "h": 1278,
+   "w": 1978,
+   "h": 1257,
    "rot": 90,
+   "crop": {
+    "top": 7,
+    "bottom": 8,
+    "left": 0,
+    "right": 19
+   },
    "q": 80,
-   "kb": 167
+   "kb": 151
   },
   {
    "file": "Sprint_page_03.jpg",
-   "w": 2000,
-   "h": 1257,
+   "w": 1979,
+   "h": 1245,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 9,
+    "left": 4,
+    "right": 11
+   },
    "q": 80,
-   "kb": 110
+   "kb": 100
   },
   {
    "file": "Sprint_page_04.jpg",
-   "w": 1232,
-   "h": 2000,
+   "w": 1219,
+   "h": 1974,
    "rot": 0,
+   "crop": {
+    "top": 5,
+    "bottom": 15,
+    "left": 10,
+    "right": 0
+   },
    "q": 80,
-   "kb": 132
+   "kb": 121
   },
   {
    "file": "Sprint_page_05.jpg",
-   "w": 1253,
-   "h": 2000,
+   "w": 1244,
+   "h": 1976,
    "rot": 0,
+   "crop": {
+    "top": 3,
+    "bottom": 15,
+    "left": 6,
+    "right": 0
+   },
    "q": 80,
-   "kb": 148
+   "kb": 139
   },
   {
    "file": "Sprint_page_06.jpg",
-   "w": 1277,
-   "h": 2000,
+   "w": 1247,
+   "h": 1979,
    "rot": 0,
+   "crop": {
+    "top": 0,
+    "bottom": 18,
+    "left": 13,
+    "right": 11
+   },
    "q": 80,
-   "kb": 191
+   "kb": 171
   }
  ],
  "shoes": [
   {
    "file": "shoes_01.jpg",
-   "w": 2000,
-   "h": 1306,
-   "rot": 90,
-   "q": 80,
-   "kb": 251
-  },
-  {
-   "file": "shoes_02.jpg",
-   "w": 2000,
-   "h": 1291,
-   "rot": 90,
-   "q": 80,
-   "kb": 204
-  },
-  {
-   "file": "shoes_03.jpg",
-   "w": 2000,
-   "h": 1308,
-   "rot": 90,
-   "q": 80,
-   "kb": 225
-  },
-  {
-   "file": "shoes_04.jpg",
-   "w": 2000,
-   "h": 1290,
-   "rot": 90,
-   "q": 80,
-   "kb": 206
-  },
-  {
-   "file": "shoes_05.jpg",
-   "w": 2000,
+   "w": 1930,
    "h": 1289,
    "rot": 90,
-   "q": 80,
-   "kb": 224
-  },
-  {
-   "file": "shoes_06.jpg",
-   "w": 2000,
-   "h": 1288,
-   "rot": 90,
-   "q": 80,
-   "kb": 167
-  },
-  {
-   "file": "shoes_07.jpg",
-   "w": 2000,
-   "h": 1290,
-   "rot": 90,
-   "q": 80,
-   "kb": 229
-  },
-  {
-   "file": "shoes_08.jpg",
-   "w": 2000,
-   "h": 1265,
-   "rot": 90,
-   "q": 80,
-   "kb": 250
-  },
-  {
-   "file": "shoes_09.jpg",
-   "w": 2000,
-   "h": 1210,
-   "rot": 90,
-   "q": 80,
-   "kb": 272
-  },
-  {
-   "file": "shoes_10.jpg",
-   "w": 2000,
-   "h": 1307,
-   "rot": 90,
-   "q": 80,
-   "kb": 286
-  },
-  {
-   "file": "shoes_11.jpg",
-   "w": 2000,
-   "h": 1281,
-   "rot": 90,
-   "q": 80,
-   "kb": 298
-  },
-  {
-   "file": "shoes_12.jpg",
-   "w": 2000,
-   "h": 1307,
-   "rot": 90,
-   "q": 80,
-   "kb": 234
-  },
-  {
-   "file": "shoes_13.jpg",
-   "w": 2000,
-   "h": 1198,
-   "rot": 90,
-   "q": 80,
-   "kb": 301
-  },
-  {
-   "file": "shoes_14.jpg",
-   "w": 2000,
-   "h": 1899,
-   "rot": 0,
-   "q": 76,
-   "kb": 296
-  },
-  {
-   "file": "shoes_15.jpg",
-   "w": 2000,
-   "h": 791,
-   "rot": 90,
-   "q": 80,
-   "kb": 170
-  },
-  {
-   "file": "shoes_16.jpg",
-   "w": 2000,
-   "h": 1290,
-   "rot": 90,
-   "q": 80,
-   "kb": 236
-  },
-  {
-   "file": "shoes_17.jpg",
-   "w": 2000,
-   "h": 1289,
-   "rot": 90,
-   "q": 80,
-   "kb": 156
-  },
-  {
-   "file": "shoes_18.jpg",
-   "w": 2000,
-   "h": 1308,
-   "rot": 90,
+   "crop": {
+    "top": 3,
+    "bottom": 8,
+    "left": 22,
+    "right": 42
+   },
    "q": 80,
    "kb": 226
   },
   {
-   "file": "shoes_19.jpg",
-   "w": 2000,
-   "h": 1296,
+   "file": "shoes_02.jpg",
+   "w": 1932,
+   "h": 1283,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 5,
+    "left": 22,
+    "right": 40
+   },
    "q": 80,
-   "kb": 167
+   "kb": 184
   },
   {
-   "file": "shoes_20.jpg",
-   "w": 2000,
-   "h": 1306,
+   "file": "shoes_03.jpg",
+   "w": 1931,
+   "h": 1297,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 8,
+    "left": 29,
+    "right": 34
+   },
    "q": 80,
-   "kb": 211
+   "kb": 204
   },
   {
-   "file": "shoes_21.jpg",
-   "w": 2000,
-   "h": 1292,
+   "file": "shoes_04.jpg",
+   "w": 1930,
+   "h": 1278,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 9,
+    "left": 27,
+    "right": 37
+   },
    "q": 80,
-   "kb": 220
+   "kb": 185
   },
   {
-   "file": "shoes_22.jpg",
-   "w": 2000,
-   "h": 1277,
+   "file": "shoes_05.jpg",
+   "w": 1931,
+   "h": 1289,
    "rot": 90,
-   "q": 80,
-   "kb": 177
-  },
-  {
-   "file": "shoes_23.jpg",
-   "w": 2000,
-   "h": 1273,
-   "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 0,
+    "left": 21,
+    "right": 42
+   },
    "q": 80,
    "kb": 208
   },
   {
-   "file": "shoes_24.jpg",
-   "w": 2000,
+   "file": "shoes_06.jpg",
+   "w": 1938,
+   "h": 1288,
+   "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 0,
+    "left": 17,
+    "right": 39
+   },
+   "q": 80,
+   "kb": 152
+  },
+  {
+   "file": "shoes_07.jpg",
+   "w": 1933,
+   "h": 1284,
+   "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 3,
+    "left": 26,
+    "right": 35
+   },
+   "q": 80,
+   "kb": 210
+  },
+  {
+   "file": "shoes_08.jpg",
+   "w": 1928,
+   "h": 1253,
+   "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 9,
+    "left": 19,
+    "right": 47
+   },
+   "q": 80,
+   "kb": 229
+  },
+  {
+   "file": "shoes_09.jpg",
+   "w": 1954,
+   "h": 1189,
+   "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 18,
+    "left": 43,
+    "right": 0
+   },
+   "q": 80,
+   "kb": 257
+  },
+  {
+   "file": "shoes_10.jpg",
+   "w": 1920,
+   "h": 1280,
+   "rot": 90,
+   "crop": {
+    "top": 14,
+    "bottom": 7,
+    "left": 26,
+    "right": 48
+   },
+   "q": 80,
+   "kb": 258
+  },
+  {
+   "file": "shoes_11.jpg",
+   "w": 1910,
+   "h": 1262,
+   "rot": 90,
+   "crop": {
+    "top": 8,
+    "bottom": 5,
+    "left": 30,
+    "right": 54
+   },
+   "q": 80,
+   "kb": 269
+  },
+  {
+   "file": "shoes_12.jpg",
+   "w": 1926,
+   "h": 1283,
+   "rot": 90,
+   "crop": {
+    "top": 7,
+    "bottom": 11,
+    "left": 25,
+    "right": 43
+   },
+   "q": 80,
+   "kb": 210
+  },
+  {
+   "file": "shoes_13.jpg",
+   "w": 1927,
+   "h": 1174,
+   "rot": 90,
+   "crop": {
+    "top": 6,
+    "bottom": 12,
+    "left": 21,
+    "right": 46
+   },
+   "q": 80,
+   "kb": 281
+  },
+  {
+   "file": "shoes_14.jpg",
+   "w": 1996,
+   "h": 1889,
+   "rot": 0,
+   "crop": {
+    "top": 0,
+    "bottom": 7,
+    "left": 1,
+    "right": 0
+   },
+   "q": 76,
+   "kb": 294
+  },
+  {
+   "file": "shoes_15.jpg",
+   "w": 1930,
+   "h": 785,
+   "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 3,
+    "left": 28,
+    "right": 36
+   },
+   "q": 80,
+   "kb": 159
+  },
+  {
+   "file": "shoes_16.jpg",
+   "w": 1939,
    "h": 1265,
    "rot": 90,
+   "crop": {
+    "top": 10,
+    "bottom": 9,
+    "left": 19,
+    "right": 36
+   },
    "q": 80,
-   "kb": 263
+   "kb": 213
+  },
+  {
+   "file": "shoes_17.jpg",
+   "w": 1940,
+   "h": 1267,
+   "rot": 90,
+   "crop": {
+    "top": 7,
+    "bottom": 9,
+    "left": 24,
+    "right": 30
+   },
+   "q": 80,
+   "kb": 135
+  },
+  {
+   "file": "shoes_18.jpg",
+   "w": 1979,
+   "h": 1298,
+   "rot": 90,
+   "crop": {
+    "top": 7,
+    "bottom": 0,
+    "left": 0,
+    "right": 18
+   },
+   "q": 80,
+   "kb": 215
+  },
+  {
+   "file": "shoes_19.jpg",
+   "w": 1974,
+   "h": 1281,
+   "rot": 90,
+   "crop": {
+    "top": 2,
+    "bottom": 7,
+    "left": 4,
+    "right": 16
+   },
+   "q": 80,
+   "kb": 154
+  },
+  {
+   "file": "shoes_20.jpg",
+   "w": 1982,
+   "h": 1274,
+   "rot": 90,
+   "crop": {
+    "top": 19,
+    "bottom": 7,
+    "left": 0,
+    "right": 15
+   },
+   "q": 80,
+   "kb": 195
+  },
+  {
+   "file": "shoes_21.jpg",
+   "w": 1972,
+   "h": 1269,
+   "rot": 90,
+   "crop": {
+    "top": 14,
+    "bottom": 3,
+    "left": 2,
+    "right": 20
+   },
+   "q": 80,
+   "kb": 205
+  },
+  {
+   "file": "shoes_22.jpg",
+   "w": 1974,
+   "h": 1264,
+   "rot": 90,
+   "crop": {
+    "top": 5,
+    "bottom": 2,
+    "left": 4,
+    "right": 16
+   },
+   "q": 80,
+   "kb": 164
+  },
+  {
+   "file": "shoes_23.jpg",
+   "w": 1965,
+   "h": 1251,
+   "rot": 90,
+   "crop": {
+    "top": 6,
+    "bottom": 10,
+    "left": 6,
+    "right": 23
+   },
+   "q": 80,
+   "kb": 193
+  },
+  {
+   "file": "shoes_24.jpg",
+   "w": 1973,
+   "h": 1245,
+   "rot": 90,
+   "crop": {
+    "top": 5,
+    "bottom": 9,
+    "left": 6,
+    "right": 15
+   },
+   "q": 80,
+   "kb": 248
   }
  ],
  "furniture": [
   {
    "file": "furniture_01.jpg",
-   "w": 2000,
-   "h": 1271,
+   "w": 1985,
+   "h": 1256,
    "rot": 0,
+   "crop": {
+    "top": 3,
+    "bottom": 6,
+    "left": 0,
+    "right": 12
+   },
    "q": 80,
-   "kb": 155
+   "kb": 149
   },
   {
    "file": "furniture_02.jpg",
    "w": 2000,
    "h": 1314,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 0,
+    "left": 0,
+    "right": 0
+   },
    "q": 80,
    "kb": 148
   },
   {
    "file": "furniture_03.jpg",
-   "w": 2000,
-   "h": 1300,
+   "w": 1934,
+   "h": 1295,
    "rot": 90,
-   "q": 80,
-   "kb": 186
-  },
-  {
-   "file": "furniture_04.jpg",
-   "w": 2000,
-   "h": 1299,
-   "rot": 90,
-   "q": 80,
-   "kb": 197
-  },
-  {
-   "file": "furniture_05.jpg",
-   "w": 2000,
-   "h": 1300,
-   "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 2,
+    "left": 17,
+    "right": 43
+   },
    "q": 80,
    "kb": 168
   },
   {
-   "file": "furniture_06.jpg",
-   "w": 2000,
-   "h": 1294,
+   "file": "furniture_04.jpg",
+   "w": 1942,
+   "h": 1292,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 4,
+    "left": 12,
+    "right": 40
+   },
    "q": 80,
-   "kb": 159
+   "kb": 180
+  },
+  {
+   "file": "furniture_05.jpg",
+   "w": 1930,
+   "h": 1291,
+   "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 6,
+    "left": 18,
+    "right": 46
+   },
+   "q": 80,
+   "kb": 148
+  },
+  {
+   "file": "furniture_06.jpg",
+   "w": 1925,
+   "h": 1284,
+   "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 7,
+    "left": 15,
+    "right": 54
+   },
+   "q": 80,
+   "kb": 138
   },
   {
    "file": "furniture_07.jpg",
-   "w": 2000,
+   "w": 1963,
    "h": 1286,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 0,
+    "left": 18,
+    "right": 13
+   },
    "q": 80,
-   "kb": 151
+   "kb": 144
   },
   {
    "file": "furniture_08.jpg",
-   "w": 2000,
-   "h": 1292,
+   "w": 1928,
+   "h": 1282,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 7,
+    "left": 22,
+    "right": 44
+   },
    "q": 80,
-   "kb": 212
+   "kb": 189
   },
   {
    "file": "furniture_09.jpg",
-   "w": 2000,
-   "h": 1291,
+   "w": 1937,
+   "h": 1281,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 7,
+    "left": 16,
+    "right": 41
+   },
    "q": 80,
-   "kb": 206
+   "kb": 185
   },
   {
    "file": "furniture_10.jpg",
-   "w": 2000,
-   "h": 1295,
+   "w": 1926,
+   "h": 1282,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 10,
+    "left": 25,
+    "right": 43
+   },
    "q": 80,
-   "kb": 178
+   "kb": 154
   },
   {
    "file": "furniture_11.jpg",
-   "w": 2000,
-   "h": 1308,
+   "w": 1938,
+   "h": 1295,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 10,
+    "left": 12,
+    "right": 44
+   },
    "q": 80,
-   "kb": 170
+   "kb": 149
   },
   {
    "file": "furniture_12.jpg",
-   "w": 2000,
+   "w": 1927,
    "h": 1290,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 0,
+    "left": 23,
+    "right": 44
+   },
    "q": 80,
-   "kb": 185
+   "kb": 168
   },
   {
    "file": "furniture_13.jpg",
-   "w": 2000,
-   "h": 1316,
+   "w": 1928,
+   "h": 1310,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 3,
+    "left": 19,
+    "right": 47
+   },
    "q": 80,
-   "kb": 261
+   "kb": 241
   },
   {
    "file": "furniture_14.jpg",
-   "w": 2000,
-   "h": 1286,
+   "w": 1940,
+   "h": 1261,
    "rot": 90,
+   "crop": {
+    "top": 9,
+    "bottom": 10,
+    "left": 14,
+    "right": 40
+   },
    "q": 80,
-   "kb": 214
+   "kb": 191
   },
   {
    "file": "furniture_15.jpg",
-   "w": 2000,
-   "h": 1272,
+   "w": 1923,
+   "h": 1264,
    "rot": 90,
+   "crop": {
+    "top": 5,
+    "bottom": 0,
+    "left": 22,
+    "right": 49
+   },
    "q": 80,
-   "kb": 185
+   "kb": 164
   },
   {
    "file": "furniture_16.jpg",
-   "w": 2000,
-   "h": 1283,
+   "w": 1929,
+   "h": 1258,
    "rot": 90,
+   "crop": {
+    "top": 11,
+    "bottom": 8,
+    "left": 24,
+    "right": 41
+   },
    "q": 80,
-   "kb": 169
+   "kb": 141
   },
   {
    "file": "furniture_17.jpg",
-   "w": 2000,
-   "h": 1273,
+   "w": 1926,
+   "h": 1265,
    "rot": 90,
+   "crop": {
+    "top": 5,
+    "bottom": 0,
+    "left": 22,
+    "right": 46
+   },
    "q": 80,
-   "kb": 200
+   "kb": 179
   },
   {
    "file": "furniture_18.jpg",
-   "w": 2000,
-   "h": 1281,
+   "w": 1933,
+   "h": 1274,
    "rot": 90,
+   "crop": {
+    "top": 4,
+    "bottom": 0,
+    "left": 22,
+    "right": 39
+   },
    "q": 80,
-   "kb": 212
+   "kb": 193
   },
   {
    "file": "furniture_19.jpg",
-   "w": 2000,
+   "w": 1940,
    "h": 1278,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 0,
+    "left": 17,
+    "right": 37
+   },
+   "q": 80,
+   "kb": 215
+  },
+  {
+   "file": "furniture_20.jpg",
+   "w": 1935,
+   "h": 1268,
+   "rot": 90,
+   "crop": {
+    "top": 3,
+    "bottom": 7,
+    "left": 20,
+    "right": 39
+   },
    "q": 80,
    "kb": 229
   },
   {
-   "file": "furniture_20.jpg",
-   "w": 2000,
-   "h": 1284,
-   "rot": 90,
-   "q": 80,
-   "kb": 252
-  },
-  {
    "file": "furniture_21.jpg",
-   "w": 2000,
-   "h": 1254,
+   "w": 1940,
+   "h": 1246,
    "rot": 90,
+   "crop": {
+    "top": 0,
+    "bottom": 5,
+    "left": 20,
+    "right": 34
+   },
    "q": 80,
-   "kb": 304
-  },
-  {
-   "file": "furniture_22.jpg",
-   "w": 2000,
-   "h": 1301,
-   "rot": 90,
-   "q": 80,
-   "kb": 236
-  },
-  {
-   "file": "furniture_23.jpg",
-   "w": 2000,
-   "h": 1317,
-   "rot": 180,
-   "q": 80,
-   "kb": 216
-  },
-  {
-   "file": "furniture_24.jpg",
-   "w": 2000,
-   "h": 1304,
-   "rot": 180,
-   "q": 80,
-   "kb": 177
+   "kb": 288
   }
  ]
 }

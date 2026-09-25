@@ -13,9 +13,8 @@
 
   <style>
     :root {
-      --bg:           #344524;
-      --bg-dark:      #263318;   /* slightly darker for nav scrolled state */
-      --cream:        #F5E3C8;
+      --bg:           #5a1200;
+      --bg-dark:      #3d1000;   /* slightly darker for nav scrolled state */
       --page-bg:      var(--bg);
       --page-fg:      var(--cream);
 
@@ -28,8 +27,8 @@
       --nav-bg-scrolled:   var(--bg);
       --nav-line-scrolled: rgba(0,0,0,0.25);
 
-      --footer-line: rgba(245,227,200,0.12);
-      --footer-fg:   rgba(245,227,200,0.35);
+      --footer-line: rgba(255,243,223,0.12);
+      --footer-fg:   rgba(255,243,223,0.35);
     }
 
 
@@ -66,7 +65,7 @@
       overflow: hidden;
       display: block;
       text-decoration: none;
-      background: #2a3a1a;  /* fallback while image loads */
+      background: #3d1000;  /* fallback while image loads */
       cursor: pointer;
     }
 
@@ -191,7 +190,7 @@
       font-size: clamp(80px, 16vw, 200px);
       line-height: 0.88;
       letter-spacing: 0;
-      color: #5C7040;             /* default: dark green (blends into bg) */
+      color: #8B3800;             /* default: burnt orange (blends into bg) */
       text-decoration: none;
       transition: color 0.22s ease;
       /* Spread letters evenly across the available width */
@@ -202,9 +201,9 @@
       justify-content: center;
     }
 
-    /* Hover: dark green → cream (lights up) */
+    /* Hover: burnt orange → cream (lights up) */
     .pg-letter:hover {
-      color: #F5E3C8;
+      color: #FFF3DF;
     }
 
     /* Each letter floats independently */
@@ -292,7 +291,7 @@
 
   <!-- 4 — Maze Game -->
   <a class="project-card" href="maze-game.html">
-    <img src="assests/images/projects/maze-game.gif" alt="Semi-Autonomous Maze Game">
+    <img src="assests/images/projects/maze-game.jpg" alt="Semi-Autonomous Maze Game">
     <div class="card-label">
       <span class="card-num">04</span>
       <span class="card-name">Semi-Autonomous Maze Game</span>
@@ -316,7 +315,7 @@
 <!-- ════════════════════════
      DISCOVER MY PLAYGROUND
      Each letter links to playground.html.
-     Hover: cream → #5C7040 (fades into bg).
+     Hover: cream → #8B3800 (fades into bg).
 ════════════════════════ -->
 <section class="playground-section">
 

@@ -13,12 +13,10 @@
 
   <style>
     :root {
-      --bg:       #F5E3C8;           /* page background */
-      --green:    #344524;           /* results cards only */
-      --text:     #1A1A1A;           /* all body text */
-      --cream:    #F5E3C8;           /* text on dark surfaces */
-      --line:     rgba(26,26,26,0.12);   /* faint lines on light bg */
-      --muted:    rgba(26,26,26,0.45);   /* labels / secondary text */
+      --bg:       #FFF3DF;           /* page background */
+      --text:     #0f0f0f;           /* all body text */
+      --line:     rgba(15,15,15,0.12);   /* faint lines on light bg */
+      --muted:    rgba(15,15,15,0.45);   /* labels / secondary text */
       --page-bg:  var(--bg);
       --page-fg:  var(--text);
 
@@ -52,7 +50,7 @@
       justify-content: flex-end;
       padding: calc(var(--nav-h) + 24px) var(--pad-x) 36px;
       overflow: hidden;
-      background: #1a2510;
+      background: #3d1000;
     }
 
     .hero-photo {
@@ -67,7 +65,7 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(20,32,10,0.35) 0%, rgba(20,32,10,0.78) 100%);
+      background: linear-gradient(to bottom, rgba(61,16,0,0.35) 0%, rgba(61,16,0,0.78) 100%);
     }
 
     .hero-content { position: relative; z-index: 1; }
@@ -78,7 +76,7 @@
       font-weight: 500;
       letter-spacing: 2.5px;
       text-transform: uppercase;
-      color: rgba(245,227,200,0.6);
+      color: rgba(255,243,223,0.6);
       margin-bottom: 10px;
     }
 
@@ -87,7 +85,7 @@
       font-size: clamp(64px, 12vw, 148px);
       letter-spacing: 3px;
       line-height: 0.9;
-      color: #F5E3C8;
+      color: #FFF3DF;
       margin-bottom: 20px;
     }
 
@@ -96,7 +94,7 @@
       font-size: clamp(13px, 1.5vw, 16px);
       font-style: italic;
       font-weight: 300;
-      color: #F5E3C8;
+      color: #FFF3DF;
       max-width: 560px;
       line-height: 1.6;
     }
@@ -152,7 +150,7 @@
       font-weight: 500;
       letter-spacing: 0.8px;
       color: var(--cream);
-      background: var(--green);
+      background: var(--brown);
       border: none;
       border-radius: 3px;
       padding: 4px 10px;
@@ -176,8 +174,8 @@
     .dashboard-card {
       margin: clamp(28px,4vh,48px) var(--pad-x);
       padding: clamp(20px,3vw,32px);
-      border: 1px solid rgba(245,227,200,0.15);
-      background: var(--green);
+      border: 1px solid rgba(255,243,223,0.15);
+      background: var(--brown);
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: clamp(20px,3vh,32px) clamp(28px,4vw,52px);
@@ -189,7 +187,7 @@
       font-weight: 600;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: rgba(245,227,200,0.55);
+      color: rgba(255,243,223,0.55);
       margin-bottom: 6px;
     }
 
@@ -202,9 +200,9 @@
     }
 
     .dashboard-card .tag {
-      background: rgba(245,227,200,0.15);
+      background: rgba(255,243,223,0.15);
       color: var(--cream);
-      border: 1px solid rgba(245,227,200,0.3);
+      border: 1px solid rgba(255,243,223,0.3);
     }
 
 
@@ -348,12 +346,12 @@
       margin-top: clamp(24px, 3vh, 40px);
       /* 1px gaps show as thin lines between cards */
       gap: 1px;
-      background: rgba(26,26,26,0.15);
-      border: 1px solid rgba(26,26,26,0.15);
+      background: rgba(15,15,15,0.15);
+      border: 1px solid rgba(15,15,15,0.15);
     }
 
     .result-card {
-      background: var(--green);     /* dark green */
+      background: var(--brown);
       padding: clamp(20px, 3vw, 36px) clamp(16px, 2.5vw, 28px);
       display: flex;
       flex-direction: column;
@@ -411,7 +409,7 @@
       font-size: clamp(10px, 1vw, 12px);
       font-weight: 300;
       line-height: 1.65;
-      color: rgba(245,227,200,0.65);
+      color: rgba(255,243,223,0.65);
     }
 
     /* ── Mobile: sections rebuilt in Phase 1 ── */
@@ -552,7 +550,7 @@
       </p>
     </div>
     <!-- assets/images/waterguard/problem.jpg -->
-    <img class="side-photo" src="assests/images/projects/waterguard/problem.gif" alt="CT scanner setup">
+    <img class="side-photo" src="assests/images/projects/waterguard/problem.webp" alt="CT scanner setup">
   </div>
 </section>
 
@@ -694,7 +692,7 @@
 ════════════════════════ -->
 <div class="project-nav">
   <a href="projects.html">← Back to Projects</a>
-  <span style="font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(26,26,26,0.3);">Coming Soon</span>
+  <span style="font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(15,15,15,0.3);">Coming Soon</span>
 </div>
 
 <!-- ════════════════════════

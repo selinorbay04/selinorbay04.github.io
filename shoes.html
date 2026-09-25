@@ -12,9 +12,8 @@
 
   <style>
     :root {
-      --cream:   #F5E3C8;
       --burnt:   #8B3800;
-      --bg:      #F5E3C8;
+      --bg:      #FFF3DF;
       --font-graffiti: 'Bangers', cursive;
       --page-bg: var(--bg);
 
@@ -104,7 +103,7 @@
     #lightbox.open { opacity: 1; pointer-events: all; }
     #lb-backdrop {
       position: absolute; inset: 0;
-      background: rgba(10,8,6,0.92);
+      background: rgba(15,15,15,0.92);
       cursor: zoom-out;
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
@@ -127,7 +126,7 @@
     #lb-close {
       position: absolute; top: -44px; right: 0;
       background: none; border: none; cursor: pointer;
-      color: rgba(245,227,200,.7); font-size: 20px;
+      color: rgba(255,243,223,.7); font-size: 20px;
       font-family: var(--font-body); line-height: 1; padding: 6px 10px;
       transition: color .2s, transform .2s;
     }
@@ -135,12 +134,12 @@
     #lb-counter {
       position: absolute; bottom: -34px; left: 50%; transform: translateX(-50%);
       font-family: var(--font-body); font-size: 11px; font-weight: 600;
-      letter-spacing: 2px; color: rgba(245,227,200,.4); white-space: nowrap;
+      letter-spacing: 2px; color: rgba(255,243,223,.4); white-space: nowrap;
     }
     .lb-arrow {
       position: fixed; top: 50%; z-index: 2;
       background: none; border: none; cursor: pointer;
-      color: rgba(245,227,200,.55); padding: 16px;
+      color: rgba(255,243,223,.55); padding: 16px;
       transform: translateY(-50%);
       transition: color .2s, transform .25s;
     }
@@ -178,30 +177,30 @@
 </header>
 
 <main class="gallery">
-  <a class="gallery-item" href="#" data-num="01"><img src="assests/playground/sketches/web/shoes/shoes_01.jpg" width="2000" height="1306" alt="Shoes 01" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="02"><img src="assests/playground/sketches/web/shoes/shoes_02.jpg" width="2000" height="1291" alt="Shoes 02" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="03"><img src="assests/playground/sketches/web/shoes/shoes_03.jpg" width="2000" height="1308" alt="Shoes 03" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="04"><img src="assests/playground/sketches/web/shoes/shoes_04.jpg" width="2000" height="1290" alt="Shoes 04" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="05"><img src="assests/playground/sketches/web/shoes/shoes_05.jpg" width="2000" height="1289" alt="Shoes 05" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="06"><img src="assests/playground/sketches/web/shoes/shoes_06.jpg" width="2000" height="1288" alt="Shoes 06" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="07"><img src="assests/playground/sketches/web/shoes/shoes_07.jpg" width="2000" height="1290" alt="Shoes 07" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="08"><img src="assests/playground/sketches/web/shoes/shoes_08.jpg" width="2000" height="1265" alt="Shoes 08" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="09"><img src="assests/playground/sketches/web/shoes/shoes_09.jpg" width="2000" height="1210" alt="Shoes 09" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="10"><img src="assests/playground/sketches/web/shoes/shoes_10.jpg" width="2000" height="1307" alt="Shoes 10" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="11"><img src="assests/playground/sketches/web/shoes/shoes_11.jpg" width="2000" height="1281" alt="Shoes 11" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="12"><img src="assests/playground/sketches/web/shoes/shoes_12.jpg" width="2000" height="1307" alt="Shoes 12" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="13"><img src="assests/playground/sketches/web/shoes/shoes_13.jpg" width="2000" height="1198" alt="Shoes 13" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="14"><img src="assests/playground/sketches/web/shoes/shoes_14.jpg" width="2000" height="1899" alt="Shoes 14" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="15"><img src="assests/playground/sketches/web/shoes/shoes_15.jpg" width="2000" height="791" alt="Shoes 15" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="16"><img src="assests/playground/sketches/web/shoes/shoes_16.jpg" width="2000" height="1290" alt="Shoes 16" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="17"><img src="assests/playground/sketches/web/shoes/shoes_17.jpg" width="2000" height="1289" alt="Shoes 17" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="18"><img src="assests/playground/sketches/web/shoes/shoes_18.jpg" width="2000" height="1308" alt="Shoes 18" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="19"><img src="assests/playground/sketches/web/shoes/shoes_19.jpg" width="2000" height="1296" alt="Shoes 19" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="20"><img src="assests/playground/sketches/web/shoes/shoes_20.jpg" width="2000" height="1306" alt="Shoes 20" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="21"><img src="assests/playground/sketches/web/shoes/shoes_21.jpg" width="2000" height="1292" alt="Shoes 21" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="22"><img src="assests/playground/sketches/web/shoes/shoes_22.jpg" width="2000" height="1277" alt="Shoes 22" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="23"><img src="assests/playground/sketches/web/shoes/shoes_23.jpg" width="2000" height="1273" alt="Shoes 23" loading="lazy"></a>
-  <a class="gallery-item" href="#" data-num="24"><img src="assests/playground/sketches/web/shoes/shoes_24.jpg" width="2000" height="1265" alt="Shoes 24" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="01"><img src="assests/playground/sketches/web/shoes/shoes_01.jpg" width="1930" height="1289" alt="Shoes 01" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="02"><img src="assests/playground/sketches/web/shoes/shoes_02.jpg" width="1932" height="1283" alt="Shoes 02" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="03"><img src="assests/playground/sketches/web/shoes/shoes_03.jpg" width="1931" height="1297" alt="Shoes 03" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="04"><img src="assests/playground/sketches/web/shoes/shoes_04.jpg" width="1930" height="1278" alt="Shoes 04" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="05"><img src="assests/playground/sketches/web/shoes/shoes_05.jpg" width="1931" height="1289" alt="Shoes 05" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="06"><img src="assests/playground/sketches/web/shoes/shoes_06.jpg" width="1938" height="1288" alt="Shoes 06" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="07"><img src="assests/playground/sketches/web/shoes/shoes_07.jpg" width="1933" height="1284" alt="Shoes 07" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="08"><img src="assests/playground/sketches/web/shoes/shoes_08.jpg" width="1928" height="1253" alt="Shoes 08" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="09"><img src="assests/playground/sketches/web/shoes/shoes_09.jpg" width="1954" height="1189" alt="Shoes 09" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="10"><img src="assests/playground/sketches/web/shoes/shoes_10.jpg" width="1920" height="1280" alt="Shoes 10" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="11"><img src="assests/playground/sketches/web/shoes/shoes_11.jpg" width="1910" height="1262" alt="Shoes 11" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="12"><img src="assests/playground/sketches/web/shoes/shoes_12.jpg" width="1926" height="1283" alt="Shoes 12" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="13"><img src="assests/playground/sketches/web/shoes/shoes_13.jpg" width="1927" height="1174" alt="Shoes 13" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="14"><img src="assests/playground/sketches/web/shoes/shoes_14.jpg" width="1996" height="1889" alt="Shoes 14" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="15"><img src="assests/playground/sketches/web/shoes/shoes_15.jpg" width="1930" height="785" alt="Shoes 15" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="16"><img src="assests/playground/sketches/web/shoes/shoes_16.jpg" width="1939" height="1265" alt="Shoes 16" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="17"><img src="assests/playground/sketches/web/shoes/shoes_17.jpg" width="1940" height="1267" alt="Shoes 17" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="18"><img src="assests/playground/sketches/web/shoes/shoes_18.jpg" width="1979" height="1298" alt="Shoes 18" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="19"><img src="assests/playground/sketches/web/shoes/shoes_19.jpg" width="1974" height="1281" alt="Shoes 19" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="20"><img src="assests/playground/sketches/web/shoes/shoes_20.jpg" width="1982" height="1274" alt="Shoes 20" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="21"><img src="assests/playground/sketches/web/shoes/shoes_21.jpg" width="1972" height="1269" alt="Shoes 21" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="22"><img src="assests/playground/sketches/web/shoes/shoes_22.jpg" width="1974" height="1264" alt="Shoes 22" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="23"><img src="assests/playground/sketches/web/shoes/shoes_23.jpg" width="1965" height="1251" alt="Shoes 23" loading="lazy"></a>
+  <a class="gallery-item" href="#" data-num="24"><img src="assests/playground/sketches/web/shoes/shoes_24.jpg" width="1973" height="1245" alt="Shoes 24" loading="lazy"></a>
 </main>
 
 <footer class="footer--split">

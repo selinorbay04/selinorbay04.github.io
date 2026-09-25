@@ -127,8 +127,8 @@ nav.scrolled .nav-links a { color: var(--nav-fg-scrolled); }
 ══════════════════════════════════════ */
 :root {
   --footer-bg:   var(--page-bg);
-  --footer-fg:   rgba(26,26,26,0.4);
-  --footer-line: rgba(26,26,26,0.12);
+  --footer-fg:   rgba(15,15,15,0.4);
+  --footer-line: rgba(15,15,15,0.12);
 }
 
 footer {

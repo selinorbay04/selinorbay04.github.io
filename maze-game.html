@@ -13,12 +13,10 @@
 
   <style>
     :root {
-      --bg:      #F5E3C8;
-      --green:   #344524;
-      --text:    #1A1A1A;
-      --cream:   #F5E3C8;
-      --line:    rgba(26,26,26,0.12);
-      --muted:   rgba(26,26,26,0.45);
+      --bg:      #FFF3DF;
+      --text:    #0f0f0f;
+      --line:    rgba(15,15,15,0.12);
+      --muted:   rgba(15,15,15,0.45);
       --page-bg:  var(--bg);
       --page-fg:  var(--text);
 
@@ -51,7 +49,7 @@
       justify-content: flex-end;
       padding: calc(var(--nav-h) + 24px) var(--pad-x) 36px;
       overflow: hidden;
-      background: #111;
+      background: #0f0f0f;
     }
 
     .hero-photo {
@@ -68,7 +66,7 @@
       font-size: clamp(13px, 1.4vw, 16px);
       font-style: italic;
       font-weight: 300;
-      color: rgba(245,227,200,0.72);
+      color: rgba(255,243,223,0.72);
       margin-top: 14px;
       max-width: 480px;
       line-height: 1.6;
@@ -77,7 +75,7 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.72) 100%);
+      background: linear-gradient(to bottom, rgba(15,15,15,0.3) 0%, rgba(15,15,15,0.72) 100%);
     }
 
     .hero-content { position: relative; z-index: 1; }
@@ -88,7 +86,7 @@
       font-weight: 500;
       letter-spacing: 2.5px;
       text-transform: uppercase;
-      color: rgba(245,227,200,0.6);
+      color: rgba(255,243,223,0.6);
       margin-bottom: 10px;
     }
 
@@ -97,7 +95,7 @@
       font-size: clamp(56px, 10vw, 130px);
       letter-spacing: 3px;
       line-height: 0.92;
-      color: #F5E3C8;
+      color: #FFF3DF;
     }
 
 
@@ -159,7 +157,7 @@
       font-weight: 500;
       letter-spacing: 0.6px;
       color: var(--cream);
-      background: var(--green);
+      background: var(--brown);
       border: none;
       border-radius: 3px;
       padding: 4px 10px;
@@ -183,8 +181,8 @@
     .dashboard-card {
       margin: clamp(28px,4vh,48px) var(--pad-x);
       padding: clamp(20px,3vw,32px);
-      border: 1px solid rgba(245,227,200,0.15);
-      background: var(--green);
+      border: 1px solid rgba(255,243,223,0.15);
+      background: var(--brown);
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: clamp(20px,3vh,32px) clamp(28px,4vw,52px);
@@ -196,7 +194,7 @@
       font-weight: 600;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: rgba(245,227,200,0.55);
+      color: rgba(255,243,223,0.55);
       margin-bottom: 6px;
     }
 
@@ -209,9 +207,9 @@
     }
 
     .dashboard-card .tag {
-      background: rgba(245,227,200,0.15);
+      background: rgba(255,243,223,0.15);
       color: var(--cream);
-      border: 1px solid rgba(245,227,200,0.3);
+      border: 1px solid rgba(255,243,223,0.3);
     }
 
 
@@ -313,7 +311,7 @@
 
     .github-card {
       width: 90px;
-      background: var(--green);
+      background: var(--brown);
       border-radius: 6px;
       padding: 16px 12px;
       display: flex;
@@ -407,7 +405,7 @@
      assets/images/maze-game/hero.jpg
 ════════════════════════ -->
 <section class="hero">
-  <img class="hero-photo" src="assests/images/projects/maze-game/hero.gif" alt="Maze game setup">
+  <img class="hero-photo" src="assests/images/projects/maze-game/hero.jpg" alt="Maze game setup">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-kicker">Computer Engineering · CE 346 · Northwestern</p>
@@ -473,7 +471,7 @@
       autonomously retracing the correct path to start once the finish is reached.
     </p>
     <!-- assets/images/maze-game/system.jpg -->
-    <img class="side-photo" src="assests/images/projects/maze-game/system.gif" alt="System overview">
+    <img class="side-photo" src="assests/images/projects/maze-game/system.jpg" alt="System overview">
   </div>
 </section>
 
@@ -544,7 +542,7 @@
       </p>
     </div>
     <!-- assets/images/maze-game/fix.jpg -->
-    <img class="side-photo" src="assests/images/projects/maze-game/fix.gif" alt="Maze debugging">
+    <img class="side-photo" src="assests/images/projects/maze-game/fix.webp" alt="Maze debugging">
   </div>
 </section>
 
