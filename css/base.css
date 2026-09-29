@@ -343,6 +343,27 @@ footer span {
 }
 .project-nav .back-pill--bottom:hover { background: var(--page-fg); color: var(--page-bg); border-color: var(--page-fg); opacity: 1; }
 
+/* Text beside a video: prose on the left, 16:9 embed on the right; stacks on narrow screens */
+.text-video {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+  padding-bottom: clamp(32px, 5vh, 52px);
+}
+.text-video .body-text { padding-bottom: 0; }
+.text-video .body-text + .body-text { margin-top: 1.2em; }
+.text-video .side-img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 560px;
+  justify-self: center;
+}
+@media (max-width: 900px) {
+  .text-video { grid-template-columns: minmax(0, 1fr); }
+}
+
 /* Figure stack: photos with numbered footnote captions */
 .fig-stack { list-style: none; margin: 0; padding: 0; }
 .fig-stack figure { margin: 0; }

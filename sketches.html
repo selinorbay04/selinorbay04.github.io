@@ -127,6 +127,22 @@
       margin: 0 auto;
     }
     .sk[hidden] { display: none; }
+
+    /* description of the selected category, above the desk */
+    .cat-note {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: clamp(28px, 4vh, 44px) clamp(24px, 6vw, 80px) 0;
+    }
+    .cat-note[hidden] { display: none; }
+    .cat-note span {
+      display: block;
+      max-width: 640px;
+      font-size: clamp(14px, 1.3vw, 16px);
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(15,15,15,0.72);
+    }
     .sk { position: relative; }
     .sk-paper {
       display: block;
@@ -183,7 +199,7 @@
 
   <div class="hero-meta">
     <span class="hero-count">83</span>
-    <p>Pen studies across five categories — from furniture to urban spaces.</p>
+    <p>Pen studies across five categories, from furniture to urban spaces, developed using industrial design methods.</p>
   </div>
 
   <div class="hero-rule"></div>
@@ -195,11 +211,11 @@
 ════════════════════════ -->
 <div class="filters" role="group" aria-label="Filter sketches by category">
     <button type="button" class="pill is-active" data-filter="all" aria-pressed="true">All <span class="pill-count">83</span></button>
-    <button type="button" class="pill" data-filter="busstop" aria-pressed="false">Bus Stop <span class="pill-count">21</span></button>
-    <button type="button" class="pill" data-filter="coffeemaker" aria-pressed="false">Coffee Maker <span class="pill-count">11</span></button>
-    <button type="button" class="pill" data-filter="sprint" aria-pressed="false">Sprint <span class="pill-count">6</span></button>
-    <button type="button" class="pill" data-filter="shoes" aria-pressed="false">Shoes <span class="pill-count">24</span></button>
-    <button type="button" class="pill" data-filter="furniture" aria-pressed="false">Furniture <span class="pill-count">21</span></button>
+    <button type="button" class="pill" data-filter="busstop" data-desc="A bus stop for Northwestern that reflects the university&#39;s spirit and architecture." aria-pressed="false">Bus Stop <span class="pill-count">21</span></button>
+    <button type="button" class="pill" data-filter="coffeemaker" data-desc="An oversized, eccentric coffee maker designed as the centerpiece of a retro-style coffee shop." aria-pressed="false">Coffee Maker <span class="pill-count">11</span></button>
+    <button type="button" class="pill" data-filter="sprint" data-desc="Prompt: design a speaker that draws on elements of your childhood. I designed a speaker inspired by How to Train Your Dragon. It sits on a stand, and its dragon spikes detach and clip onto a ski helmet to become wearable speakers." aria-pressed="false">Sprint <span class="pill-count">6</span></button>
+    <button type="button" class="pill" data-filter="shoes" data-desc="A tennis shoe designed to feel relaxed while keeping an elegant silhouette." aria-pressed="false">Shoes <span class="pill-count">24</span></button>
+    <button type="button" class="pill" data-filter="furniture" data-desc="A furniture set for pet owners, with built-in spaces for pets integrated into each piece." aria-pressed="false">Furniture <span class="pill-count">21</span></button>
 </div>
 
 
@@ -207,6 +223,7 @@
      THE DESK
 ════════════════════════ -->
 <main>
+  <p class="cat-note" id="catNote" aria-live="polite" hidden></p>
   <ul class="desk" id="desk">
     <li class="sk" data-cat="busstop" style="--r:-1.4deg;--dx:-10px;--dy:16px">
       <a class="sk-paper" href="assests/playground/sketches/web/busstop/Bus_stop_01.jpg" data-lightbox="sketches" data-label="Bus Stop">

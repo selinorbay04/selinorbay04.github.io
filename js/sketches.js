@@ -17,6 +17,7 @@
   const desk  = document.getElementById('desk');
   const items = [...desk.querySelectorAll('.sk')];
   const pills = [...document.querySelectorAll('.filters [data-filter]')];
+  const note  = document.getElementById('catNote');
   const cats  = pills.map(p => p.dataset.filter);
   const animate = gsap && Flip && !SO.reduced;
 
@@ -31,6 +32,12 @@
       const on = p.dataset.filter === cat;
       p.classList.toggle('is-active', on);
       p.setAttribute('aria-pressed', String(on));
+      if (on && note) {
+        const desc = p.dataset.desc || '';
+        note.replaceChildren();
+        if (desc) note.appendChild(document.createElement('span')).textContent = desc;
+        note.hidden = !desc;
+      }
     });
     settleDrift();   // a filter change ends the scroll drift: everything is placed
     const state = withMotion ? Flip.getState(items) : null;
@@ -56,7 +63,7 @@
     history.replaceState(null, '', cat === 'all' ? location.pathname : '#' + cat);
     // if we're scrolled into the desk, bring its top back under the sticky pills first
     const bar  = document.querySelector('.filters');
-    const top  = desk.getBoundingClientRect().top + window.scrollY - bar.offsetHeight - (document.getElementById('nav')?.offsetHeight || 0);
+    const top  = desk.parentElement.getBoundingClientRect().top + window.scrollY - bar.offsetHeight - (document.getElementById('nav')?.offsetHeight || 0);
     if (window.scrollY > top + 4) {
       if (SO?.lenis) SO.lenis.scrollTo(top, { immediate: true });
       else window.scrollTo(0, top);

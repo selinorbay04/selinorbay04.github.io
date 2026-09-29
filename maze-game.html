@@ -265,6 +265,21 @@
       display: block;
     }
 
+    /* build section: spec table beside an uncropped portrait photo */
+    .two-col--build { grid-template-columns: 3fr 2fr; align-items: start; }
+    .two-col--build .spec-table { margin-bottom: 0; }
+    .build-photo {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      max-height: 560px;
+      justify-self: center;
+    }
+
+    @media (max-width: 900px) {
+      .two-col, .two-col--build { grid-template-columns: minmax(0, 1fr); }
+    }
+
 
     /* ══════════════════════════════════════
        ENGINEERING — spec table
@@ -459,7 +474,7 @@
 <hr class="divider">
 
 <section class="section">
-  <p class="body-text">The goal was to build a maze-navigating robot that sits at the boundary between autonomous and human-controlled: the robot handles line following, obstacle detection, and backtracking on its own, but pauses at decision junctions and defers to a human operator via a wireless handheld controller. The system then autonomously retraces the correct path back to start once the finish is reached. Everything — driving logic, RF communication, and state tracking — was written from scratch in C on two micro:bit v2 microcontrollers.</p>
+  <p class="body-text">The goal was to build a maze-navigating robot that sits at the boundary between autonomous and human-controlled: the robot handles line following, obstacle detection, and backtracking on its own, but pauses at decision junctions and defers to a human operator via a wireless handheld controller. The system then autonomously retraces the correct path back to start once the finish is reached. All of the driving logic, RF communication, and state tracking was written from scratch in C and deployed onto two micro:bit v2 microcontrollers.</p>
 </section>
 
 <hr class="divider">
@@ -473,10 +488,13 @@
 
   <div class="two-col">
     <p class="body-text">
-      A line-following robot that navigates a maze autonomously but pauses at junctions
-      to ask for direction. The user steers via a handheld micro:bit controller; the
-      robot handles the rest: line tracking, obstacle detection, backtracking, and
-      autonomously retracing the correct path to start once the finish is reached.
+      A line-following sensor array on the robot's underside tracks the black lines on the
+      board. On a straight segment, the array reads white-black-white: the center sensor sits
+      on the line and the outer sensors see the white board. A junction shows up as black
+      appearing on an outer sensor. A left junction reads black-black-white, a right junction
+      white-black-black, and a T-junction black-black-black. Walls are detected by a sonar
+      sensor. During a turn, the array counts the alternating white and black sections it
+      passes over, so the robot knows when it has rotated onto the new line.
     </p>
     <!-- assets/images/maze-game/system.jpg -->
     <img class="side-photo" src="assests/images/projects/maze-game/system.jpg" alt="System overview">
@@ -493,6 +511,7 @@
 <section class="section">
   <h2 class="section-title">ENGINEERING THE BUILD</h2>
 
+  <div class="two-col two-col--build">
   <div class="spec-table">
 
     <div class="spec-row">
@@ -521,6 +540,9 @@
     </div>
 
   </div>
+    <img class="build-photo" src="assests/images/projects/maze-game/system2.jpg" width="930" height="1222" loading="lazy"
+         alt="The handheld micro:bit controller lighting up an arrow while the robot waits at a junction on the maze board">
+  </div>
 </section>
 
 <hr class="divider">
@@ -535,9 +557,10 @@
   <div class="two-col">
     <div class="two-col-text">
       <p class="body-text">
-        Our backtracking passed every bench test – then misbehaved on the real maze.
-        The robot chassis was casting a shadow on the bottom-mounted line sensors,
-        making them read white surface as black lines at junctions.
+        Our line following logic passed every bench test, then misbehaved on the real maze.
+        The robot chassis was casting a shadow on the bottom-mounted line sensors, making
+        them read white surfaces as black lines at junctions. This messed up both
+        backtracking and initial line following.
       </p>
       <p class="body-text">Wrong reads → wrong user prompts.</p>
       <p class="body-text">
@@ -587,7 +610,7 @@
 ════════════════════════ -->
 <div class="project-nav">
   <a class="pill back-pill back-pill--bottom" href="projects.html">← Back to projects</a>
-  <a href="waterguard.html">Next: WaterGuard →</a>
+  <a href="hexabot.html">Next: SpiderPi Hexabot →</a>
 </div>
 
 <!-- ════════════════════════

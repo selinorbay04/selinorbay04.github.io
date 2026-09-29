@@ -309,37 +309,6 @@
       margin-bottom: clamp(28px, 4vh, 44px);
     }
 
-    .stat-cards {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--line);
-    }
-
-    .stat-card {
-      background: var(--brown);
-      padding: clamp(24px, 3.5vw, 40px) clamp(20px, 2.5vw, 32px);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .stat-number {
-      font-family: var(--font-display);
-      font-size: clamp(40px, 5.5vw, 68px);
-      letter-spacing: 1px;
-      color: var(--cream);
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-family: var(--font-body);
-      font-size: clamp(11px, 1vw, 13px);
-      font-weight: 300;
-      color: rgba(255,243,223,0.65);
-      line-height: 1.5;
-    }
-
 
     /* ── Project nav footer ── */
     .project-nav {
@@ -362,9 +331,6 @@
     .project-nav a:hover { opacity: 0.55; }
 
 
-    @media (max-width: 767px) {
-      .stat-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
 
   </style>
 </head>
@@ -399,7 +365,7 @@
     <dl class="credits" data-reveal data-reveal-delay="0.3">
       <div><dt>Course</dt><dd>CS/ME 301 · Northwestern</dd></div>
       <div><dt>Year</dt><dd>2026</dd></div>
-      <div><dt>Stack</dt><dd>Python · Q-learning · IMU</dd></div>
+      <div><dt>Stack</dt><dd>Python · Reinforcement learning · Sonar</dd></div>
       <div><dt>Role</dt><dd>Programmer</dd></div>
     </dl>
   </div>
@@ -425,7 +391,7 @@
   <div class="dashboard-card">
     <div>
       <p class="dash-label">Goal</p>
-      <p class="dash-value">Eliminate lateral drift in a hexapod's straight-line gait using reinforcement learning — no manual servo tuning</p>
+      <p class="dash-value">Eliminate lateral drift in a hexapod's straight-line gait using reinforcement learning, without manual servo tuning</p>
     </div>
     <div>
       <p class="dash-label">Role</p>
@@ -437,19 +403,19 @@
         <span class="meta-tag">Q-Learning</span>
         <span class="meta-tag">Reinforcement Learning</span>
         <span class="meta-tag">Python</span>
-        <span class="meta-tag">IMU / Sensor Integration</span>
+        <span class="meta-tag">Sonar / Sensor Integration</span>
         <span class="meta-tag">Gait Control</span>
       </div>
     </div>
     <div>
       <p class="dash-label">Outcome</p>
-      <p class="dash-value">3× reduction in lateral drift · 63% of runs within 5 cm of centerline · convergence in 87 episodes</p>
+      <p class="dash-value">A straight heading held across repeated trials with no manual tuning between them</p>
     </div>
   </div>
 
   <hr class="divider">
 
-  <p class="body-text">The SpiderPi hexapod consistently veered left due to small mechanical asymmetries — servo calibration offsets that couldn't be corrected by hand without introducing new errors. The goal was to teach the robot to correct its own drift without any manual tuning, using only onboard sensor feedback and a learned policy. We framed this as a reinforcement learning problem: a Q-learning agent that observes yaw error and selects stride timing adjustments in real time.</p>
+  <p class="body-text">The SpiderPi hexapod consistently veered left due to small mechanical asymmetries, and we couldn't correct it by hand without introducing new errors. The goal was to teach the robot to correct its own drift without manual tuning, using an onboard distance sensor and human-in-the-loop heading measurements.</p>
 
   <hr class="divider">
 
@@ -459,45 +425,65 @@
   <h2 class="section-title">THE APPROACH</h2>
 
   <p class="body-text">
-    The SpiderPi hexapod robot has six legs and a built-in tripod gait, but ours consistently
-    veered left due to small mechanical asymmetries — stiffness differences, micro-offsets in
-    servo calibration. Rather than attempting to measure and compensate each discrepancy by hand,
-    we framed the problem as a reinforcement learning task. A Q-learning agent observes the robot's
-    yaw drift and selects corrective adjustments to the stride timing. Over training episodes the
-    agent learns which adjustments produce the straightest paths.
+      The SpiderPi has six legs and runs a custom tripod gait. Rather than measuring and
+      compensating for each asymmetry in the gait by hand, we framed the problem as a
+      reinforcement learning task. A Q-learning agent observes the robot's yaw drift and selects
+      corrective adjustments to the stride timing. Over training episodes, it learns which
+      adjustments produce the straightest paths: choices that increase drift are penalized, and
+      choices that reduce it are rewarded.
   </p>
+
+  <hr class="divider">
+
+  <!-- ════════════════════════
+       SMALL CAVEAT
+  ════════════════════════ -->
+  <h2 class="section-title">SMALL CAVEAT</h2>
+
+  <div class="text-video">
+    <p class="body-text">
+      We didn't have an IMU, so we measured heading manually. After each stride cycle, the robot
+      paused while we read a compass mounted on top of it and recorded its deviation from north.
+      A distance sensor continuously measured the gap to the wall on the robot's left, giving us a
+      second, automated measure of drift.
+    </p>
+    <img class="side-img" src="assests/images/projects/hexabot/angle.jpg" width="926" height="1138" loading="lazy"
+         alt="The SpiderPi from above with a phone compass strapped to its body, reading 166° S">
+  </div>
 
   <div class="spec-table">
 
     <div class="spec-row">
       <div class="spec-label">State Space</div>
       <div class="spec-value">
-        Discretized yaw error bins (left heavy, centered, right heavy) derived from IMU readings
-        sampled after each stride cycle.
+        Discretized yaw error bins (drifting left, centered, drifting right), derived from compass
+        and distance sensor readings taken after each stride cycle.
       </div>
     </div>
 
     <div class="spec-row">
       <div class="spec-label">Action Space</div>
       <div class="spec-value">
-        Three servo timing adjustments: increase left-side dwell, increase right-side dwell, or
-        maintain current timing. Applied per stride cycle.
+        Three servo timing adjustments, applied per stride cycle: increase left-side dwell,
+        increase right-side dwell, or maintain current timing.
       </div>
     </div>
 
     <div class="spec-row">
       <div class="spec-label">Reward</div>
       <div class="spec-value">
-        +1 for a stride that reduces yaw error, −1 for one that increases it, 0 for no significant
-        change. Sparse signal kept the agent from overfitting to noise.
+        +1 for a stride that reduces yaw error, −1 for one that increases it, and 0 for no
+        significant change. The coarse three-level signal made the agent less sensitive to
+        measurement noise.
       </div>
     </div>
 
     <div class="spec-row">
       <div class="spec-label">Training</div>
       <div class="spec-value">
-        Run on the physical robot across multiple 2-meter corridor trials. Q-table updated in real
-        time after each stride; ε-greedy exploration annealed from 0.9 → 0.05 over 200 episodes.
+        Conducted on the physical robot across repeated 2-meter corridor trials. The Q-table was
+        updated after each stride, with ε-greedy exploration annealed from 0.9 to 0.05 over
+        200 episodes.
       </div>
     </div>
 
@@ -510,35 +496,14 @@
   ════════════════════════ -->
   <h2 class="section-title">RESULTS</h2>
 
-  <div class="results-section">
+  <div class="results-section text-video">
     <p class="results-intro">
-      After training, the robot's lateral drift dropped dramatically. The corrected gait held
-      a straight heading across repeated 2-meter runs with no manual tuning between trials —
-      a result that purely hand-tuned compensation had never achieved.
+      After training, the robot's lateral drift dropped from over 32 cm to 12 cm over a 2-meter
+      run. The corrected gait held a straight heading across repeated trials with no manual
+      tuning between them, which hand-tuned compensation had never achieved.
     </p>
-
-    <div class="stat-cards">
-
-      <div class="stat-card">
-        <span class="stat-number">×3</span>
-        <span class="stat-label">reduction in lateral drift vs. uncorrected baseline</span>
-      </div>
-
-      <div class="stat-card">
-        <span class="stat-number">63%</span>
-        <span class="stat-label">of runs finished within 5 cm of centerline over 2 m</span>
-      </div>
-
-      <div class="stat-card">
-        <span class="stat-number">32 CM</span>
-        <span class="stat-label">max drift in baseline vs. ~10 cm after training</span>
-      </div>
-
-      <div class="stat-card">
-        <span class="stat-number">87</span>
-        <span class="stat-label">training episodes to convergence</span>
-      </div>
-
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/9GArfARKhAU?si=6Cbg48GJN3bnxaKz&rel=0" title="Gait correction demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
     </div>
   </div>
 
