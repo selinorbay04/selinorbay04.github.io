@@ -128,6 +128,9 @@
     .deck-card .credits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .deck-cta { align-self: flex-start; margin-top: auto; }
     .deck-card .credits + .deck-cta { margin-top: 18px; }
+    /* not linked yet: the CTA reads as a status, not a button */
+    .deck-card--soon .deck-cta { opacity: 0.6; cursor: default; }
+    .deck-card--soon .deck-cta:hover { background: transparent; color: inherit; border-color: currentColor; }
 
     @media (hover: hover) and (pointer: fine) {
       .deck-link:hover .deck-media img { transform: scale(1.04); }
@@ -267,11 +270,29 @@
       </a>
     </article>
 
+    <article class="deck-card deck-card--soon">
+      <div class="deck-link">
+        <div class="deck-media"><img src="assests/images/flashbot.jpg" style="object-position: 50% 62%" alt="The Flashbot collaborative robot arm plasma-cutting a steel plate, sparks spraying behind it"></div>
+        <div class="deck-info">
+          <span class="deck-num">[02]</span>
+          <h2 class="deck-title">Flashbot Toolpath Generator</h2>
+          <p class="deck-sub">Plasma-cutting toolpaths for a collaborative robot arm</p>
+          <dl class="credits">
+            <div><dt>Company</dt><dd>FlashCut CNC</dd></div>
+            <div><dt>Year</dt><dd>2026</dd></div>
+            <div><dt>Stack</dt><dd>Python · ROS · URScript · PolyScope</dd></div>
+            <div><dt>Role</dt><dd>Self-directed project · full-stack owner</dd></div>
+          </dl>
+          <span class="pill deck-cta">Coming soon</span>
+        </div>
+      </div>
+    </article>
+
     <article class="deck-card">
       <a class="deck-link" href="basketball.html">
         <div class="deck-media"><img src="assests/images/projects/basketball-card.jpg" alt="Mini basketball hoop fitted with sensors" loading="lazy"></div>
         <div class="deck-info">
-          <span class="deck-num">[02]</span>
+          <span class="deck-num">[03]</span>
           <h2 class="deck-title">Basketball Shot Classifier</h2>
           <p class="deck-sub">Machine learning &amp; sensing</p>
           <dl class="credits">
@@ -289,7 +310,7 @@
       <a class="deck-link" href="maze-game.html">
         <div class="deck-media"><img src="assests/images/projects/maze-game.jpg" alt="Line-following robot on a maze track" loading="lazy"></div>
         <div class="deck-info">
-          <span class="deck-num">[03]</span>
+          <span class="deck-num">[04]</span>
           <h2 class="deck-title">Semi-Autonomous Maze Game</h2>
           <p class="deck-sub">Line-following robot with a human in the loop</p>
           <dl class="credits">
@@ -307,7 +328,7 @@
       <a class="deck-link" href="hexabot.html">
         <div class="deck-media"><img src="assests/images/projects/hexabot-card.jpg" alt="SpiderPi Hexabot on the lab floor" loading="lazy"></div>
         <div class="deck-info">
-          <span class="deck-num">[04]</span>
+          <span class="deck-num">[05]</span>
           <h2 class="deck-title">SpiderPi Hexabot</h2>
           <p class="deck-sub">Gait correction &amp; maze mapping</p>
           <dl class="credits">
@@ -325,7 +346,7 @@
       <a class="deck-link" href="waterguard.html">
         <div class="deck-media"><img src="assests/images/projects/waterguard-card.jpg" alt="The WaterGuard team beside the lined CT scanner" loading="lazy"></div>
         <div class="deck-info">
-          <span class="deck-num">[05]</span>
+          <span class="deck-num">[06]</span>
           <h2 class="deck-title">WaterGuard</h2>
           <p class="deck-sub">Water-resistant CT scanner liner</p>
           <dl class="credits">
